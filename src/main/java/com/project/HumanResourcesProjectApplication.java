@@ -20,7 +20,9 @@ public class HumanResourcesProjectApplication {
 
 		System.out.println("Elifffffff denemee");
 
-		System.out.println("Burcu denemeee");
+
+		System.out.println("Burcu deneme");
+
 
 	}
 
