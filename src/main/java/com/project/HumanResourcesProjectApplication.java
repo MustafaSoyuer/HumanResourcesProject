@@ -12,6 +12,7 @@ public class HumanResourcesProjectApplication {
 		System.out.println("Deneme2222");
 
 		System.out.println("asdasd");
+		System.out.println("denemeeeeeeeeeeee");
 
 	}
 
