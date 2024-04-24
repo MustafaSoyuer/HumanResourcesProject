@@ -20,6 +20,8 @@ public class HumanResourcesProjectApplication {
 
 		System.out.println("Elifffffff denemee");
 
+		System.out.println("Burcu denemee");
+
 	}
 
 }
