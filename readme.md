@@ -20,5 +20,5 @@
     dENEME YENİ EKLENTİ
 
 # UG  NOT
-    kontroll
+    kontrollll
      
