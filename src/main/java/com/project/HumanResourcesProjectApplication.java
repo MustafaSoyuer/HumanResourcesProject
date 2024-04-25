@@ -8,7 +8,6 @@ public class HumanResourcesProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HumanResourcesProjectApplication.class, args);
-		System.out.println("Human Resources Project Application Started");
 	}
 
 }
