@@ -17,5 +17,8 @@
        git push -u origin burcu
 
 # EG NOT
-dENEME YENİ EKLENTİ
+    dENEME YENİ EKLENTİ
+
+# UG  NOT
+    asdasdsa
      
