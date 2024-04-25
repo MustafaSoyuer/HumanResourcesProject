@@ -1,4 +1,6 @@
 rootProject.name = 'HumanResourcesProject'
-include 'admin-service'
-include 'company-service'
+include 'manager-service'
+include 'comment-service'
+include 'auth-service'
+include 'employee-service'
 
