@@ -15,3 +15,10 @@
        git checkout burcu
        git merge master
        git push -u origin burcu
+
+# EG NOT
+    dENEME YENİ EKLENTİ
+
+# UG  NOT
+    kontrollll
+     
