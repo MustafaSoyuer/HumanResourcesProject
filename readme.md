@@ -1,17 +1,23 @@
-# KURULUMLAR VE PROJE TEKNOLOJ�LER�
+# KURULUMLAR VE PROJE TEKNOLOJİLERİ
 
-## Git Komutlar�:
+## Git Komutları:
    
-    ***** De�i�iklikleri kaydetmek
+    ***** Değişiklikleri kaydetmek
+    Sağ kısımdan commit and push yapılır. 
+    Sonra Githubta "https://github.com/MustafaSoyuer/HumanResourcesProject" linkine gidilir.
+    Pull request -> aşağı kısımdaki create commit tuşuna tıklanır.
+    Merge kısmına tıklanır.
+
+    **** Yedek Komutlar
     git checkout master
     git add .
     git commit -m "commit message"
     git push -u origin master
  
-    ***** De�i�iklikleri kendi projene �ekmek i�in;
+    ***** Değişiklikleri kendi projene çekmek için;
     git pull origin master
 
-     *** Merge i�lemi
+     *** Merge işlemi (Eğer githubtaki merge kısmı aktif olmazsa)
        git checkout burcu
        git merge master
        git push -u origin burcu
