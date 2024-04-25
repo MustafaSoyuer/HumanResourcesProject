@@ -7,6 +7,7 @@
     Terminal ekraninda git checkout master yazıyoruz
     Daha sonra git merge umit yaziyoruz
     git push -u origin master yaziyoruz
+    (Eğer bu kısımda çakışma sorunu verirse git pull origin master komutu ile verileri çekiyoruz.)
     ve tekrar master dan umit e gecip kod yazmaya devam ediyoruz
  
     ***** Degisiklikleri kendi projene cekmek icin;
