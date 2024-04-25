@@ -1,1 +1,0 @@
-# bu yeni ekleme denemesi EG 
