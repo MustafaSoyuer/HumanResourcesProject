@@ -1,1 +1,4 @@
 rootProject.name = 'HumanResourcesProject'
+include 'admin-service'
+include 'company-service'
+
