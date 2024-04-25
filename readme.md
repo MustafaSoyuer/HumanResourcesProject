@@ -1,18 +1,21 @@
-# KURULUMLAR VE PROJE TEKNOLOJÝLERÝ
+# KURULUMLAR VE PROJE TEKNOLOJï¿½LERï¿½
 
-## Git Komutlarý:
+## Git Komutlarï¿½:
    
-    ***** Deðiþiklikleri kaydetmek
+    ***** Deï¿½iï¿½iklikleri kaydetmek
     git checkout master
     git add .
     git commit -m "commit message"
     git push -u origin master
  
-    ***** Deðiþiklikleri kendi projene çekmek için;
+    ***** Deï¿½iï¿½iklikleri kendi projene ï¿½ekmek iï¿½in;
     git pull origin master
 
-     *** Merge iþlemi
+     *** Merge iï¿½lemi
        git checkout burcu
        git merge master
        git push -u origin burcu
+
+# EG NOT
+dENEME YENÄ° EKLENTÄ°
      
