@@ -1,24 +1,15 @@
-# KURULUMLAR VE PROJE TEKNOLOJ�LER�
+# KURULUMLAR VE PROJE TEKNOLOJILERI
 
-## Git Komutlar�:
+## Git Komutlari:
    
-    ***** De�i�iklikleri kaydetmek
-    git checkout master
-    git add .
-    git commit -m "commit message"
-    git push -u origin master
+    ***** Degisiklikleri kaydetmek
+    Commit kismindan commit and push yapıyoruz
+    Terminal ekraninda git checkout master yazıyoruz
+    Daha sonra git merge umit yaziyoruz
+    git push -u master yaziyoruz
+    ve tekrar master dan umit e gecip kod yazmaya devam ediyoruz
  
-    ***** De�i�iklikleri kendi projene �ekmek i�in;
+    ***** Degisiklikleri kendi projene cekmek icin;
     git pull origin master
 
-     *** Merge i�lemi
-       git checkout burcu
-       git merge master
-       git push -u origin burcu
-
-# EG NOT
-    dENEME YENİ EKLENTİ
-
-# UG  NOT
-    kontrollll
      
