@@ -8,9 +8,4 @@ public class AdminServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(AdminServiceApplication.class, args);
     }
-
-    /**
-     * TODO: applicaiton.yml kontrol edilecek, portler ve db oluşturulacak.
-     * TODO: postgresqlde db açılacak
-     */
 }

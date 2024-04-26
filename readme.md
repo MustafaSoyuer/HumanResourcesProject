@@ -32,4 +32,11 @@
 ```
      db.createUser({ user: "bilgeUser", pwd: "bilgeUser*", roles: ["readWrite","dbAdmin"]})
 ```
+
+
+## YAPILACAKLAR
+
+GENEL DTO'suna email ve anotasyonlar vs eklenecek (NE EKSİK OLURSA)
+
+EG: private EKLENECEK ENTITYLERE!! 
      

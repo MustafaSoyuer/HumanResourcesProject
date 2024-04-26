@@ -22,7 +22,7 @@ public class Manager {
     private String avatar;
     private String birthDate;
     private String phone;
-    private String idenityNumber;
+    private String identityNumber;
     private String email;
     private String address;
     private Long occupation;

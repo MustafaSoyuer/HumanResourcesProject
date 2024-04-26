@@ -6,17 +6,13 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class Company extends BaseEntity implements Serializable {
-    //todo: serilizable burada mı yoksa classta mı olacak?
-
+public class Company extends BaseEntity {
     @Id
     private String id;
     private String name;

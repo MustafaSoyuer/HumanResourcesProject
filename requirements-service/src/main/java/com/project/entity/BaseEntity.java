@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@SuperBuilder //TODO: Bu sıkıntı çıkarmıyor düzelttim ama gıcıklık yaratabilir spring çalışırken bişeyler yazıo
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseEntity {

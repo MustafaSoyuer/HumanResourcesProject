@@ -4,10 +4,12 @@ import com.project.utility.enums.EExpenseType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +25,6 @@ public class Expenses extends BaseEntity {
     Double amount;
     EExpenseType expenseType;
     String document;
-    //TODO: Bunları date mi yapalım?
     Long requestDate;
     Long approvalDate;
 }

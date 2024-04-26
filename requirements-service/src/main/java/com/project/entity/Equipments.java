@@ -4,10 +4,12 @@ import com.project.utility.enums.EEquipmentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +26,5 @@ public class Equipments extends BaseEntity{
     String document;
     Long receivingDate;
     Long returningDate;
-    //TODO: Buraya equipment status eklersek karışabilir
-    // yukarıdaki isimlerle bence eklemeyelim :D
 
 }

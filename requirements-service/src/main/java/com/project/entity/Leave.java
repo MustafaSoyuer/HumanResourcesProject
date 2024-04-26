@@ -4,10 +4,12 @@ import com.project.utility.enums.EStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +25,6 @@ public class Leave extends BaseEntity{
     String companyId;
     String employeeName;
     String employeeSurname;
-    //TODO: Dateler değişsin mi?
     Long startDate;
     Long approvalDate;
     EStatus status;

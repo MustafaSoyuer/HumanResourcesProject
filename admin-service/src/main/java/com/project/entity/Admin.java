@@ -24,7 +24,7 @@ public class Admin extends BaseEntity{
     @Email
     private String email;
     private String address;
-    @Size(min = 11, max = 11) //todo: gerek var mı?
+    @Size(min = 11, max = 15)
     private String phone;
     private String avatar;
 
