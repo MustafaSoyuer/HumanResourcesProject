@@ -3,4 +3,7 @@ include 'manager-service'
 include 'comment-service'
 include 'auth-service'
 include 'employee-service'
+include 'requirements-service'
+include 'admin-service'
+include 'company-service'
 
