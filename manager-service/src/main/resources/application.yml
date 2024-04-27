@@ -1,9 +1,9 @@
 server:
-  port: 9091
+  port: 9095
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/HRPAuthDB
+    url: jdbc:postgresql://localhost:5432/HRPManagerDB
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver

@@ -1,12 +1,12 @@
 server:
-  port: 9091
+  port: 9096
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/HRPAuthDB
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/HRPRequirementsDB
     username: postgres
     password: root
-    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
