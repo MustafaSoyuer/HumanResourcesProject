@@ -1,5 +1,8 @@
 package com.project.dto.request;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthLoginRequestDto {
-    String email;
-    String password;
+    @Email
+    @NotNull
+    private String email;
+
+    @Size(min=8, max=20)
+    @NotNull
+    private String password;
 }

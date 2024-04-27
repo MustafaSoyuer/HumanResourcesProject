@@ -1,4 +1,4 @@
-package com.project.dto.response;
+package com.project.exception;
 
 
 import lombok.AllArgsConstructor;
@@ -6,12 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthLoginResponseDto {
-    String token;
-    String role;
-
+public class ErrorMessage {
+    int code;
+    String message;
+    List<String> fields;
 }

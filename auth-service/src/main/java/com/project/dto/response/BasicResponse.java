@@ -1,6 +1,5 @@
 package com.project.dto.response;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthLoginResponseDto {
-    String token;
-    String role;
-
+public class BasicResponse<T> {
+    int status;
+    String message;
+    T data;
 }
