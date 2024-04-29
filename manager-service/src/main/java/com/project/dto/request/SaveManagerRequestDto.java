@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class SaveManagerRequestDto {
-
+    private Long authId;
     private String token;
     @NotNull
     private String name;

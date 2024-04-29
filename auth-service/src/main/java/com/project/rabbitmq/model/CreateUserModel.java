@@ -2,6 +2,8 @@ package com.project.rabbitmq.model;
 
 import com.project.utility.enums.ERole;
 import com.project.utility.enums.EStatus;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +19,12 @@ import java.io.Serializable;
 public class CreateUserModel implements Serializable {
 
     private Long authId;
+    private String name;
+    private String surname;
     private String email;
-    private String password;
-    private ERole role;
-    private EStatus state;
+    private String phone;
+    private String address;
+    private String company;
+    private String taxNo;
 
 }

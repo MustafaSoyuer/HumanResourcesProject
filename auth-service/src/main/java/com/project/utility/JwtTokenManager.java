@@ -21,7 +21,7 @@ public class JwtTokenManager {
         String token;
         try{
             token = JWT.create().withAudience()
-                    .withClaim("authid", authId)
+                    .withClaim("id", authId)
                     .withIssuer(ISSUER)
                     .withIssuedAt(new Date())
                     .withExpiresAt(new Date(System.currentTimeMillis() + EXDATE))
