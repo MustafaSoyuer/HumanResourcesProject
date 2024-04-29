@@ -22,6 +22,7 @@ ext{
             springCloudConfig                   : "org.springframework.cloud:spring-cloud-starter-config:${versions.springCloud}",
             springCloudConfigServer             : "org.springframework.cloud:spring-cloud-config-server:${versions.springCloud}",
             springCloudConfigClient             : "org.springframework.cloud:spring-cloud-config-client:${versions.springCloud}",
+            springBootMailSender:            "org.springframework.boot:spring-boot-starter-mail:${versions.springBoot}",
             jwt                                 : "com.auth0:java-jwt:${versions.jwt}"
     ]
 }

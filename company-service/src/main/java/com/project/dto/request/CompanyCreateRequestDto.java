@@ -1,19 +1,21 @@
-package com.project.entity;
+package com.project.dto.request;
+
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
-public class Company extends BaseEntity {
+
+public class CompanyCreateRequestDto {
+
     @Id
     private String id;
     private Long managerId;
@@ -30,7 +32,6 @@ public class Company extends BaseEntity {
     private String sector;
     private String taxNumber;
     private String taxOffice;
-    //todo: mongodb de unique olarak burayı işaretle
     private String mersisNo;
     private String vision;
     private String mission;
@@ -41,5 +42,6 @@ public class Company extends BaseEntity {
     private String foundingYear;
     private String linkedin;
     private String membershipPlan;
+
 
 }

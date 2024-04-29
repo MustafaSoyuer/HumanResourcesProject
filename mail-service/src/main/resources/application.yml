@@ -1,0 +1,15 @@
+server:
+  port: 9096
+
+spring:
+  mail:
+    username: ${mail-service-username}
+    password: ${mail-service-password}
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

@@ -18,6 +18,6 @@ public class AuthController {
     @CrossOrigin("*")
     public ResponseEntity<AuthLoginResponseDto> login(@RequestBody AuthLoginRequestDto dto) {
         return ResponseEntity.ok(new AuthLoginResponseDto(authService.login(dto)));
-
     }
+
 }

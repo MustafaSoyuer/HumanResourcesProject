@@ -8,8 +8,11 @@ public class RestApiUrls {
     private static final String ROOT= DEV + VERSION;
     public static final String COMPANY = ROOT + "/company";
 
-    public static final String ADD= "/add";
+    public static final String CREATE= "/create";
+    public static final String UPDATE= "/update";
     public static final String GET_ALL= "/get-all";
+    public static final String GET_ALL_COMPANY_COUNT= "/get-all-company-count";
+
 
 
 }

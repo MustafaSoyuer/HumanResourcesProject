@@ -50,6 +50,8 @@ allprojects {
 		annotationProcessor libs.mapstructProcessor
 		implementation libs.jwt
 
+
+
 	}
 
 	test {
