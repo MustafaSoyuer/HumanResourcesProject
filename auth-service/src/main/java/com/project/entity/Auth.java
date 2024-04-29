@@ -1,6 +1,7 @@
 package com.project.entity;
 
 import com.project.utility.enums.ERole;
+import com.project.utility.enums.EStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -26,6 +27,8 @@ public class Auth  {
 
     private Long createAt;
     private Long updateAt;
-    private boolean state;
+
+    @Builder.Default
+    private EStatus state=EStatus.PENDING; //TODO methodlara ekle
 
 }

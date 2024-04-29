@@ -40,6 +40,8 @@ public class AuthController {
                 .build());
     }
 
+
+    //bu addemployee þeklinde olabilir
     @PostMapping(REGISTER_EMPLOYEE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<RegisterEmployeeResponseDto>> registerEmployee(@RequestBody @Valid RegisterEmployeeRequestDto dto) {

@@ -1,6 +1,6 @@
-package com.project.dto.response;
+package com.project.dto.request;
 
-import com.project.utility.enums.ERole;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -12,14 +12,23 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterManagerResponseDto {
 
-    private Long id;
+public class SaveManagerRequestDto {
+
+    private String token;
+    @NotNull
     private String name;
+    @NotNull
     private String surname;
+    @Email
     private String email;
+    @NotNull
     private String phone;
+    @NotNull
     private String address;
+    @NotNull
     private String company;
+    @NotNull
     private String taxNo;
+
 }

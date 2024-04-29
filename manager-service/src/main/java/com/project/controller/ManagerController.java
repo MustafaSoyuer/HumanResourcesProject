@@ -1,9 +1,10 @@
 package com.project.controller;
 
+import com.project.dto.request.SaveManagerRequestDto;
 import com.project.service.ManagerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import static com.project.constants.RestApiUrls.*;
 
@@ -12,5 +13,11 @@ import static com.project.constants.RestApiUrls.*;
 @RequiredArgsConstructor
 public class ManagerController {
     private final ManagerService managerService;
+
+    @PostMapping(SAVE_MANAGER)
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> save(@RequestBody SaveManagerRequestDto dto) {
+        return ResponseEntity.ok(managerService.save(dto));
+    }
 
 }

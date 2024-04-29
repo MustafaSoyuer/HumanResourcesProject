@@ -49,6 +49,7 @@ allprojects {
 		implementation libs.mapstruct
 		annotationProcessor libs.mapstructProcessor
 		implementation libs.jwt
+		implementation libs.springBootStarterAmqp
 
 
 

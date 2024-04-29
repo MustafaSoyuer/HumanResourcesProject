@@ -46,16 +46,10 @@ public class AuthService {
             throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
         }
 
-        //if (isCompanyEmail(dto.getEmail(), dto.getCompany())){
-            Auth auth = AuthMapper.INSTANCE.fromRegisterManagerRequestToAuth(dto);
-            //TODO: burada manager kaydı yapılırken, adminin onaylaması gerekmektedir.
-            // if(admin.isApproved()){ gibi -> setState.aktif
-            auth.setRole(ERole.MANAGER);
-            authRepository.save(auth);
-            return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
-//        }else {
-//            throw new AuthServiceException(ErrorType.ERROR_EMAIL_ISCOMPANY);
-//        }
+        Auth auth = AuthMapper.INSTANCE.fromRegisterManagerRequestToAuth(dto);
+        auth.setRole(ERole.MANAGER);
+        authRepository.save(auth);
+        return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
     }
 
     public RegisterEmployeeResponseDto registerEmployee(RegisterEmployeeRequestDto dto) {
