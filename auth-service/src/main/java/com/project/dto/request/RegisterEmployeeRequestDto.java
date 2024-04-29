@@ -2,7 +2,6 @@ package com.project.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +11,19 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthLoginRequestDto {
+public class RegisterEmployeeRequestDto {
+    @NotNull
+    private String name;
+    @NotNull
+    private String surname;
     @Email
+    private String identityNumber;
     @NotNull
-    private String email;
-
-    @Size(min=8, max=20)
+    private String phone;
     @NotNull
-    private String password;
+    private String address;
+    @NotNull
+    private String occupation;
+    @NotNull
+    private String department;
 }

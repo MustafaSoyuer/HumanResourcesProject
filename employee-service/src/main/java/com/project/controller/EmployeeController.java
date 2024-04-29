@@ -12,4 +12,6 @@ import static com.project.constants.RestApiUrls.*;
 @RequestMapping(EMPLOYEE)
 public class EmployeeController {
     private final EmployeeService employeeService;
+
+// email _> ad.soyad@şirketadı.com
 }
