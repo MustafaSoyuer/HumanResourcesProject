@@ -1,8 +1,12 @@
 package com.project.controller;
 
 import com.project.dto.request.AuthLoginRequestDto;
+import com.project.dto.request.RegisterEmployeeRequestDto;
+import com.project.dto.request.RegisterManagerRequestDto;
 import com.project.dto.response.AuthLoginResponseDto;
 import com.project.dto.response.BasicResponse;
+import com.project.dto.response.RegisterEmployeeResponseDto;
+import com.project.dto.response.RegisterManagerResponseDto;
 import com.project.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +25,28 @@ public class AuthController {
     public ResponseEntity<BasicResponse<AuthLoginResponseDto>> login(@RequestBody @Valid AuthLoginRequestDto dto) {
         return ResponseEntity.ok(BasicResponse.<AuthLoginResponseDto>builder()
                 .status(200)
-                .message("Giriş Başarılı")
+                .message("Login successful")
                 .data(authService.login(dto))
+                .build());
+    }
+
+    @PostMapping(REGISTER_MANAGER)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<RegisterManagerResponseDto>> registerManager(@RequestBody @Valid RegisterManagerRequestDto dto) {
+        return ResponseEntity.ok(BasicResponse.<RegisterManagerResponseDto>builder()
+                .status(200)
+                .message("Manager Register successful")
+                .data(authService.registerManager(dto))
+                .build());
+    }
+
+    @PostMapping(REGISTER_EMPLOYEE)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<RegisterEmployeeResponseDto>> registerEmployee(@RequestBody @Valid RegisterEmployeeRequestDto dto) {
+        return ResponseEntity.ok(BasicResponse.<RegisterEmployeeResponseDto>builder()
+                .status(200)
+                .message("Employee Register successful")
+                .data(authService.registerEmployee(dto))
                 .build());
     }
 }
