@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.request.SaveManagerRequestDto;
+import com.project.entity.Manager;
 import com.project.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class ManagerController {
 
     @PostMapping(SAVE_MANAGER)
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> save(@RequestBody SaveManagerRequestDto dto) {
+    public ResponseEntity<Manager> save(@RequestBody SaveManagerRequestDto dto) {
         return ResponseEntity.ok(managerService.save(dto));
     }
 

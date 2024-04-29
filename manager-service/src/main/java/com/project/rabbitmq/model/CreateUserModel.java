@@ -17,9 +17,12 @@ import java.io.Serializable;
 public class CreateUserModel implements Serializable {
 
     private Long authId;
+    private String name;
+    private String surname;
     private String email;
-    private String password;
-    private ERole role;
-    private EStatus state;
+    private String phone;
+    private String address;
+    private String company;
+    private String taxNo;
 
 }

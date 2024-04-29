@@ -14,5 +14,6 @@ public class RestApiUrls {
     public static final String LOGIN = "/login";
     public static final String REGISTER_MANAGER = "/register-manager";
     public static final String REGISTER_EMPLOYEE = "/register-employee";
+    public static final String REGISTER_ADMIN = "/register-admin";
 
 }
