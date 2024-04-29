@@ -20,6 +20,8 @@ public class Auth  {
     @Email
     private String email;
     private String password;
+
+    @Enumerated(EnumType.ORDINAL)
     private ERole role;
 
     private Long createAt;

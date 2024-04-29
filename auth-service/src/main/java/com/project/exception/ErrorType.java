@@ -16,6 +16,8 @@ public enum ErrorType {
     ERROR_CREATE_TOKEN(1003,"Token oluşturma hatası. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.INTERNAL_SERVER_ERROR),
     ERROR_INVALID_LOGIN_PARAMETER(1004,"Kullanıcı adı ya da şifre hatalıdır. Lütfen düzelterek tekrar deneyiniz.",HttpStatus.BAD_REQUEST),
     ERROR_EMAIL_ISCOMPANY(1005,"Girdiğiniz email adresi şirket emaili olmalıdır. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.BAD_REQUEST),
+    INVALID_TOKEN(1006,"Girdiğiniz token hatalıdır. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.UNAUTHORIZED),
+    USER_NOT_FOUND(1007,"Kullanıcı bulunamadı. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.NOT_FOUND)
     ;
 
 

@@ -1,9 +1,8 @@
 package com.project.config.security;
 
-import com.burcu.domain.User;
-import com.burcu.repository.UserRepository;
 import com.project.entity.Auth;
 import com.project.repository.AuthRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,34 +16,36 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class JwtUserDetail implements UserDetailsService {
-    @Autowired
-    private AuthRepository repository;
+
+    private final AuthRepository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
 
 
-
-    //auhtıdden userdetailsıdi oluşturmmaız lazım
-    public UserDetails getAuthByAuthId(Long authId){
-       Optional<Auth> authUser=repository.findOptionalByAuthId(authId);
+    public UserDetails getAuthById(Long authId){
+       Optional<Auth> authUser=repository.findOptionalById(authId);
         if (authUser.isEmpty()) return null;
 
-        List<GrantedAuthority> yetkiListesi=new ArrayList<>();
-        yetkiListesi.add(new SimpleGrantedAuthority("ROLE_USER")); //bu roleler ayrı bir dbden de çekilebilir aslında doğru kulanımı o, role id kullnıcı eşlemeşmesinden
-        yetkiListesi.add(new SimpleGrantedAuthority("ADMIN"));
-        yetkiListesi.add(new SimpleGrantedAuthority("SUPER_ADMIN"));
+        List<GrantedAuthority> authorizedList=new ArrayList<>();
+        authorizedList.add(new SimpleGrantedAuthority("EMPLOYEE")); //employee
+        authorizedList.add(new SimpleGrantedAuthority("MANAGER")); //manager
+        authorizedList.add(new SimpleGrantedAuthority("ADMIN")); //site yöneticisi
+
+
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(authUser.get().getEmail())
-                .password("")
-                .accountLocked(false) //hesap kitli mi
-                .accountExpired(false) //hesap süresi geçmiş mi
-                .authorities(yetkiListesi) //kullanıcının yetkilerini yazıyoruz.
+                .password(authUser.get().getPassword())
+                .accountLocked(false)
+                .accountExpired(false)
+                .authorities(authorizedList)
                 .build();
     }
+
 
 
 }

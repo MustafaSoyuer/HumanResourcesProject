@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableMethodSecurity
 @Slf4j
-public class ElasticSecurityConfig {
+public class AuthSecurityConfig {
 
     @Bean
     public JwtAuthFilter getJwtAuthFilter(){
@@ -27,7 +27,9 @@ public class ElasticSecurityConfig {
                         "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
-                        .requestMatchers("/dev/v1/auth/**").hasAuthority("SUPER_ADMIN")
+                        .requestMatchers("/dev/v1/auth/**").hasAuthority("ADMIN")
+                        .requestMatchers("/dev/v1/auth/register-manager/**").hasAuthority("MANAGER")
+                        .requestMatchers("/dev/v1/auth/register-employee/**").hasAuthority("MANAGER")
                         .anyRequest()
                         .authenticated()
                 );

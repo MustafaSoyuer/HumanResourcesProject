@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterEmployeeRequestDto {
+
+    private String token;
     @NotNull
     private String name;
     @NotNull

@@ -12,6 +12,7 @@ import com.project.exception.ErrorType;
 import com.project.mapper.AuthMapper;
 import com.project.repository.AuthRepository;
 import com.project.utility.JwtTokenManager;
+import com.project.utility.enums.ERole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,18 +37,25 @@ public class AuthService {
     }
 
     public RegisterManagerResponseDto registerManager(RegisterManagerRequestDto dto) {
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+        }
+        Optional<Auth> admin = authRepository.findOptionalById(authId.get());
+        if (admin.isEmpty()){
+            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
+        }
+
         //if (isCompanyEmail(dto.getEmail(), dto.getCompany())){
             Auth auth = AuthMapper.INSTANCE.fromRegisterManagerRequestToAuth(dto);
             //TODO: burada manager kaydı yapılırken, adminin onaylaması gerekmektedir.
             // if(admin.isApproved()){ gibi -> setState.aktif
+            auth.setRole(ERole.MANAGER);
             authRepository.save(auth);
             return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
 //        }else {
 //            throw new AuthServiceException(ErrorType.ERROR_EMAIL_ISCOMPANY);
 //        }
-
-
-
     }
 
     public RegisterEmployeeResponseDto registerEmployee(RegisterEmployeeRequestDto dto) {

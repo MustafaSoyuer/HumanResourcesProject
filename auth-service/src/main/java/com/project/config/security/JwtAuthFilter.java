@@ -1,6 +1,7 @@
 package com.project.config.security;
 
-import com.burcu.JwtTokenManager;
+
+import com.project.utility.JwtTokenManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,9 +36,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token=authHeader.substring(7);
             log.info("Token...: " + token);
 
-            Optional<Long> authId=jwtTokenManager.validateToken(token);
-            if (authId.isPresent()){
-                UserDetails userDetails= userDetail.getAuthByAuthId(authId.get());
+            Optional<Long> id=jwtTokenManager.validateToken(token);
+            if (id.isPresent()){
+                UserDetails userDetails= userDetail.getAuthById(id.get());
                 UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(
                         userDetails,null,userDetails.getAuthorities()
                 );

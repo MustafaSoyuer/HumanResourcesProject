@@ -2,6 +2,10 @@ server:
   port: 9091
 
 spring:
+  security:
+    user:
+      name: workforce
+      password: solutions
   datasource:
     url: jdbc:postgresql://localhost:5432/HRPAuthDB
     username: postgres
