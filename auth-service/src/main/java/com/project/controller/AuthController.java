@@ -41,7 +41,7 @@ public class AuthController {
     }
 
 
-    //bu addemployee þeklinde olabilir
+    //bu addemployee Seklinde olabilir
     @PostMapping(REGISTER_EMPLOYEE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<RegisterEmployeeResponseDto>> registerEmployee(@RequestBody @Valid RegisterEmployeeRequestDto dto) {
