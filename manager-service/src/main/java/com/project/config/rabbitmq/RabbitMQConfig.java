@@ -12,6 +12,7 @@ public class RabbitMQConfig {
 
     private final String EXCHANGE_MANAGER = "manager-exchange";
     private final String QUEUE_MANAGER = "manager-queue";
+    private final String QUEUE_AUTH = "auth-queue";
     private final String BINDING_KEY_MANAGER = "manager-binding-key";
 
     @Bean
@@ -20,13 +21,18 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    Queue queueAuth(){
+    Queue queueManager(){
         return new Queue(QUEUE_MANAGER);
     }
 
     @Bean
-    Binding bindingAuth(final DirectExchange directExchange, final Queue queueAuth){
-        return BindingBuilder.bind(queueAuth).to(directExchange).with(BINDING_KEY_MANAGER);
+    Queue queueAuth(){
+        return new Queue(QUEUE_AUTH);
+    }
+
+    @Bean
+    Binding bindingManager(final DirectExchange directExchange, final Queue queueManager){
+        return BindingBuilder.bind(queueManager).to(directExchange).with(BINDING_KEY_MANAGER);
     }
 
 

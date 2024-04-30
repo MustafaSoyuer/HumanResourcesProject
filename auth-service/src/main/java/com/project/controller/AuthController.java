@@ -24,8 +24,8 @@ public class AuthController {
 
     @PostMapping(LOGIN)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<AuthLoginResponseDto>> login(@RequestBody @Valid AuthLoginRequestDto dto) {
-        return ResponseEntity.ok(BasicResponse.<AuthLoginResponseDto>builder()
+    public ResponseEntity<BasicResponse<String>> login(@RequestBody @Valid AuthLoginRequestDto dto) {
+        return ResponseEntity.ok(BasicResponse.<String>builder()
                 .status(200)
                 .message("Login successful")
                 .data(authService.login(dto))
@@ -34,13 +34,13 @@ public class AuthController {
 
     @PostMapping(REGISTER_ADMIN)
     @CrossOrigin("*")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<BasicResponse<Void>> registerAdmin(@RequestBody @Valid RegisterAdminRequestDto dto) {
+//    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<BasicResponse<Boolean>> registerAdmin(@RequestBody @Valid RegisterAdminRequestDto dto) {
 
-        return ResponseEntity.ok(BasicResponse.<Void>builder()
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Admin Register successful")
-                        .data(authService.registerAdmin(dto))
+                .data(authService.registerAdmin(dto))
                 .build());
     }
 

@@ -20,9 +20,12 @@ public class CreateUserModel implements Serializable {
     private String name;
     private String surname;
     private String email;
+    private String password;
     private String phone;
     private String address;
     private String company;
     private String taxNo;
+    private ERole role;
+    private Long createAt;
 
 }

@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterManagerRequestDto {
 
-    private String token;
     @NotNull
     private String name;
     @NotNull
