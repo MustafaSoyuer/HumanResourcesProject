@@ -20,6 +20,7 @@ public class ManagerService {
     private final JwtTokenManager jwtTokenManager;
 
     public Manager save(SaveManagerRequestDto dto) {
+
         return managerRepository.save(ManagerMapper.INSTANCE.fromSaveManagerRequestDtoToManager(dto));
     }
 }

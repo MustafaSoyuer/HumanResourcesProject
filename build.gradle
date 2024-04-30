@@ -50,6 +50,7 @@ allprojects {
 		annotationProcessor libs.mapstructProcessor
 		implementation libs.jwt
 		implementation libs.springBootStarterAmqp
+		implementation libs.springBootStarterSecurity
 
 
 

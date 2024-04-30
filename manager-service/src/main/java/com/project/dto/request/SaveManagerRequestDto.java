@@ -1,6 +1,7 @@
 package com.project.dto.request;
 
 
+import com.project.utility.enums.ERole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,8 @@ public class SaveManagerRequestDto {
     @Email
     private String email;
     @NotNull
+    private String password;
+    @NotNull
     private String phone;
     @NotNull
     private String address;
@@ -30,5 +33,7 @@ public class SaveManagerRequestDto {
     private String company;
     @NotNull
     private String taxNo;
+    private ERole role;
+    private Long createAt;
 
 }

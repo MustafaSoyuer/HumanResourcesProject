@@ -25,6 +25,9 @@ public class CreateUserConsumer {
                         .company(model.getCompany())
                         .name(model.getName())
                         .surname(model.getSurname())
+                        .password(model.getPassword())
+                        .role(model.getRole())
+                        .createAt(model.getCreateAt())
                         .build());
 
 

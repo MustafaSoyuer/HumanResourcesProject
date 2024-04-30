@@ -14,8 +14,10 @@ import com.project.mapper.AuthMapper;
 import com.project.rabbitmq.model.CreateUserModel;
 import com.project.rabbitmq.producer.CreateUserProducer;
 import com.project.repository.AuthRepository;
+import com.project.utility.CodeGenerator;
 import com.project.utility.JwtTokenManager;
 import com.project.utility.enums.ERole;
+import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,16 +31,20 @@ public class AuthService {
     private final CreateUserProducer createUserProducer;
 
 
-    public AuthLoginResponseDto login(AuthLoginRequestDto dto) {
+    public String login(AuthLoginRequestDto dto) {
         Optional<Auth> auth = authRepository.findOptionalByEmailAndPassword(dto.getEmail(), dto.getPassword());
         if (auth.isEmpty())
             throw new AuthServiceException(ErrorType.ERROR_INVALID_LOGIN_PARAMETER);
-        Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
-        System.out.println("token....: ahanada buradaaaaaaaaa ->>>>>> "+token);
-        if (token.isEmpty())
-            throw new AuthServiceException(ErrorType.ERROR_CREATE_TOKEN);
-        return AuthLoginResponseDto.builder().token(token.get()).role(auth.get().getRole().name()).build();
+
+        if (auth.get().getState().equals(EStatus.ACTIVE)) {
+            return jwtTokenManager.createToken(auth.get().getId())
+                    .orElseThrow(() -> {
+                        throw new AuthServiceException(ErrorType.ERROR_CREATE_TOKEN);
+                    });
+        }else {
+            throw new AuthServiceException(ErrorType.USER_IS_NOT_ACTIVE);
     }
+}
 
     /**
      * Süper admin token ile kontrol edilir.
@@ -46,17 +52,11 @@ public class AuthService {
      * @return
      */
     public RegisterManagerResponseDto registerManager(RegisterManagerRequestDto dto) {
-        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
-        if (authId.isEmpty()){
-            throw new AuthServiceException(ErrorType.INVALID_TOKEN);
-        }
-        Optional<Auth> admin = authRepository.findOptionalById(authId.get());
-        if (admin.isEmpty()){
-            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
-        }
 
         Auth auth = AuthMapper.INSTANCE.fromRegisterManagerRequestToAuth(dto);
         auth.setRole(ERole.MANAGER);
+        auth.setPassword(dto.getName() + CodeGenerator.generateCode());
+        auth.setCreateAt(System.currentTimeMillis());
         authRepository.save(auth);
         createUserProducer.sendMessage(CreateUserModel.builder()
                         .authId(auth.getId())
@@ -67,6 +67,8 @@ public class AuthService {
                         .phone(dto.getPhone())
                         .surname(dto.getSurname())
                         .taxNo(dto.getTaxNo())
+                        .password(auth.getPassword())
+                        .createAt(auth.getCreateAt())
                 .build());
         return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
     }
@@ -85,11 +87,21 @@ public class AuthService {
         }
     }
 
-    public Void registerAdmin(RegisterAdminRequestDto dto) {
+    public Boolean registerAdmin(RegisterAdminRequestDto dto) {
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+        }
+        Optional<Auth> admin = authRepository.findOptionalById(authId.get());
+        if (admin.isEmpty()){
+            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
+        }
+
 
         Auth auth = Auth.builder().email(dto.getEmail()).password(dto.getPassword()).build();
         auth.setRole(ERole.ADMIN);
+        auth.setState(EStatus.ACTIVE);
         authRepository.save(auth);
-        return null;
+        return true;
     }
 }

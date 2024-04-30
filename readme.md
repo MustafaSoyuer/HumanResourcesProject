@@ -39,4 +39,7 @@
 GENEL DTO'suna email ve anotasyonlar vs eklenecek (NE EKSİK OLURSA)
 
 EG: private EKLENECEK ENTITYLERE!! 
+
+Admin onaylaması
+Company servis manager save  rabbit ile haberleştirilecek.  
      

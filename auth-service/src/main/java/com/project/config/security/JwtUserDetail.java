@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class JwtUserDetail implements UserDetailsService {
 
-    private final AuthRepository repository;
+    @Autowired
+    private AuthRepository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
@@ -39,7 +39,7 @@ public class JwtUserDetail implements UserDetailsService {
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(authUser.get().getEmail())
-                .password(authUser.get().getPassword())
+                .password("")
                 .accountLocked(false)
                 .accountExpired(false)
                 .authorities(authorizedList)
