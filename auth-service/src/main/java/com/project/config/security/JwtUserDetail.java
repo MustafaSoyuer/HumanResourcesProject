@@ -38,9 +38,6 @@ public class JwtUserDetail implements UserDetailsService {
 
 
         return org.springframework.security.core.userdetails.User.builder()
-                //TODO username parametresi yok bu yüzden uniqe olması için email aldık.
-                // acaba burada email aldığımız için mi olmuyor? username şart mı?
-                // @EnableSecurity @EnableGlobalMethodSecurity @EnableWebSecurity bunlara bakılacak
                 .username(authUser.get().getEmail())
                 .password("")
                 .accountLocked(false)

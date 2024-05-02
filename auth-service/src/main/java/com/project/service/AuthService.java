@@ -2,10 +2,8 @@ package com.project.service;
 
 import com.project.dto.request.AuthLoginRequestDto;
 import com.project.dto.request.RegisterAdminRequestDto;
-import com.project.dto.request.RegisterEmployeeRequestDto;
 import com.project.dto.request.RegisterManagerRequestDto;
 import com.project.dto.response.AuthLoginResponseDto;
-import com.project.dto.response.RegisterEmployeeResponseDto;
 import com.project.dto.response.RegisterManagerResponseDto;
 import com.project.entity.Auth;
 import com.project.exception.AuthServiceException;
@@ -31,20 +29,24 @@ public class AuthService {
     private final CreateUserProducer createUserProducer;
 
 
-    public String login(AuthLoginRequestDto dto) {
+    public AuthLoginResponseDto login(AuthLoginRequestDto dto) {
         Optional<Auth> auth = authRepository.findOptionalByEmailAndPassword(dto.getEmail(), dto.getPassword());
+
         if (auth.isEmpty())
             throw new AuthServiceException(ErrorType.ERROR_INVALID_LOGIN_PARAMETER);
 
         if (auth.get().getState().equals(EStatus.ACTIVE)) {
-            return jwtTokenManager.createToken(auth.get().getId())
-                    .orElseThrow(() -> {
-                        throw new AuthServiceException(ErrorType.ERROR_CREATE_TOKEN);
-                    });
+            Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
+            if(token.isEmpty()){
+                throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+            }else {
+                return AuthLoginResponseDto.builder().token(token.get()).role(auth.get().getRole()).build();
+            }
         }else {
             throw new AuthServiceException(ErrorType.USER_IS_NOT_ACTIVE);
+
+        }
     }
-}
 
     /**
      * Süper admin token ile kontrol edilir.
@@ -59,24 +61,20 @@ public class AuthService {
         auth.setCreateAt(System.currentTimeMillis());
         authRepository.save(auth);
         createUserProducer.sendMessage(CreateUserModel.builder()
-                        .authId(auth.getId())
-                        .address(dto.getAddress())
-                        .company(dto.getCompany())
-                        .email(dto.getEmail())
-                        .name(dto.getName())
-                        .phone(dto.getPhone())
-                        .surname(dto.getSurname())
-                        .taxNo(dto.getTaxNo())
-                        .password(auth.getPassword())
-                        .createAt(auth.getCreateAt())
+                .authId(auth.getId())
+                .address(dto.getAddress())
+                .company(dto.getCompany())
+                .email(dto.getEmail())
+                .name(dto.getName())
+                .phone(dto.getPhone())
+                .surname(dto.getSurname())
+                .taxNo(dto.getTaxNo())
+                .password(auth.getPassword())
+                .createAt(auth.getCreateAt())
                 .build());
         return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
     }
 
-    //todo: manager service save olarak eklencek.
-    public RegisterEmployeeResponseDto registerEmployee(RegisterEmployeeRequestDto dto) {
-        return null;
-    }
 
     public boolean isCompanyEmail(String email, String company) {
         //TODO: kontrol edilecek. email doğrulaması yapmayı amaçladım. Şirket maili ile girmeli. Ayrıca bir domain istenebilir?
@@ -104,5 +102,5 @@ public class AuthService {
         auth.setState(EStatus.ACTIVE);
         authRepository.save(auth);
         return true;
-    }
+}
 }
