@@ -39,7 +39,7 @@ public class JwtTokenManager {
             DecodedJWT decodedJWT = verifier.verify(token);
             if(decodedJWT == null)
                 return Optional.empty();
-            Long authId = decodedJWT.getClaim("id").asLong();
+            Long authId = decodedJWT.getClaim("authid").asLong();
             return Optional.of(authId);
         }catch (Exception e){
             return Optional.empty();
@@ -56,7 +56,7 @@ public class JwtTokenManager {
                 throw new ManagerServiceException(ErrorType.INVALID_TOKEN);
             }
 
-            Long id=decodedJWT.getClaim("id").asLong();
+            Long id=decodedJWT.getClaim("authid").asLong();
             return Optional.of(id);
 
         }catch (Exception e){

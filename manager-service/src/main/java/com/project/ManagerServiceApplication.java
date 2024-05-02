@@ -8,4 +8,7 @@ public class ManagerServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(ManagerServiceApplication.class, args);
     }
+
+
+
 }

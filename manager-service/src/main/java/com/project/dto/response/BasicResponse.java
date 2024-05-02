@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterEmployeeResponseDto {
-    String token;
-
+public class BasicResponse<T> {
+    int status;
+    String message;
+    T data;
 }

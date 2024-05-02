@@ -18,7 +18,7 @@ public class Employee {
     private Long id;
     private String name;
     private String surname;
-    private String authId;
+    private Long authId;
     private String companyId;
     private String identityNumber;
     private String birthDate;

@@ -2,10 +2,8 @@ package com.project.service;
 
 import com.project.dto.request.AuthLoginRequestDto;
 import com.project.dto.request.RegisterAdminRequestDto;
-import com.project.dto.request.RegisterEmployeeRequestDto;
 import com.project.dto.request.RegisterManagerRequestDto;
 import com.project.dto.response.AuthLoginResponseDto;
-import com.project.dto.response.RegisterEmployeeResponseDto;
 import com.project.dto.response.RegisterManagerResponseDto;
 import com.project.entity.Auth;
 import com.project.exception.AuthServiceException;
@@ -31,16 +29,19 @@ public class AuthService {
     private final CreateUserProducer createUserProducer;
 
 
-    public String login(AuthLoginRequestDto dto) {
+    public AuthLoginResponseDto login(AuthLoginRequestDto dto) {
         Optional<Auth> auth = authRepository.findOptionalByEmailAndPassword(dto.getEmail(), dto.getPassword());
+
         if (auth.isEmpty())
             throw new AuthServiceException(ErrorType.ERROR_INVALID_LOGIN_PARAMETER);
 
         if (auth.get().getState().equals(EStatus.ACTIVE)) {
-            return jwtTokenManager.createToken(auth.get().getId())
-                    .orElseThrow(() -> {
-                        throw new AuthServiceException(ErrorType.ERROR_CREATE_TOKEN);
-                    });
+            Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
+            if(token.isEmpty()){
+                throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+            }else {
+                return AuthLoginResponseDto.builder().token(token.get()).role(auth.get().getRole()).build();
+            }
         }else {
             throw new AuthServiceException(ErrorType.USER_IS_NOT_ACTIVE);
     }
@@ -73,9 +74,6 @@ public class AuthService {
         return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
     }
 
-    public RegisterEmployeeResponseDto registerEmployee(RegisterEmployeeRequestDto dto) {
-        return null;
-    }
 
     public boolean isCompanyEmail(String email, String company) {
         //TODO: kontrol edilecek. email doğrulaması yapmayı amaçladım. Şirket maili ile girmeli. Ayrıca bir domain istenebilir?

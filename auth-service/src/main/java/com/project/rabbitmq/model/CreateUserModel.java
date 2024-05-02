@@ -1,9 +1,6 @@
 package com.project.rabbitmq.model;
 
 import com.project.utility.enums.ERole;
-import com.project.utility.enums.EStatus;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -17,7 +17,8 @@ public enum ErrorType {
     POST_NOT_FOUND(4312,"Böyle bir araç bulunamadi" ,HttpStatus.BAD_REQUEST),
     VEHICLE_ALREADY_EXISTS(4313,"Bu araç daha önceden kayıt edilmiştir." ,HttpStatus.BAD_REQUEST),
     VEHICLE_NOT_AVAILABLE(2002, "Bu araç kiralama için uygun değildir.",HttpStatus.BAD_REQUEST),
-    VEHICLE_CANNOT_FOUND(2003, "Bu ID'de bir araç bulunamadı",HttpStatus.BAD_REQUEST);
+    VEHICLE_CANNOT_FOUND(2003, "Bu ID'de bir araç bulunamadı",HttpStatus.BAD_REQUEST),
+    INVALID_TOKEN(2004, "Geçersiz token bilgisi girildi. Lütfen tekrar deneyiniz", HttpStatus.BAD_REQUEST);
 
 
     private int code;
