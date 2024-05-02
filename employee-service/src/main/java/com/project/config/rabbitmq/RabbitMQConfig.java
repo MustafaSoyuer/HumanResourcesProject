@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
+
     private final String EXCHANGE_EMPLOYEE = "employee-exchange";
     private final String QUEUE_EMPLOYEE = "employee-queue";
+    private final String QUEUE_MANAGER = "manager-queue";
     private final String BINDING_KEY_EMPLOYEE = "employee-binding-key";
 
     @Bean
@@ -19,12 +21,19 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    Queue queueAuth(){
+    Queue queueEmployee(){
         return new Queue(QUEUE_EMPLOYEE);
     }
 
     @Bean
-    Binding bindingAuth(final DirectExchange directExchange, final Queue queueAuth){
-        return BindingBuilder.bind(queueAuth).to(directExchange).with(BINDING_KEY_EMPLOYEE);
+    Queue queueManager(){
+        return new Queue(QUEUE_MANAGER);
     }
+
+    @Bean
+    Binding bindingEmployee(final DirectExchange directExchange, final Queue queueEmployee){
+        return BindingBuilder.bind(queueEmployee).to(directExchange).with(BINDING_KEY_EMPLOYEE);
+    }
+
+
 }

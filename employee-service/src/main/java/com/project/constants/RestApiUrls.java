@@ -8,5 +8,7 @@ public class RestApiUrls {
 
     public static final String EMPLOYEE = ROOT + "/employee";
 
+    public static final String SAVE_EMPLOYEE = EMPLOYEE + "/save-employee";
+
 
 }
