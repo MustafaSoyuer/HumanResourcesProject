@@ -1,10 +1,10 @@
 ext{
     versions = [
-            springBoot            : '3.2.5',
-            lombok                : '1.18.32',
+            springBoot            : '3.2.2',
+            lombok                : '1.18.30',
             mapstruct             : '1.5.5.Final',
-            openApi               : '2.5.0',
-            postgresql            : '42.7.3',
+            openApi               : '2.3.0',
+            postgresql            : '42.7.1',
             jwt                   : '4.4.0',
             springCloud           : '4.1.0',
             springCircuit         : '3.1.0'
