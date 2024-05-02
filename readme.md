@@ -42,4 +42,7 @@ EG: private EKLENECEK ENTITYLERE!!
 
 Admin onaylaması
 Company servis manager save  rabbit ile haberleştirilecek.  
+
+## 
+Requir. service e config eklenecek
      
