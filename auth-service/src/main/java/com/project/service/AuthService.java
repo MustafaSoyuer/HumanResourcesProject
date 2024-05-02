@@ -73,6 +73,7 @@ public class AuthService {
         return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
     }
 
+    //todo: manager service save olarak eklencek.
     public RegisterEmployeeResponseDto registerEmployee(RegisterEmployeeRequestDto dto) {
         return null;
     }

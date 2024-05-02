@@ -36,10 +36,12 @@
 
 ## YAPILACAKLAR
 
-GENEL DTO'suna email ve anotasyonlar vs eklenecek (NE EKSİK OLURSA)
+-       GENEL DTO'suna email ve anotasyonlar vs eklenecek (NE EKSİK OLURSA)
+        Admin onaylaması
+        Company servis manager save  rabbit ile haberleştirilecek.  
+- 1- GatewayService oluştur, app.ymla auth-manager-employee servislerini ekle izinlerini.
+- 2- securityleri configleri servislere ekle.
+- 3- cors config kısmı eksik onu tamamla araştır. 
+- 4- Anasayfa hazır sayfa araştır seçeneklerden ele.
 
-EG: private EKLENECEK ENTITYLERE!! 
-
-Admin onaylaması
-Company servis manager save  rabbit ile haberleştirilecek.  
      
