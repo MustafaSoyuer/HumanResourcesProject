@@ -1,6 +1,5 @@
 package com.project.rabbitmq.model;
 
-import com.project.utility.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,19 +11,15 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+public class CreateEmployeeModel implements Serializable {
 
-public class CreateUserModel implements Serializable {
-
-    private Long authId;
+    private Long managerId;
     private String name;
     private String surname;
-    private String email;
-    private String password;
-    private String phone;
+    private String identityNumber;
+    private String phoneNumber;
     private String address;
-    private String company;
-    private String taxNo;
-    private ERole role;
-    private Long createAt;
-
+    private String position;
+    private String department;
+    private String occupation;
 }

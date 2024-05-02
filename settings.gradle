@@ -7,4 +7,6 @@ include 'requirements-service'
 include 'admin-service'
 include 'company-service'
 include 'mail-service'
+include 'gateway-service'
+include 'config-server'
 

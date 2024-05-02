@@ -1,7 +1,6 @@
 package com.project.rabbitmq.model;
 
 import com.project.utility.enums.ERole;
-import com.project.utility.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

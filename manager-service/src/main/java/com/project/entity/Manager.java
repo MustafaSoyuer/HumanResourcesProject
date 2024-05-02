@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.project.utility.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Manager {
     private String phone;
     private String identityNumber;
     private String email;
+    private String password;
     private String address;
     private Long occupation;
     private String companyId;
@@ -31,5 +33,8 @@ public class Manager {
     private String jobStartDate;
     private Long createAt;
     private Long updateAt;
+
+    @Builder.Default
+    private EStatus state=EStatus.PENDING; // TODO onaylanması admin tarafından yapılacak (sadece auth ta mı olacak ? aynı zaman durumu burada da görmeliyim)
 
 }

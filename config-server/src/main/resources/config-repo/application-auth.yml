@@ -1,5 +1,5 @@
 server:
-  port: 9094
+  port: 9091
 
 spring:
   security:
@@ -12,7 +12,7 @@ spring:
     username: admin
     password: root
   datasource:
-    url: jdbc:postgresql://localhost:5432/HRPEmployeeDB
+    url: jdbc:postgresql://localhost:5432/HRPAuthDB
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
