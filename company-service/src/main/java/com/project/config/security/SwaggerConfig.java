@@ -9,9 +9,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
+
     @Bean
     public OpenAPI customize(){
-        String securitySchemeName="bearearCompany";
+        String securitySchemeName="bearearAuth";
         return new OpenAPI()
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
                 .components(new Components()

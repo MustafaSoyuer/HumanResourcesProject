@@ -2,12 +2,14 @@ package com.project.service;
 
 import com.project.dto.request.AddEmployeeRequestDto;
 import com.project.dto.request.SaveManagerRequestDto;
+import com.project.dto.response.SaveManagerResponseDto;
 import com.project.entity.Manager;
 import com.project.exception.ErrorType;
 import com.project.exception.ManagerServiceException;
 import com.project.mapper.ManagerMapper;
+import com.project.rabbitmq.model.CreateCompanyModel;
 import com.project.rabbitmq.model.CreateEmployeeModel;
-import com.project.rabbitmq.model.CreateUserModel;
+import com.project.rabbitmq.producer.CreateCompanyProducer;
 import com.project.rabbitmq.producer.CreateEmployeeProducer;
 import com.project.repository.ManagerRepository;
 import com.project.utility.JwtTokenManager;
@@ -22,10 +24,17 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final JwtTokenManager jwtTokenManager;
     private final CreateEmployeeProducer createEmployeeProducer;
+    private final CreateCompanyProducer createCompanyProducer;
 
-    public Manager save(SaveManagerRequestDto dto) {
-
-        return managerRepository.save(ManagerMapper.INSTANCE.fromSaveManagerRequestDtoToManager(dto));
+    public SaveManagerResponseDto createManager(SaveManagerRequestDto dto) {
+        Manager manager= managerRepository.save(ManagerMapper.INSTANCE.fromSaveManagerRequestDtoToManager(dto));
+        createCompanyProducer.sendMessage(CreateCompanyModel.builder()
+                        .managerId(manager.getId())
+                        .name(dto.getCompany())
+                        .taxNumber(dto.getTaxNumber())
+                        .status(dto.getStatus())
+                .build());
+        return ManagerMapper.INSTANCE.fromManagerToSaveManagerResponseDto(manager);
     }
 
     public Boolean addEmployee(AddEmployeeRequestDto dto) {

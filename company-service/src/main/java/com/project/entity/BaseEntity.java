@@ -16,5 +16,5 @@ public class BaseEntity implements Serializable{
 
     private String createdAt;
     private String updateAt;
-    private boolean state;
+
 }

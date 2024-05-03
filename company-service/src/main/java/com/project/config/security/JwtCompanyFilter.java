@@ -1,5 +1,6 @@
 package com.project.config.security;
 
+
 import com.project.utility.JwtTokenManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,17 +29,17 @@ public class JwtCompanyFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
 
-        final String companyHeader=request.getHeader("Authorization");
+        final String authHeader=request.getHeader("Authorization");
 
-        log.info("gelen token...: "  + companyHeader);
+        log.info("gelen token...: "  + authHeader);
         log.info("Tüm istekler buraya düşecek ve burada auth kontrol yapılacak.");
-        if (Objects.nonNull(companyHeader) && companyHeader.startsWith("Bearer ")){
-            String token=companyHeader.substring(7);
+        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")){
+            String token=authHeader.substring(7);
             log.info("Token...: " + token);
 
-            Optional<Long> id=jwtTokenManager.validateToken(token);
-            if (id.isPresent()){
-                UserDetails userDetails= userDetail.getCompanyById(id.get());
+            Optional<String> role=jwtTokenManager.getRoleFromToken(token);
+            if (role.isPresent()){
+                UserDetails userDetails= userDetail.loadUserByUserRole(role.get());
                 UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(
                         userDetails,null,userDetails.getAuthorities()
                 );

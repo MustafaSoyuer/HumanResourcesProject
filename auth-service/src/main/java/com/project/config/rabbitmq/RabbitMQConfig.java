@@ -11,22 +11,27 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     private final String EXCHANGE_AUTH = "auth-exchange";
-    private final String QUEUE_AUTH = "auth-queue";
-    private final String BINDING_KEY_AUTH = "auth-binding-key";
-
     @Bean
     DirectExchange directExchange(){
         return new DirectExchange(EXCHANGE_AUTH);
     }
 
+
+
+    /**
+     * Auth -> Manager; createMAnager methoduna mesaj gönderir.
+     */
+    private final String QUEUE_AUTH_CREATE_MANAGER = "auth-create-manager-queue";
+    private final String BINDING_KEY_AUTH_CREATE_MANAGER = "auth-create-manager-binding-key";
+
     @Bean
-    Queue queueAuth(){
-        return new Queue(QUEUE_AUTH);
+    Queue queueAuthCreateManager(){
+        return new Queue(QUEUE_AUTH_CREATE_MANAGER);
     }
 
     @Bean
-    Binding bindingAuth(final DirectExchange directExchange, final Queue queueAuth){
-        return BindingBuilder.bind(queueAuth).to(directExchange).with(BINDING_KEY_AUTH);
+    Binding bindingAuth(final DirectExchange directExchange, final Queue queueAuthCreateManager){
+        return BindingBuilder.bind(queueAuthCreateManager).to(directExchange).with(BINDING_KEY_AUTH_CREATE_MANAGER);
     }
 
 

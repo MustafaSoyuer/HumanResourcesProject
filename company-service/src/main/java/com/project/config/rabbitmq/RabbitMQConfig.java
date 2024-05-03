@@ -9,23 +9,17 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    private final String EXCHANGE_COMPANY = "company-exchange";
-    private final String QUEUE_COMPANY = "company-queue";
-    private final String BINDING_KEY_COMPANY = "company-binding-key";
 
+    /**
+     * Manager -> Company; createCompany methodu ile iletişime geçen kuyruk.
+     */
+    private final String QUEUE_CREATE_COMPANY = "create-company-queue";
     @Bean
-    DirectExchange directExchange(){
-        return new DirectExchange(EXCHANGE_COMPANY);
+    Queue queueCreateCompany(){
+        return new Queue(QUEUE_CREATE_COMPANY);
     }
 
-    @Bean
-    Queue queueAuth(){
-        return new Queue(QUEUE_COMPANY);
-    }
 
-    @Bean
-    Binding bindingAuth(final DirectExchange directExchange, final Queue queueAuth){
-        return BindingBuilder.bind(queueAuth).to(directExchange).with(BINDING_KEY_COMPANY);
-    }
+
 
 }
