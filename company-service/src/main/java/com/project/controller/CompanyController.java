@@ -106,5 +106,10 @@ public class CompanyController {
      * kayıtlı personel sayısı gibi özet grafikler yer almalıdır.
      */
 
+    /**
+     * Site yöneticisinin şirket başvurularını görüntüleyebilmesi ve onaylama/reddetme
+     * işlemlerini gerçekleştirebilmesi için arayüz tasarımının ve işlevselliğinin sağlanması.
+     */
+
 
 }

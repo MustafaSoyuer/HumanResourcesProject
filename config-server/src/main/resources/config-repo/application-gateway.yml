@@ -5,17 +5,21 @@ server:
 spring:
   main:
     web-application-type: reactive
+  application:
+    name: gateway-service
   cloud:
     gateway:
       globalcors:
         add-to-simple-url-handler-mapping: true
         cors-configurations:
-          '[/**]':
+          '[/]':
             allowedOrigins: "*"
             allowedHeaders: "*"
             allowedMethods:
               - GET
               - POST
+              - PUT
+              - DELETE
       default-filters:
         # gelen URL -> http://localhost/auth/get-service-name
         # düzenlenecek ->  segment -> get-service-name
@@ -31,6 +35,7 @@ spring:
             - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
             - name: CircuitBreaker
               args:
+                enabled: true #!
                 name: auth
                 fallbackUri: forward:/fallback/auth
         - id: manager-service
@@ -41,5 +46,6 @@ spring:
             - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
             - name: CircuitBreaker
               args:
+                enabled: true
                 name: manager
                 fallbackUri: forward:/fallback/manager

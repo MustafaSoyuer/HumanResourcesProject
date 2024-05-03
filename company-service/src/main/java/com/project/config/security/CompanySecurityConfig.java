@@ -27,9 +27,6 @@ public class CompanySecurityConfig {
                                         "/v3/api-docs/**"
                                 ).permitAll()
                                 .requestMatchers("/dev/v1/company/**").permitAll()
-//                        .requestMatchers("/dev/v1/auth/register-admin").hasAuthority("ADMIN")
-//                        .requestMatchers("/dev/v1/auth/register-manager/**").hasAuthority("MANAGER")
-//                        .requestMatchers("/dev/v1/auth/register-employee/**").hasAuthority("MANAGER")
                                 .anyRequest()
                                 .authenticated()
         );

@@ -44,6 +44,7 @@ public class AuthService {
             }
         }else {
             throw new AuthServiceException(ErrorType.USER_IS_NOT_ACTIVE);
+
         }
     }
 
@@ -60,20 +61,19 @@ public class AuthService {
         auth.setCreateAt(System.currentTimeMillis());
         authRepository.save(auth);
         createUserProducer.sendMessage(CreateUserModel.builder()
-                        .authId(auth.getId())
-                        .address(dto.getAddress())
-                        .company(dto.getCompany())
-                        .email(dto.getEmail())
-                        .name(dto.getName())
-                        .phone(dto.getPhone())
-                        .surname(dto.getSurname())
-                        .taxNo(dto.getTaxNo())
-                        .password(auth.getPassword())
-                        .createAt(auth.getCreateAt())
+                .authId(auth.getId())
+                .address(dto.getAddress())
+                .company(dto.getCompany())
+                .email(dto.getEmail())
+                .name(dto.getName())
+                .phone(dto.getPhone())
+                .surname(dto.getSurname())
+                .taxNo(dto.getTaxNo())
+                .password(auth.getPassword())
+                .createAt(auth.getCreateAt())
                 .build());
         return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
     }
-
 
 
     public boolean isCompanyEmail(String email, String company) {
@@ -102,5 +102,5 @@ public class AuthService {
         auth.setState(EStatus.ACTIVE);
         authRepository.save(auth);
         return true;
-    }
+}
 }

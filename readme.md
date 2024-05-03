@@ -35,13 +35,22 @@
 
 
 ## YAPILACAKLAR
+- HOCAYA SORULACAKLAR
+
+- ConfigServer ve Gateway hata veriyor
+- 
 
 -       GENEL DTO'suna email ve anotasyonlar vs eklenecek (NE EKSİK OLURSA)
         Admin onaylaması
         Company servis manager save  rabbit ile haberleştirilecek.  
 - 1- GatewayService oluştur, app.ymla auth-manager-employee servislerini ekle izinlerini.
-- 2- securityleri configleri servislere ekle.
-- 3- cors config kısmı eksik onu tamamla araştır. 
-- 4- Anasayfa hazır sayfa araştır seçeneklerden ele.
+- 2- securityleri configleri servislere ekle. +
+- 3- cors config kısmı eksik onu tamamla araştır. +
+- 5- Gateway ve config server kalırıldı. tekrar bakılacak.
 
+- 6- Yeni görev dağılımı yapılacak.
+- 7- Front ile back arası bağlantıları oluşturulacak bakılacak. (fetch işlemleri 403 hatası veriyor)
+- 4- Anasayfa hazır sayfa araştır seçeneklerden ele.
+- 8- Servislerde metodların ayrıntılarına bakılacak
+- 9- rabbitlerin kuyrukların ismi değişcek metod ismi ile
      
