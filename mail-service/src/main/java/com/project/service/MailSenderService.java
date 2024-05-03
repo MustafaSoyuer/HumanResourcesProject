@@ -1,6 +1,8 @@
 package com.project.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -8,17 +10,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MailSenderService {
-
+    /**
+     * ttdt sjkq xora nmhr
+     */
     private final JavaMailSender javaMailSender;
 
-    public void sendMail(String email) {
+    @EventListener(ApplicationReadyEvent.class)
+    public void sendMail() {
         SimpleMailMessage mailMessage=new SimpleMailMessage();
-        mailMessage.setFrom("burcusekmen6@gmail.com");
-        mailMessage.setTo("burcusekmen6@gmail.com");
-        mailMessage.setSubject("Aktivasyon Kodu");
-
-//        mailMessage.setText( "Kullanýcý adýnýz: " + dto.getUsername() + "\n" +
-//                "Hesabýnýzý aktifleþtirmek için lütfen aþaðýdaki linke týklayýn:\n" +
+        mailMessage.setFrom("workforce.solutions.info@gmail.com");
+        mailMessage.setTo("workforce.solutions.info@gmail.com");
+        mailMessage.setSubject("Aktivasyon Kodunuz...");
+        mailMessage.setText("email ile doÄŸrulama");
+//        mailMessage.setText( "Kullanï¿½cï¿½ adï¿½nï¿½z: " + dto.getUsername() + "\n" +
+//                "Hesabï¿½nï¿½zï¿½ aktifleï¿½tirmek iï¿½in lï¿½tfen aï¿½aï¿½ï¿½daki linke tï¿½klayï¿½n:\n" +
 //                "http://34.155.167.124:9090/dev/v1/auth/activate-status/" + dto.getActivationCode());
 
         javaMailSender.send(mailMessage);

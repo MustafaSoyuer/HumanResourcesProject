@@ -3,8 +3,8 @@ server:
 
 spring:
   mail:
-    username: ${mail-service-username}
-    password: ${mail-service-password}
+    username: workforce.solutions.info@gmail.com #TODO ortam değişkeni
+    password: ttdtsjkqxoranmhr
     host: smtp.gmail.com
     port: 587
     properties:
