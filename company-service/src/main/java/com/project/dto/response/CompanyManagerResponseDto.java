@@ -1,5 +1,6 @@
 package com.project.dto.response;
 
+import com.project.utility.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +15,8 @@ public class CompanyManagerResponseDto {
 
     private String id;
     private Long managerId;
+    private String name;
+    private String taxNumber;
+    private EStatus status;
 
 }

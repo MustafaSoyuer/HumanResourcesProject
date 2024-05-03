@@ -3,11 +3,13 @@ package com.project.service;
 import com.project.dto.request.CompanyCreateRequestDto;
 import com.project.dto.request.CompanyUpdateRequestDto;
 import com.project.dto.response.CompanyGetAllResponseDto;
+import com.project.dto.response.CompanyManagerResponseDto;
 import com.project.entity.Company;
 import com.project.exception.CompanyServiceException;
 import com.project.exception.ErrorType;
 import com.project.mapper.CompanyMapper;
 import com.project.repository.CompanyRepository;
+import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,4 +48,10 @@ public class CompanyService {
     }
 
 
+    //statusu pending olan şirketleri listelemeye yarar
+    public List<CompanyManagerResponseDto> getAllPendingCompanies() {
+       return companyRepository.findAll().stream().
+                filter(company -> company.getStatus().equals(EStatus.PENDING))
+                .map(companyMapper::fromCompanyToCompanyManagerResponseDto).collect(Collectors.toList());
+    }
 }

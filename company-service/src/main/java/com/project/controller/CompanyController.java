@@ -61,7 +61,6 @@ public class CompanyController {
      * @return -> List<CompanyGetAllResponseDto>
      */
     @GetMapping(GET_ALL)
-   // TODO: @PreAuthorize("hasAuthority('ROLE_USER')") //buna sahip olanlar erişebilir demek ya da requestmatcherla olur
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<List<CompanyGetAllResponseDto>>> getAll() {
         return ResponseEntity.ok(BasicResponse.<List<CompanyGetAllResponseDto>>builder()
@@ -88,23 +87,21 @@ public class CompanyController {
     }
 
     /**
-     * TODO: gidişat hangi servisten service anlamadım
-     * Site yöneticisi, üyelik başvurusunda bulunmuş şirket yöneticilerini ve
-     * mail doğrulaması durumlarını görüntüleyebilmelidir.
+     * Site yöneticisinin başvuruda bulunmuş şirketleri görüntülemesini sağlar.
      * @return
      */
 
-    public ResponseEntity<BasicResponse<List<CompanyManagerResponseDto>>> getCompanyManagers() {
-        return null;
+    @GetMapping(GET_ALL_PENDING_COMPANIES)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<List<CompanyManagerResponseDto>>> getAllPendingCompanies() {
+        return ResponseEntity.ok(BasicResponse.<List<CompanyManagerResponseDto>>builder()
+                .status(200)
+                .message("Pending Companies received all successfully")
+                .data(companyService.getAllPendingCompanies())
+                .build());
 
     }
 
-
-    /**
-     * TODO: bu methodlar hangi serviste olacak? admin ve employee mi yoksa burası mı ?
-     * kayıtlı şirket yöneticisi sayısı,
-     * kayıtlı personel sayısı gibi özet grafikler yer almalıdır.
-     */
 
     /**
      * Site yöneticisinin şirket başvurularını görüntüleyebilmesi ve onaylama/reddetme
