@@ -53,4 +53,11 @@
 - 4- Anasayfa hazır sayfa araştır seçeneklerden ele.
 - 8- Servislerde metodların ayrıntılarına bakılacak
 - 9- rabbitlerin kuyrukların ismi değişcek metod ismi ile
+
+
+## EKSİKLİKLER
+
+- 1- logine tıklayınca admin panele yönelmedi.
+- 2- aktivasyon gerçekleşmeden login olmaya çalışınca hesap aktif değil uyarısı verdir.
+- 3- regsiter olunca role status null geliyor 
      

@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @Service
 public class JwtUserDetail implements UserDetailsService {
+
     @Autowired
     private CompanyRepository repository;
     @Override
@@ -23,24 +24,18 @@ public class JwtUserDetail implements UserDetailsService {
         return null;
     }
 
-
-    public UserDetails getCompanyById(Long companyId){
-        Optional<Company> companyUser=repository.findOptionalById(companyId);
-        if (companyUser.isEmpty()) return null;
-
-        List<GrantedAuthority> authorizedList=new ArrayList<>();
-        authorizedList.add(new SimpleGrantedAuthority("EMPLOYEE")); //employee
-        authorizedList.add(new SimpleGrantedAuthority("MANAGER")); //manager
-        authorizedList.add(new SimpleGrantedAuthority("ADMIN")); //site yöneticisi
-
-
-
+    public UserDetails loadUserByUserRole(String role) throws UsernameNotFoundException {
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        authorityList.add(new SimpleGrantedAuthority(role));
         return org.springframework.security.core.userdetails.User.builder()
-                .username(companyUser.get().getEmail())
+                .username(role)
                 .password("")
                 .accountLocked(false)
                 .accountExpired(false)
-                .authorities(authorizedList)
+                .authorities(authorityList)
                 .build();
     }
+
+
+
 }

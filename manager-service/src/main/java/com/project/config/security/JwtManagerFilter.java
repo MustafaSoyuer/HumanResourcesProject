@@ -1,5 +1,6 @@
 package com.project.config.security;
 
+
 import com.project.utility.JwtTokenManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,24 +22,24 @@ public class JwtManagerFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenManager jwtTokenManager;
     @Autowired
-    private JwtUserDetail userDetail;
+    private JwtUserDetail managerDetail;
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
 
-        final String managerHeader=request.getHeader("Authorization");
+        final String authHeader=request.getHeader("Authorization");
 
-        log.info("gelen token...: "  + managerHeader);
+        log.info("gelen token...: "  + authHeader);
         log.info("Tüm istekler buraya düşecek ve burada auth kontrol yapılacak.");
-        if (Objects.nonNull(managerHeader) && managerHeader.startsWith("Bearer ")){
-            String token=managerHeader.substring(7);
+        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")){
+            String token=authHeader.substring(7);
             log.info("Token...: " + token);
 
-            Optional<Long> id=jwtTokenManager.validateToken(token);
+            Optional<Long> id=jwtTokenManager.getIdFromToken(token);
             if (id.isPresent()){
-                UserDetails userDetails= userDetail.getManagerById(id.get());
+                UserDetails userDetails= managerDetail.getAuthById(id.get());
                 UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(
                         userDetails,null,userDetails.getAuthorities()
                 );

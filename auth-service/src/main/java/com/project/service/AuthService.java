@@ -9,8 +9,8 @@ import com.project.entity.Auth;
 import com.project.exception.AuthServiceException;
 import com.project.exception.ErrorType;
 import com.project.mapper.AuthMapper;
-import com.project.rabbitmq.model.CreateUserModel;
-import com.project.rabbitmq.producer.CreateUserProducer;
+import com.project.rabbitmq.model.CreateManagerModel;
+import com.project.rabbitmq.producer.CreateManagerProducer;
 import com.project.repository.AuthRepository;
 import com.project.utility.CodeGenerator;
 import com.project.utility.JwtTokenManager;
@@ -26,7 +26,7 @@ import java.util.Optional;
 public class AuthService {
     private final AuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
-    private final CreateUserProducer createUserProducer;
+    private final CreateManagerProducer createManagerProducer;
 
 
     public AuthLoginResponseDto login(AuthLoginRequestDto dto) {
@@ -35,7 +35,7 @@ public class AuthService {
         if (auth.isEmpty())
             throw new AuthServiceException(ErrorType.ERROR_INVALID_LOGIN_PARAMETER);
 
-        if (auth.get().getState().equals(EStatus.ACTIVE)) {
+        if (auth.get().getStatus().equals(EStatus.ACTIVE)) {
             Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
             if(token.isEmpty()){
                 throw new AuthServiceException(ErrorType.INVALID_TOKEN);
@@ -60,7 +60,7 @@ public class AuthService {
         auth.setPassword(dto.getName() + CodeGenerator.generateCode());
         auth.setCreateAt(System.currentTimeMillis());
         authRepository.save(auth);
-        createUserProducer.sendMessage(CreateUserModel.builder()
+        createManagerProducer.sendMessage(CreateManagerModel.builder()  //
                 .authId(auth.getId())
                 .address(dto.getAddress())
                 .company(dto.getCompany())
@@ -68,9 +68,10 @@ public class AuthService {
                 .name(dto.getName())
                 .phone(dto.getPhone())
                 .surname(dto.getSurname())
-                .taxNo(dto.getTaxNo())
-                .password(auth.getPassword())
-                .createAt(auth.getCreateAt())
+                .taxNumber(dto.getTaxNumber())
+                .password(auth.getPassword()) //todo: burası düzeltilmeli.
+                .createAt(System.currentTimeMillis())
+                .status(EStatus.PENDING)
                 .build());
         return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
     }
@@ -99,7 +100,7 @@ public class AuthService {
 
         Auth auth = Auth.builder().email(dto.getEmail()).password(dto.getPassword()).build();
         auth.setRole(ERole.ADMIN);
-        auth.setState(EStatus.ACTIVE);
+        auth.setStatus(EStatus.ACTIVE);
         authRepository.save(auth);
         return true;
 }

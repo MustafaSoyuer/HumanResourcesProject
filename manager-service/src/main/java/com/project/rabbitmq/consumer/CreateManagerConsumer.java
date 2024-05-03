@@ -1,33 +1,35 @@
 package com.project.rabbitmq.consumer;
 
 import com.project.dto.request.SaveManagerRequestDto;
-import com.project.rabbitmq.model.CreateUserModel;
+import com.project.rabbitmq.model.CreateManagerModel;
 import com.project.service.ManagerService;
+import com.project.utility.enums.ERole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CreateUserConsumer {
+public class CreateManagerConsumer {
 
     private final ManagerService managerService;
 
-    @RabbitListener(queues = "auth-queue")
-    public void createUserListener(CreateUserModel model){
+    @RabbitListener(queues = "auth-create-manager-queue")
+    public void createUserListener(CreateManagerModel model){
         System.out.println("Kuyruk gelen mesaj: " + model);
-        managerService.save(SaveManagerRequestDto.builder()
+        managerService.createManager(SaveManagerRequestDto.builder()
                         .authId(model.getAuthId())
                         .email(model.getEmail())
-                        .taxNo(model.getTaxNo())
+                        .taxNumber(model.getTaxNumber())
                         .phone(model.getPhone())
                         .address(model.getAddress())
                         .company(model.getCompany())
                         .name(model.getName())
                         .surname(model.getSurname())
-                        .password(model.getPassword())
-                        .role(model.getRole())
-                        .createAt(model.getCreateAt())
+                        .password(model.getPassword())  //todo burası doğru mu
+                        .role(ERole.MANAGER)
+                        .createAt(System.currentTimeMillis())
+                        .status(model.getStatus())
                         .build());
 
 

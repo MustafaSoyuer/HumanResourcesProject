@@ -1,7 +1,6 @@
 package com.project.rabbitmq.producer;
 
 import com.project.rabbitmq.model.CreateEmployeeModel;
-import com.project.rabbitmq.model.CreateUserModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
