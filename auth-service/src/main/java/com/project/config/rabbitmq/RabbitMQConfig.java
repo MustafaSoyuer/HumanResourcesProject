@@ -52,4 +52,38 @@ public class RabbitMQConfig {
     Queue queueRejectAuth(){
         return new Queue(QUEUE_REJECT_AUTH);
     }
+
+    /**
+     * Auth -> MailService; sendMailActivation methoduna mesaj gönderir.
+     */
+
+    private final String QUEUE_SEND_MAIL_ACTIVATION = "send-mail-activation-queue";
+    private final String BINDING_KEY_SEND_MAIL_ACTIVATION = "send-mail-activation-binding-key";
+
+    @Bean
+    Queue queueSendMailActivation(){
+        return new Queue(QUEUE_SEND_MAIL_ACTIVATION);
+    }
+
+    @Bean
+    Binding bindingSendMailActivation(final DirectExchange directExchange, final Queue queueSendMailActivation){
+        return BindingBuilder.bind(queueSendMailActivation).to(directExchange).with(BINDING_KEY_SEND_MAIL_ACTIVATION);
+    }
+
+    /**
+     * Auth -> MailService; sendMailReject methoduna mesaj gönderir.
+     */
+
+    private final String QUEUE_SEND_MAIL_REJECT = "send-mail-reject-queue";
+    private final String BINDING_KEY_SEND_MAIL_REJECT = "send-mail-reject-binding-key";
+
+    @Bean
+    Queue queueSendMailReject(){
+        return new Queue(QUEUE_SEND_MAIL_REJECT);
+    }
+
+    @Bean
+    Binding bindingSendMailReject(final DirectExchange directExchange, final Queue queueSendMailReject){
+        return BindingBuilder.bind(queueSendMailReject).to(directExchange).with(BINDING_KEY_SEND_MAIL_REJECT);
+    }
 }

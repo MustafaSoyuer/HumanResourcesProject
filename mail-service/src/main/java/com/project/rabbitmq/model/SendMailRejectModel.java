@@ -1,18 +1,24 @@
-package com.project.dto.request;
+package com.project.rabbitmq.model;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChangePasswordDto {
+public class SendMailRejectModel implements Serializable {
 
+    private Long id;
     private String email;
-    private String oldPassword;
-    private String newPassword;
-    private String confirmPassword;
+    private Long updateAt;
+
+
+
+
 }

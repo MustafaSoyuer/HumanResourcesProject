@@ -11,7 +11,11 @@ import com.project.exception.AuthServiceException;
 import com.project.exception.ErrorType;
 import com.project.mapper.AuthMapper;
 import com.project.rabbitmq.model.CreateManagerModel;
+import com.project.rabbitmq.model.SendMailActivationModel;
+import com.project.rabbitmq.model.SendMailRejectModel;
 import com.project.rabbitmq.producer.CreateManagerProducer;
+import com.project.rabbitmq.producer.SendMailActivationProducer;
+import com.project.rabbitmq.producer.SendMailRejectProducer;
 import com.project.repository.AuthRepository;
 import com.project.utility.CodeGenerator;
 import com.project.utility.JwtTokenManager;
@@ -28,7 +32,8 @@ public class AuthService {
     private final AuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
     private final CreateManagerProducer createManagerProducer;
-
+    private final SendMailActivationProducer sendMailActivationProducer;
+    private final SendMailRejectProducer sendMailRejectProducer;
 
     public AuthLoginResponseDto login(AuthLoginRequestDto dto) {
         Optional<Auth> auth = authRepository.findOptionalByEmailAndPassword(dto.getEmail(), dto.getPassword());
@@ -107,13 +112,19 @@ public class AuthService {
     }
 
     public Boolean approveAuth(Long authId) {
-        Optional<Auth> auth = authRepository.findOptionalById(authId);
-        if (auth.isEmpty())
+        Optional<Auth> optionalAuth = authRepository.findOptionalById(authId);
+        if (optionalAuth.isEmpty())
             throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
-        auth.get().setStatus(EStatus.ACTIVE);
-        auth.get().setUpdateAt(System.currentTimeMillis());
-        authRepository.save(auth.get());
-        //authtan mailsedere haber gidicek.
+        Auth auth=optionalAuth.get();
+        auth.setStatus(EStatus.ACTIVE);
+        auth.setUpdateAt(System.currentTimeMillis());
+        authRepository.save(auth);
+        sendMailActivationProducer.sendMessage(SendMailActivationModel.builder()
+                        .id(auth.getId())
+                        .email(auth.getEmail())
+                        .password(auth.getPassword())
+                        .updateAt(System.currentTimeMillis())
+                .build());
         return true;
     }
 
@@ -124,17 +135,18 @@ public class AuthService {
         auth.get().setStatus(EStatus.PASSIVE);
         auth.get().setUpdateAt(System.currentTimeMillis());
         authRepository.save(auth.get());
-        //authtan mailsedere haber gidicek.
+        sendMailRejectProducer.sendMessage(SendMailRejectModel.builder()
+                        .id(auth.get().getId())
+                        .email(auth.get().getEmail())
+                        .updateAt(System.currentTimeMillis())
+                .build());
         return true;
     }
 
 
     public Boolean changePassword(ChangePasswordDto dto) {
-        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
-        if (authId.isEmpty()){
-            throw new AuthServiceException(ErrorType.INVALID_TOKEN);
-        }
-        Optional<Auth> auth = authRepository.findOptionalById(authId.get());
+
+        Optional<Auth> auth = authRepository.findOptionalByEmailAndPassword(dto.getEmail(), dto.getOldPassword());
         if (auth.isEmpty()){
             throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
         }
