@@ -10,5 +10,10 @@ public class RestApiUrls {
 
     public static final String SAVE_EMPLOYEE = EMPLOYEE + "/save-employee";
 
+    public static final String UPDATE_EMPLOYEE = EMPLOYEE + "/update-employee";
+
+    public static final String MANAGER_UPDATE_EMPLOYEE = EMPLOYEE + "/manager-update-employee";
+
+
 
 }

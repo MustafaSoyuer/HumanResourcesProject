@@ -1,5 +1,7 @@
 package com.project.dto.request;
 
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,18 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaveEmployeeRequestDto {
-
-    private String token;
-    private Long managerId;
+public class UpdateAdminRequestDto {
+    @Id
+    private Long id;
     private String name;
     private String surname;
-    private String identityNumber;
-    private String phoneNumber;
     private String address;
-    private String position;
-    private String department;
-    private String occupation;
-    private String email;
-
+    @Size(min = 11, max = 15)
+    private String phone;
+    private String avatar;
 }
