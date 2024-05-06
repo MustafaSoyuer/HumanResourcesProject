@@ -1,5 +1,7 @@
 package com.project.repository;
 
+import com.project.dto.request.SaveManagerRequestDto;
+import com.project.dto.response.SaveManagerResponseDto;
 import com.project.entity.Manager;
 import org.springframework.data.jpa.repository.JpaRepository;
 

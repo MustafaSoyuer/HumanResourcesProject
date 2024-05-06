@@ -1,6 +1,7 @@
 package com.project.dto.request;
 
 
+import com.project.utility.enums.EStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,9 @@ public class CompanyCreateRequestDto {
     private String foundingYear;
     private String linkedin;
     private String membershipPlan;
+    private EStatus status;
+    private Long createAt;
+    private Long updateAt;
 
 
 }

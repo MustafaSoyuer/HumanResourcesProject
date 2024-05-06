@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.dto.request.ActivateCompanyStatusRequestDto;
 import com.project.dto.request.CompanyCreateRequestDto;
 import com.project.dto.request.CompanyUpdateRequestDto;
 import com.project.dto.response.BasicResponse;
@@ -8,6 +9,7 @@ import com.project.dto.response.CompanyManagerResponseDto;
 import com.project.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,7 +63,6 @@ public class CompanyController {
      * @return -> List<CompanyGetAllResponseDto>
      */
     @GetMapping(GET_ALL)
-   // TODO: @PreAuthorize("hasAuthority('ROLE_USER')") //buna sahip olanlar erişebilir demek ya da requestmatcherla olur
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<List<CompanyGetAllResponseDto>>> getAll() {
         return ResponseEntity.ok(BasicResponse.<List<CompanyGetAllResponseDto>>builder()
@@ -88,23 +89,49 @@ public class CompanyController {
     }
 
     /**
-     * TODO: gidişat hangi servisten service anlamadım
-     * Site yöneticisi, üyelik başvurusunda bulunmuş şirket yöneticilerini ve
-     * mail doğrulaması durumlarını görüntüleyebilmelidir.
+     * Site yöneticisinin başvuruda bulunmuş şirketleri görüntülemesini sağlar.
      * @return
      */
 
-    public ResponseEntity<BasicResponse<List<CompanyManagerResponseDto>>> getCompanyManagers() {
-        return null;
+    @GetMapping(GET_ALL_PENDING_COMPANIES)
+    @CrossOrigin("*")
+   // @PreAuthorize("hasAuthority('MANAGER')")
+    public ResponseEntity<BasicResponse<List<CompanyManagerResponseDto>>> getAllPendingCompanies() {
+        return ResponseEntity.ok(BasicResponse.<List<CompanyManagerResponseDto>>builder()
+                .status(200)
+                .message("Pending Companies received all successfully")
+                .data(companyService.getAllPendingCompanies())
+                .build());
+    }
 
+    /**
+     * Site yöneticisinin başvuruda bulunan şirketleri onaylamasını sağlayan methodtur.
+     * @param
+     * @return
+     */
+    @PostMapping(APPROVE_COMPANY + "/{id}")
+    @CrossOrigin("*")
+   // @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<BasicResponse<Boolean>> approveCompany(@PathVariable String id) {
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                        .status(200)
+                        .message("Company approved successfully")
+                        .data(companyService.approveCompany(id))
+                .build());
+    }
+
+    @PostMapping(REJECT_COMPANY + "/{id}")
+    @CrossOrigin("*")
+    // @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<BasicResponse<Boolean>> rejectCompany(@PathVariable String id) {
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .status(200)
+                .message("Company rejected.")
+                .data(companyService.rejectCompany(id))
+                .build());
     }
 
 
-    /**
-     * TODO: bu methodlar hangi serviste olacak? admin ve employee mi yoksa burası mı ?
-     * kayıtlı şirket yöneticisi sayısı,
-     * kayıtlı personel sayısı gibi özet grafikler yer almalıdır.
-     */
 
 
 }

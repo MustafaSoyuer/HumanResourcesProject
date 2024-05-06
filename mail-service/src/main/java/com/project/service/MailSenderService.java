@@ -1,6 +1,8 @@
 package com.project.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -8,19 +10,39 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MailSenderService {
-
+    /**
+     * ttdt sjkq xora nmhr
+     */
     private final JavaMailSender javaMailSender;
 
-    public void sendMail(String email) {
+    //@EventListener(ApplicationReadyEvent.class)
+    public void sendMailChangePassword(String email, String password) {
+        String activationLink = generateActivationLink(email,password);
         SimpleMailMessage mailMessage=new SimpleMailMessage();
-        mailMessage.setFrom("burcusekmen6@gmail.com");
-        mailMessage.setTo("burcusekmen6@gmail.com");
-        mailMessage.setSubject("Aktivasyon Kodu");
+        mailMessage.setFrom("workforce.solutions.info@gmail.com");
+        mailMessage.setTo(email);
+        mailMessage.setSubject("Workforce Solutions");
+        mailMessage.setText("Your Account is activated. \n \n " +
+                "Welcome to Workforce Solutions! \n \n " +
+                "Your password is : " + password + "\n \n " +
+                "Please change your password by clicking on the link below. \n \n " + "" + activationLink);
 
-//        mailMessage.setText( "Kullanıcı adınız: " + dto.getUsername() + "\n" +
-//                "Hesabınızı aktifleştirmek için lütfen aşağıdaki linke tıklayın:\n" +
-//                "http://34.155.167.124:9090/dev/v1/auth/activate-status/" + dto.getActivationCode());
+        javaMailSender.send(mailMessage);
+    }
 
+    public String generateActivationLink(String email,String password) {
+        return "http://localhost:9091/swagger-ui/index.html#/auth-controller/changePassword?email=" + email + "&password=" + password;
+        // todo:  "http://localhost:9091/dev/v1/auth/change-password?email=" + email + "&password=" + password -> kubernetes kÄ±smÄ± gelince burasÄ± gÃ¼ncellenecek.
+
+    }
+
+    public void sendMailReject(String email) {
+        SimpleMailMessage mailMessage=new SimpleMailMessage();
+        mailMessage.setFrom("workforce.solutions.info@gmail.com");
+        mailMessage.setTo(email);
+        mailMessage.setSubject("Workforce Solutions");
+        mailMessage.setText("Your Account could not be activated. \n \n " +
+                "Thank You For Choosing Us.!");
         javaMailSender.send(mailMessage);
     }
 

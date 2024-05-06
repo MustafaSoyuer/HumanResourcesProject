@@ -29,6 +29,7 @@ public class Auth  {
     private Long updateAt;
 
     @Builder.Default
-    private EStatus state=EStatus.PENDING; //TODO methodlara ekle
+    private EStatus status=EStatus.PENDING;
+
 
 }

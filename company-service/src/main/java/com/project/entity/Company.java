@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.project.utility.enums.EStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -41,5 +42,6 @@ public class Company extends BaseEntity {
     private String foundingYear;
     private String linkedin;
     private String membershipPlan;
+    private EStatus status;
 
 }

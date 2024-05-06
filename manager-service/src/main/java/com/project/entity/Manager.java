@@ -24,6 +24,7 @@ public class Manager {
     private String birthDate;
     private String phone;
     private String identityNumber;
+    private String taxNumber;
     private String email;
     private String password;
     private String address;
@@ -33,8 +34,6 @@ public class Manager {
     private String jobStartDate;
     private Long createAt;
     private Long updateAt;
-
-    @Builder.Default
-    private EStatus state=EStatus.PENDING; // TODO onaylanması admin tarafından yapılacak (sadece auth ta mı olacak ? aynı zaman durumu burada da görmeliyim)
+    private EStatus status; // TODO onaylanması admin tarafından yapılacak (sadece auth ta mı olacak ? aynı zaman durumu burada da görmeliyim)
 
 }

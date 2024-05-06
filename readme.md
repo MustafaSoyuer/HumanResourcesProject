@@ -33,6 +33,27 @@
      db.createUser({ user: "bilgeUser", pwd: "bilgeUser*", roles: ["readWrite","dbAdmin"]})
 ```
 
+## RabbitMq Kurulum ve Kullanım
+    RabbitMq iki port ile çalışır. 5672, 15672 bu portlardan;
+    1- 5672 olan port Rest isteklerini işlemek için kullanılır, bu nedenle Spring Boot bu porta bağlanır.
+    2- 15672 olan port arayüz webUI kısmıdır. yönetim ekranı burasıdır.
+
+
+```bash
+    docker run -d --name java13-rabbit -p 5672:5672 -p 15672:15672 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=root rabbitmq:3-management
+```
+
+    Spring boot ile kullanım için;
+    implemantatio 'org.springframework.boot:spring-boot-starter-amqp:3.2.2'
+
+    DİKKAT!!!
+    RabbitMq Desrializable işleminde getirilen yeni güvenlik config nedeniyle şu ENV nin eklenmesi gereklidir. 
+    "SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true" 
+    Bu envirenment ı eklemek için user microservisin main class üzerine sağ tıklayarak
+    run modify configuration diyerek environment variable eklememiz gerekmektedir.
+
+
+
 
 ## YAPILACAKLAR
 - HOCAYA SORULACAKLAR
@@ -53,4 +74,11 @@
 - 4- Anasayfa hazır sayfa araştır seçeneklerden ele.
 - 8- Servislerde metodların ayrıntılarına bakılacak
 - 9- rabbitlerin kuyrukların ismi değişcek metod ismi ile
+
+
+## EKSİKLİKLER
+
+- 1- logine tıklayınca admin panele yönelmedi.
+- 2- aktivasyon gerçekleşmeden login olmaya çalışınca hesap aktif değil uyarısı verdir.
+- 3- regsiter olunca role status null geliyor 
      

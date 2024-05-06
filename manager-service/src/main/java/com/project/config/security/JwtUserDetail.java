@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @Service
 public class JwtUserDetail implements UserDetailsService {
+
     @Autowired
     private ManagerRepository repository;
     @Override
@@ -24,23 +25,24 @@ public class JwtUserDetail implements UserDetailsService {
     }
 
 
-    public UserDetails getManagerById(Long managerId){
-        Optional<Manager> managerUser=repository.findOptionalById(managerId);
-        if (managerUser.isEmpty()) return null;
+    public UserDetails getAuthById(Long managerId){
+       Optional<Manager> manager=repository.findOptionalById(managerId);
+        if (manager.isEmpty()) return null;
 
         List<GrantedAuthority> authorizedList=new ArrayList<>();
-        authorizedList.add(new SimpleGrantedAuthority("EMPLOYEE")); //employee
         authorizedList.add(new SimpleGrantedAuthority("MANAGER")); //manager
         authorizedList.add(new SimpleGrantedAuthority("ADMIN")); //site yöneticisi
 
 
-
         return org.springframework.security.core.userdetails.User.builder()
-                .username(managerUser.get().getEmail())
+                .username(manager.get().getEmail())
                 .password("")
                 .accountLocked(false)
                 .accountExpired(false)
                 .authorities(authorizedList)
                 .build();
     }
+
+
+
 }

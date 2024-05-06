@@ -27,7 +27,7 @@ public class RegisterManagerRequestDto {
     @NotNull
     private String company;
     @NotNull
-    private String taxNo;
+    private String taxNumber;
 
 
 

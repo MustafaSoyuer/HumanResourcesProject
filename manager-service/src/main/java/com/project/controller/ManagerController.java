@@ -3,6 +3,7 @@ package com.project.controller;
 import com.project.dto.request.AddEmployeeRequestDto;
 import com.project.dto.request.SaveManagerRequestDto;
 import com.project.dto.response.BasicResponse;
+import com.project.dto.response.SaveManagerResponseDto;
 import com.project.entity.Manager;
 import com.project.service.ManagerService;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,12 @@ public class ManagerController {
 
     @PostMapping(SAVE_MANAGER)
     @CrossOrigin("*")
-    public ResponseEntity<Manager> save(@RequestBody SaveManagerRequestDto dto) {
-        return ResponseEntity.ok(managerService.save(dto));
+    public ResponseEntity<BasicResponse<SaveManagerResponseDto>> createManager(@RequestBody SaveManagerRequestDto dto) {
+        return ResponseEntity.ok(BasicResponse.<SaveManagerResponseDto>builder()
+                .status(200)
+                .message("Manager created")
+                .data(managerService.createManager(dto))
+                .build());
     }
 
     @PostMapping(ADD_EMPLOYEE)

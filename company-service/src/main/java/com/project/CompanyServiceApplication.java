@@ -10,7 +10,10 @@ public class CompanyServiceApplication {
         SpringApplication.run(CompanyServiceApplication.class, args);
 
         /**
-         * Mongoda db açılacak.
+         * Yapılacaklar;
+         * company aktifleşmesini manager ve autha da rabbitle gönder.
+         * yetkilendirme admin yapması lazım yine 403 hatası verdi? permtiall diyince hata gitti.
+         * pasifleştirme metofunu yAZ
          */
     }
 }
