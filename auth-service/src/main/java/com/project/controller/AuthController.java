@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.request.AuthLoginRequestDto;
+import com.project.dto.request.ChangePasswordDto;
 import com.project.dto.request.RegisterAdminRequestDto;
 import com.project.dto.request.RegisterManagerRequestDto;
 import com.project.dto.response.AuthLoginResponseDto;
@@ -50,6 +51,17 @@ public class AuthController {
                 .data(authService.registerManager(dto))
                 .build());
     }
+
+    @PutMapping(CHANGE_PASSWORD)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<Boolean>> changePassword(@RequestBody @Valid ChangePasswordDto dto) {
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .status(200)
+                .message("Password changed successfully")
+                .data(authService.changePassword(dto))
+                .build());
+    }
+
 
 
 }
