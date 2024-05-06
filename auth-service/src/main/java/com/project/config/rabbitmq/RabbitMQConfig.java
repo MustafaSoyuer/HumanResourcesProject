@@ -34,5 +34,22 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(queueAuthCreateManager).to(directExchange).with(BINDING_KEY_AUTH_CREATE_MANAGER);
     }
 
+    /**
+     * Manager -> Auth; approveAuth methodu ile iletişime geçen kuyruk.
+     */
+    private final String QUEUE_APPROVE_AUTH = "approve-auth-queue";
+    @Bean
+    Queue queueApproveAuth(){
+        return new Queue(QUEUE_APPROVE_AUTH);
+    }
 
+
+    /**
+     * Manager -> Auth; rejectAuth methodu ile iletişime geçen kuyruk.
+     */
+    private final String QUEUE_REJECT_AUTH = "reject-auth-queue";
+    @Bean
+    Queue queueRejectAuth(){
+        return new Queue(QUEUE_REJECT_AUTH);
+    }
 }

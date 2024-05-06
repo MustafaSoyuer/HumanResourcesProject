@@ -81,4 +81,21 @@ public class JwtTokenManager {
         }
     }
 
+    public Optional<Long> getManagerIdFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC512(SECRETKEY);
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            if (decodedJWT == null) {
+                throw new CompanyServiceException(ErrorType.INVALID_TOKEN);
+            }
+            Long id = decodedJWT.getClaim("managerId").asLong();
+            return Optional.of(id);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            throw new CompanyServiceException(ErrorType.INVALID_TOKEN);
+        }
+
+    }
+
 }

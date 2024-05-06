@@ -1,4 +1,4 @@
-package com.project.dto.response;
+package com.project.rabbitmq.model;
 
 import com.project.utility.enums.EStatus;
 import lombok.AllArgsConstructor;
@@ -6,17 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+public class ApproveAuthModel implements Serializable {
 
-public class CompanyManagerResponseDto {
-
-    private String id;
-    private Long managerId;
-    private String name;
-    private String taxNumber;
+    private Long id;
+    private Long authId;
+    private Long updateAt;
     private EStatus status;
 
 }

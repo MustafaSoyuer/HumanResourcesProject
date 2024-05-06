@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class BaseEntity implements Serializable{
 
-    private String createdAt;
-    private String updateAt;
+    private Long createAt;
+    private Long updateAt;
 
 }

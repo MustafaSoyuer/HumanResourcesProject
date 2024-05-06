@@ -12,6 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ApproveManagerRequestDto {
 
+    private String token;
     private Long authId;
+    private String name;
+    private String surname;
+    private String company;
+    private String taxNumber;
 
 }
