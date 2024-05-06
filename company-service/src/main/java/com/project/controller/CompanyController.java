@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.dto.request.ActivateCompanyStatusRequestDto;
 import com.project.dto.request.CompanyCreateRequestDto;
 import com.project.dto.request.CompanyUpdateRequestDto;
 import com.project.dto.response.BasicResponse;
@@ -8,6 +9,7 @@ import com.project.dto.response.CompanyManagerResponseDto;
 import com.project.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -93,20 +95,43 @@ public class CompanyController {
 
     @GetMapping(GET_ALL_PENDING_COMPANIES)
     @CrossOrigin("*")
+   // @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<BasicResponse<List<CompanyManagerResponseDto>>> getAllPendingCompanies() {
         return ResponseEntity.ok(BasicResponse.<List<CompanyManagerResponseDto>>builder()
                 .status(200)
                 .message("Pending Companies received all successfully")
                 .data(companyService.getAllPendingCompanies())
                 .build());
+    }
 
+    /**
+     * Site yöneticisinin başvuruda bulunan şirketleri onaylamasını sağlayan methodtur.
+     * @param
+     * @return
+     */
+    @PostMapping(APPROVE_COMPANY + "/{id}")
+    @CrossOrigin("*")
+   // @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<BasicResponse<Boolean>> approveCompany(@PathVariable String id) {
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                        .status(200)
+                        .message("Company approved successfully")
+                        .data(companyService.approveCompany(id))
+                .build());
+    }
+
+    @PostMapping(REJECT_COMPANY + "/{id}")
+    @CrossOrigin("*")
+    // @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<BasicResponse<Boolean>> rejectCompany(@PathVariable String id) {
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .status(200)
+                .message("Company rejected.")
+                .data(companyService.rejectCompany(id))
+                .build());
     }
 
 
-    /**
-     * Site yöneticisinin şirket başvurularını görüntüleyebilmesi ve onaylama/reddetme
-     * işlemlerini gerçekleştirebilmesi için arayüz tasarımının ve işlevselliğinin sağlanması.
-     */
 
 
 }

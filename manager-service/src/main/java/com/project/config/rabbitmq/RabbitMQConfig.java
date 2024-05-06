@@ -61,4 +61,58 @@ public class RabbitMQConfig {
     }
 
 
+    /**
+     * Company -> Manager; approveManager methodu ile iletişime geçen kuyruk.
+     */
+
+    private final String QUEUE_APPROVE_MANAGER = "approve-manager-queue";
+    @Bean
+    Queue queueApproveManager(){
+        return new Queue(QUEUE_APPROVE_MANAGER);
+    }
+
+    /**
+     * Manager -> Auth; approveAuth methodu ile iletişime geçen kuyruk.
+     */
+
+    private final String QUEUE_APPROVE_AUTH = "approve-auth-queue";
+    private final String BINDING_KEY_APPROVE_AUTH = "approve-auth-binding-key";
+    @Bean
+    Queue queueApproveAuth(){
+        return new Queue(QUEUE_APPROVE_AUTH);
+    }
+
+    @Bean
+    Binding bindingApproveAuth(final DirectExchange directExchange, final Queue queueApproveAuth){
+        return BindingBuilder.bind(queueApproveAuth).to(directExchange).with(BINDING_KEY_APPROVE_AUTH);
+    }
+
+    /**
+     * Company -> Manager; rejectManager methodu ile iletişime geçen kuyruk.
+     */
+
+    private final String QUEUE_REJECT_MANAGER = "reject-manager-queue";
+    @Bean
+    Queue queueRejectManager(){
+        return new Queue(QUEUE_REJECT_MANAGER);
+    }
+
+    /**
+     * Manager -> Auth; rejectAuth methodu ile iletişime geçen kuyruk.
+     */
+
+    private final String QUEUE_REJECT_AUTH = "reject-auth-queue";
+    private final String BINDING_KEY_REJECT_AUTH = "reject-auth-binding-key";
+    @Bean
+    Queue queueRejectAuth(){
+        return new Queue(QUEUE_REJECT_AUTH);
+    }
+
+    @Bean
+    Binding bindingRejectAuth(final DirectExchange directExchange, final Queue queueRejectAuth){
+        return BindingBuilder.bind(queueRejectAuth).to(directExchange).with(BINDING_KEY_REJECT_AUTH);
+    }
+
+
+
 }

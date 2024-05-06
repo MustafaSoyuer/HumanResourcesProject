@@ -21,4 +21,6 @@ public interface CompanyMapper {
     CompanyGetAllResponseDto fromCompanyToCompanyGetAllResponseDto(final Company company);
 
     CompanyManagerResponseDto fromCompanyToCompanyManagerResponseDto(final Company company);
+
+    CompanyUpdateRequestDto fromCompanyToCompanyUpdateRequestDto(final Company company);
 }

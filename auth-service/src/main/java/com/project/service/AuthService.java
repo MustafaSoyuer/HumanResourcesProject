@@ -103,5 +103,31 @@ public class AuthService {
         auth.setStatus(EStatus.ACTIVE);
         authRepository.save(auth);
         return true;
-}
+    }
+
+    public Boolean approveAuth(Long authId) {
+        Optional<Auth> auth = authRepository.findOptionalById(authId);
+        if (auth.isEmpty())
+            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
+        auth.get().setStatus(EStatus.ACTIVE);
+        auth.get().setUpdateAt(System.currentTimeMillis());
+        authRepository.save(auth.get());
+        //authtan mailsedere haber gidicek.
+        return true;
+    }
+
+    public Boolean rejectAuth(Long authId) {
+        Optional<Auth> auth = authRepository.findOptionalById(authId);
+        if (auth.isEmpty())
+            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
+        auth.get().setStatus(EStatus.PASSIVE);
+        auth.get().setUpdateAt(System.currentTimeMillis());
+        authRepository.save(auth.get());
+        //authtan mailsedere haber gidicek.
+        return true;
+    }
+
+
+
+
 }

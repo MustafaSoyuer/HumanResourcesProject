@@ -44,6 +44,8 @@ public class CompanyCreateRequestDto {
     private String linkedin;
     private String membershipPlan;
     private EStatus status;
+    private Long createAt;
+    private Long updateAt;
 
 
 }

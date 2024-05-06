@@ -13,6 +13,6 @@ public class RestApiUrls {
     public static final String GET_ALL= "/get-all";
     public static final String GET_ALL_COMPANY_COUNT= "/get-all-company-count";
     public static final String GET_ALL_PENDING_COMPANIES= "/get-all-pending-companies";
-
-
+    public static final String APPROVE_COMPANY= "/approve-company";
+    public static final String REJECT_COMPANY= "/reject-company";
 }

@@ -20,6 +20,7 @@ public class CreateCompanyConsumer {
                         .name(model.getName())
                         .taxNumber(model.getTaxNumber())
                         .status(model.getStatus())
+                        .createAt(System.currentTimeMillis())
                 .build());
     }
 }

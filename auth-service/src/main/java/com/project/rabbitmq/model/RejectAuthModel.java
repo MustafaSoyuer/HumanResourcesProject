@@ -1,6 +1,5 @@
 package com.project.rabbitmq.model;
 
-import com.project.utility.enums.ERole;
 import com.project.utility.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,13 +12,11 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+public class RejectAuthModel implements Serializable {
 
-public class CreateUserModel implements Serializable {
-
+    private Long id;
     private Long authId;
-    private String email;
-    private String password;
-    private ERole role;
-    private EStatus state;
+    private Long updateAt;
+    private EStatus status;
 
 }

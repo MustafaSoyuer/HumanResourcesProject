@@ -30,5 +30,6 @@ public class Auth  {
 
     @Builder.Default
     private EStatus status=EStatus.PENDING; //TODO methodlara ekle
+    private String activationCode;
 
 }

@@ -18,9 +18,9 @@ public class AdminController {
 
     @PostMapping(APPROVE_MANAGER)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> approveManager(@RequestBody ApproveManagerRequestDto dto){
-
-        return ResponseEntity.ok(BasicResponse.<Boolean>builder().data(adminService.approveManager(dto.getAuthId())).build());
+    public ResponseEntity<BasicResponse<Boolean>> activateCompanyStatus(@RequestBody ApproveManagerRequestDto dto){
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .data(adminService.activateCompanyStatus(dto)).build());
 
     }
 
