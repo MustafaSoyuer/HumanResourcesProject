@@ -1,6 +1,7 @@
 package com.project.service;
 
 import com.project.dto.request.AuthLoginRequestDto;
+import com.project.dto.request.ChangePasswordDto;
 import com.project.dto.request.RegisterAdminRequestDto;
 import com.project.dto.request.RegisterManagerRequestDto;
 import com.project.dto.response.AuthLoginResponseDto;
@@ -128,6 +129,23 @@ public class AuthService {
     }
 
 
-
-
+    public Boolean changePassword(ChangePasswordDto dto) {
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+        }
+        Optional<Auth> auth = authRepository.findOptionalById(authId.get());
+        if (auth.isEmpty()){
+            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
+        }
+        if (!auth.get().getPassword().equalsIgnoreCase(dto.getOldPassword())) {
+            throw new AuthServiceException(ErrorType.PASSWORD_NOT_MATCH);
+        }
+        if (!dto.getNewPassword().equalsIgnoreCase(dto.getConfirmPassword())) {
+            throw new AuthServiceException(ErrorType.PASSWORD_NOT_MATCH);
+        }
+        auth.get().setPassword(dto.getNewPassword());
+        authRepository.save(auth.get());
+        return true;
+    }
 }
