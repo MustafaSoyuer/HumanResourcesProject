@@ -8,11 +8,11 @@ public class RestApiUrls {
 
     public static final String EMPLOYEE = ROOT + "/employee";
 
-    public static final String SAVE_EMPLOYEE = EMPLOYEE + "/save-employee";
+    public static final String ADD_EMPLOYEE =  "/add-employee";
 
-    public static final String UPDATE_EMPLOYEE = EMPLOYEE + "/update-employee";
+    public static final String UPDATE_EMPLOYEE =  "/update-employee";
 
-    public static final String MANAGER_UPDATE_EMPLOYEE = EMPLOYEE + "/manager-update-employee";
+    public static final String MANAGER_OR_ADMIN_UPDATE_EMPLOYEE = "/manager-or-admin-update-employee";
 
 
 

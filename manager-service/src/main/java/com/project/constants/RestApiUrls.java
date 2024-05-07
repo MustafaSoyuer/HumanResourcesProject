@@ -7,6 +7,8 @@ public class RestApiUrls {
     public static final String MANAGER = ROOT + "/manager";
     public static final String SAVE_MANAGER = "/save-manager";
     public static final String ADD_EMPLOYEE = "/add-employee";
+    public static final String UPDATE_MANAGER = "/update-manager";
+    public static final String ADMIN_UPDATE_MANAGER = "/admin-update-manager";
 
 
 

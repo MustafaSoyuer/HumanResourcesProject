@@ -1,24 +1,24 @@
-package com.project.dto.request;
+package com.project.rabbitmq.model;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ManagerUpdateEmployeeRequestDto {
-    @Id
-    private Long employeeId;
+public class ManagerOrAdminUpdateEmployeeModel implements Serializable {
+
+    private Long id;
     private String token;
-    private Long managerId;
     private String name;
     private String surname;
     private String birthDate;
-    private String identityNumber;
+    private Long managerId;
     private String phoneNumber;
     private String address;
     private String jobStartDate;
@@ -29,8 +29,4 @@ public class ManagerUpdateEmployeeRequestDto {
     private String occupation;
     private String avatar;
     private String shiftId;
-
-
-
-
 }

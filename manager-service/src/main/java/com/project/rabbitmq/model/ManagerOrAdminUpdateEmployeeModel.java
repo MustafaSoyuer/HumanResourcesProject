@@ -11,15 +11,22 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateEmployeeModel implements Serializable {
+public class ManagerOrAdminUpdateEmployeeModel implements Serializable {
 
-    private Long managerId;
+    private Long id;
+    private String token;
     private String name;
     private String surname;
-    private String identityNumber;
+    private String birthDate;
+    private Long managerId;
     private String phoneNumber;
     private String address;
+    private String jobStartDate;
+    private String jobEndDate;
     private String position;
+    private String salary;
     private String department;
     private String occupation;
+    private String avatar;
+    private String shiftId;
 }

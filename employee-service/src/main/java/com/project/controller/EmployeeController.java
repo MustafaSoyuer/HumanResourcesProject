@@ -1,7 +1,7 @@
 package com.project.controller;
 
-import com.project.dto.request.ManagerUpdateEmployeeRequestDto;
-import com.project.dto.request.SaveEmployeeRequestDto;
+import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
+import com.project.dto.request.AddEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.BasicResponse;
 import com.project.service.EmployeeService;
@@ -22,14 +22,15 @@ public class EmployeeController {
      * @param dto
      * @return
      */
-    @PostMapping(SAVE_EMPLOYEE)
+    //TODO: identity number unique mi kontrol et
+    @PostMapping(ADD_EMPLOYEE)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> save(@RequestBody SaveEmployeeRequestDto dto) {
-        employeeService.save(dto);
+    public ResponseEntity<BasicResponse<Boolean>> addEmployee(@RequestBody AddEmployeeRequestDto dto) {
+
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Employee saved successfully")
-                .data(true)
+                .data(employeeService.addEmployee(dto))
                 .build()
         );
     }
@@ -42,11 +43,11 @@ public class EmployeeController {
     @PutMapping(UPDATE_EMPLOYEE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> updateEmployee(@RequestBody UpdateEmployeeRequestDto dto) {
-        employeeService.updateEmployee(dto);
+
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Employee updated successfully")
-                .data(true)
+                .data(employeeService.updateEmployee(dto))
                 .build()
         );
     }
@@ -55,14 +56,14 @@ public class EmployeeController {
      * @param dto
      * @return
      */
-    @PutMapping(MANAGER_UPDATE_EMPLOYEE)
+    @PutMapping(MANAGER_OR_ADMIN_UPDATE_EMPLOYEE)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> managerUpdateEmployee(@RequestBody ManagerUpdateEmployeeRequestDto dto) {
-        employeeService.managerUpdateEmployee(dto);
+    public ResponseEntity<BasicResponse<Boolean>> managerOrAdminUpdateEmployee(@RequestBody ManagerOrAdminUpdateEmployeeRequestDto dto) {
+
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
-                .message("Employee updated successfully")
-                .data(true)
+                .message("Manager updated to employee successfully")
+                .data(employeeService.managerOrAdminUpdateEmployee(dto))
                 .build()
         );
     }

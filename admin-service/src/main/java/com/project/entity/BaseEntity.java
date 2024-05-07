@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 
 public class BaseEntity {
 
-    private String createdAt;
-    private String updateAt;
+    private Long createdAt;
+    private Long updateAt;
     private boolean state;
 
 

@@ -1,7 +1,9 @@
 package com.project.service;
 
 import com.project.dto.request.AddEmployeeRequestDto;
+import com.project.dto.request.AdminUpdateManagerRequestDto;
 import com.project.dto.request.SaveManagerRequestDto;
+import com.project.dto.request.UpdateManagerRequestDto;
 import com.project.dto.response.SaveManagerResponseDto;
 import com.project.entity.Manager;
 import com.project.exception.ErrorType;
@@ -95,6 +97,26 @@ public class ManagerService {
                         .updateAt(System.currentTimeMillis())
                         .status(manager.getStatus())
                 .build());
+        return true;
+    }
+
+    public Boolean updateManager(UpdateManagerRequestDto dto) {
+        Optional<Manager> manager = managerRepository.findById(dto.getId());
+        if (manager.isEmpty()) {
+            throw new ManagerServiceException(ErrorType.MANAGER_NOT_FOUND);
+        }
+        manager.get().setUpdateAt(System.currentTimeMillis());
+        managerRepository.save(ManagerMapper.INSTANCE.fromUpdateManagerRequestDtoToManager(dto));
+        return true;
+    }
+
+    public Boolean adminUpdateManager(AdminUpdateManagerRequestDto dto) {
+        Optional<Manager> manager = managerRepository.findById(dto.getId());
+        if (manager.isEmpty()) {
+            throw new ManagerServiceException(ErrorType.MANAGER_NOT_FOUND);
+        }
+        manager.get().setUpdateAt(System.currentTimeMillis());
+        managerRepository.save(ManagerMapper.INSTANCE.fromAdminUpdateManagerRequestDtoToManager(dto));
         return true;
     }
 

@@ -86,4 +86,13 @@ public class RabbitMQConfig {
     Binding bindingSendMailReject(final DirectExchange directExchange, final Queue queueSendMailReject){
         return BindingBuilder.bind(queueSendMailReject).to(directExchange).with(BINDING_KEY_SEND_MAIL_REJECT);
     }
+
+    /**
+     * Employee -> Auth; addEmployee methodu ile iletisime gecen kuyruk
+     */
+    private final String QUEUE_ADD_EMPLOYEE = "add-employee-queue";
+    @Bean
+    Queue queueAddEmployee(){
+        return new Queue(QUEUE_ADD_EMPLOYEE);
+    }
 }

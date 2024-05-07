@@ -1,6 +1,5 @@
 package com.project.controller;
 
-import com.project.dto.request.ApproveManagerRequestDto;
 import com.project.dto.request.UpdateAdminRequestDto;
 import com.project.dto.response.BasicResponse;
 import com.project.service.AdminService;
@@ -17,14 +16,6 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    @PostMapping(APPROVE_MANAGER)
-    @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> activateCompanyStatus(@RequestBody ApproveManagerRequestDto dto){
-        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
-                .data(adminService.activateCompanyStatus(dto)).build());
-
-    }
-
     /**
      * Admin kendi bilgilerini güncellemesi icin method
      * @param dto
@@ -33,11 +24,12 @@ public class AdminController {
     @PutMapping(UPDATE_ADMIN)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> updateAdmin(@RequestBody UpdateAdminRequestDto dto) {
-        adminService.updateAdmin(dto);
+
+
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Admin updated successfully")
-                .data(true)
+                .data(adminService.updateAdmin(dto))
                 .build()
         );
     }
