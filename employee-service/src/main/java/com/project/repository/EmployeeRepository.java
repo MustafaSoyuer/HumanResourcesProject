@@ -9,4 +9,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Optional<Employee> findOptionalById(Long id);
 
     Optional<Employee> findOptionalByIdientityNumber(String identityNumber);
+
+
 }

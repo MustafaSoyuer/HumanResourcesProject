@@ -1,6 +1,8 @@
 package com.project.mapper;
 
-import com.project.dto.request.SaveEmployeeRequestDto;
+import com.project.dto.request.AddEmployeeRequestDto;
+import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
+import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.entity.Employee;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -11,8 +13,9 @@ public interface EmployeeMapper {
 
     EmployeeMapper INSTANCE = Mappers.getMapper(EmployeeMapper.class);
 
-    Employee fromSaveEmployeeRequestDtoToEmployee(final SaveEmployeeRequestDto dto);
+    Employee fromUpdateEmployeeRequestDtoToEmployee(final UpdateEmployeeRequestDto dto);
 
+    Employee fromManagerOrAdminUpdateEmployeeRequestDtoToEmployee(final ManagerOrAdminUpdateEmployeeRequestDto dto);
 
-
+    Employee fromAddEmployeeRequestDtoToEmployee(final AddEmployeeRequestDto dto);
 }

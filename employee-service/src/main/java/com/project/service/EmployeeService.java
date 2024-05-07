@@ -1,11 +1,14 @@
 package com.project.service;
 
-import com.project.dto.request.SaveEmployeeRequestDto;
+import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
+import com.project.dto.request.AddEmployeeRequestDto;
+import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
 import com.project.mapper.EmployeeMapper;
 import com.project.repository.EmployeeRepository;
+import com.project.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +18,36 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final JwtTokenManager jwtTokenManager;
 
-    public Employee save(SaveEmployeeRequestDto dto) {
-        Optional<Employee> employee = employeeRepository.findOptionalByIdientityNumber(dto.getIdentityNumber());
-        if (employee.isPresent()) {
-            throw new EmployeeServiceException(ErrorType.EMPLOYEE_IS_ALREADY_REGISTERED);
-        }
+    //TODO employee email otomatik olusturulacak orn: umit@bilgeadam.com, email olustulduktan sonra mail gidecek
 
-        return employeeRepository.save(EmployeeMapper.INSTANCE.fromSaveEmployeeRequestDtoToEmployee(dto));
+    public Boolean addEmployee(AddEmployeeRequestDto dto) {
+        employeeRepository.save(EmployeeMapper.INSTANCE.fromAddEmployeeRequestDtoToEmployee(dto));
+        return true;
     }
+
+    public Boolean updateEmployee(UpdateEmployeeRequestDto dto) {
+        Optional<Employee> employee = employeeRepository.findById(dto.getEmployeeId());
+        if (employee.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        employeeRepository.save(EmployeeMapper.INSTANCE.fromUpdateEmployeeRequestDtoToEmployee(dto));
+        return true;
+    }
+
+    public Boolean managerOrAdminUpdateEmployee(ManagerOrAdminUpdateEmployeeRequestDto dto) {
+        Optional<Employee> employee = employeeRepository.findById(dto.getId());
+        if (employee.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        employeeRepository.save(EmployeeMapper.INSTANCE.fromManagerOrAdminUpdateEmployeeRequestDtoToEmployee(dto));
+        return true;
+    }
+
+
+
+
 
 
 //TODO
@@ -34,4 +58,14 @@ public class EmployeeService {
      *         auth.setCompanyName(auth.getCompanyName().toLowerCase());
      *         save(auth);
      */
+
+
+
+
+
+
+
+
+
+
 }

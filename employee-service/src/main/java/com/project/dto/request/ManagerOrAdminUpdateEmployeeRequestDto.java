@@ -1,8 +1,7 @@
-package com.project.entity;
+package com.project.dto.request;
 
 import com.project.utility.EStatus;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,23 +11,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tbl_employee")
-public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ManagerOrAdminUpdateEmployeeRequestDto {
+
     private Long id;
+    private String token;
+    private Long managerId;
     private String name;
     private String surname;
-    private Long authId;
-    private Long managerId;
-    private String companyId;
-    @Column(unique = true)
-    private String identityNumber;
     private String birthDate;
-    @Email
-    //TODO: email kontrolu ekle wp dan
-    private String email;
     private String phoneNumber;
     private String address;
     private String jobStartDate;
@@ -37,13 +27,11 @@ public class Employee {
     private String salary;
     private String department;
     private String occupation;
-    private String gender;
     private String avatar;
     private String shiftId;
     private EStatus status;
 
-    private Long createAt;
-    private Long updateAt;
+
 
 
 }

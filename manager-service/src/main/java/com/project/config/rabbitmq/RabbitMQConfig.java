@@ -18,21 +18,6 @@ public class RabbitMQConfig {
     }
 
 
-    private final String QUEUE_MANAGER = "manager-queue";
-
-    private final String BINDING_KEY_MANAGER = "manager-binding-key";
-
-    @Bean
-    Queue queueManager(){
-        return new Queue(QUEUE_MANAGER);
-    }
-
-    @Bean
-    Binding bindingManager(final DirectExchange directExchange, final Queue queueManager){
-        return BindingBuilder.bind(queueManager).to(directExchange).with(BINDING_KEY_MANAGER);
-    }
-
-
     /**
      * Auth -> Manager; createManager methoduna mesaj gönderir.
      */
@@ -112,6 +97,30 @@ public class RabbitMQConfig {
     Binding bindingRejectAuth(final DirectExchange directExchange, final Queue queueRejectAuth){
         return BindingBuilder.bind(queueRejectAuth).to(directExchange).with(BINDING_KEY_REJECT_AUTH);
     }
+
+    /**
+     * Manager -> Employee ; managerOrAdminUpdateEmployee methodu ile iletisime gecen kuyruk
+     */
+    private final String QUEUE_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE = "manager-or-admin-update-employee-queue";
+    private final String BINDING_KEY_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE = "manager-or-admin-update-employee-binding-key";
+    @Bean
+    Queue queueManagerOrAdminUpdateEmployee(){
+        return new Queue(QUEUE_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE);
+    }
+    @Bean
+    Binding bindingManagerOrAdminUpdateEmployee(final DirectExchange directExchange, final Queue queueManagerOrAdminUpdateEmployee){
+        return BindingBuilder.bind(queueManagerOrAdminUpdateEmployee).to(directExchange).with(BINDING_KEY_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE);
+    }
+
+    /**
+     * Admin -> Manager; adminUpdateManager methodu ile iletisime gecen kuyruk
+     */
+    private final String QUEUE_ADMIN_UPDATE_MANAGER = "admin-update-manager-queue";
+    @Bean
+    Queue queueAdminUpdateManager(){
+        return new Queue(QUEUE_ADMIN_UPDATE_MANAGER);
+    }
+
 
 
 

@@ -15,24 +15,30 @@ public class RabbitMQConfig {
     private final String QUEUE_MANAGER = "manager-queue";
     private final String BINDING_KEY_EMPLOYEE = "employee-binding-key";
 
+    /**
+     * Manager -> Employee; ManagerOrAdminUpdateEmployee methodu ile iletisime gecen kuyruk
+     * Admin -> Employee; ManagerOrAdminUpdateEmployee methodu ile iletisime gecen kuyruk
+     */
+    private final String QUEUE_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE = "manager-or-admin-update-employee-queue";
     @Bean
-    DirectExchange directExchange(){
-        return new DirectExchange(EXCHANGE_EMPLOYEE);
+    Queue queueManagerOrAdminUpdateEmployee(){
+        return new Queue(QUEUE_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE);
+    }
+
+    /**
+     * Employee -> Auth; addEmployee methodu ile iletisime gecen kuyruk
+     */
+    private final String QUEUE_ADD_EMPLOYEE = "add-employee-queue";
+    private final String BINDING_KEY_ADD_EMPLOYEE = "add-employee-binding-key";
+
+    @Bean
+    Queue queueSendMailReject(){
+        return new Queue(QUEUE_ADD_EMPLOYEE);
     }
 
     @Bean
-    Queue queueEmployee(){
-        return new Queue(QUEUE_EMPLOYEE);
-    }
-
-    @Bean
-    Queue queueManager(){
-        return new Queue(QUEUE_MANAGER);
-    }
-
-    @Bean
-    Binding bindingEmployee(final DirectExchange directExchange, final Queue queueEmployee){
-        return BindingBuilder.bind(queueEmployee).to(directExchange).with(BINDING_KEY_EMPLOYEE);
+    Binding bindingAddEmployee(final DirectExchange directExchange, final Queue queueAddEmployee){
+        return BindingBuilder.bind(queueAddEmployee).to(directExchange).with(BINDING_KEY_ADD_EMPLOYEE);
     }
 
 

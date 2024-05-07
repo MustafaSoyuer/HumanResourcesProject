@@ -1,6 +1,7 @@
 package com.project.dto.request;
 
-
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApproveManagerRequestDto {
-
-    private String token;
-    private Long authId;
+public class UpdateAdminRequestDto {
+    @Id
+    private Long id;
     private String name;
     private String surname;
-    private String company;
-    private String taxNumber;
-
+    private String address;
+    @Size(min = 11, max = 15)
+    private String phone;
+    private String avatar;
 }

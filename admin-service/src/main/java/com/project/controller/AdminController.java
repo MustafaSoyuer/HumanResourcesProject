@@ -1,6 +1,6 @@
 package com.project.controller;
 
-import com.project.dto.request.ApproveManagerRequestDto;
+import com.project.dto.request.UpdateAdminRequestDto;
 import com.project.dto.response.BasicResponse;
 import com.project.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,22 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    @PostMapping(APPROVE_MANAGER)
+    /**
+     * Admin kendi bilgilerini güncellemesi icin method
+     * @param dto
+     * @return
+     */
+    @PutMapping(UPDATE_ADMIN)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> activateCompanyStatus(@RequestBody ApproveManagerRequestDto dto){
-        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
-                .data(adminService.activateCompanyStatus(dto)).build());
+    public ResponseEntity<BasicResponse<Boolean>> updateAdmin(@RequestBody UpdateAdminRequestDto dto) {
 
+
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .status(200)
+                .message("Admin updated successfully")
+                .data(adminService.updateAdmin(dto))
+                .build()
+        );
     }
 
 

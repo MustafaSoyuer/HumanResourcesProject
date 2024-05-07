@@ -165,4 +165,16 @@ public class AuthService {
         authRepository.save(auth.get());
         return true;
     }
+    public Boolean addEmployee(String email) {
+        Optional<Auth> auth = authRepository.findOptionalByEmail(email);
+        if (auth.isEmpty()){
+            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
+        }
+        auth.get().setStatus(EStatus.ACTIVE);
+        auth.get().setCreateAt(System.currentTimeMillis());
+        auth.get().setUpdateAt(System.currentTimeMillis());
+        auth.get().setRole(ERole.EMPLOYEE);;
+        authRepository.save(auth.get());
+        return true;
+    }
 }

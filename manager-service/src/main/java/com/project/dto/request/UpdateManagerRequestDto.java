@@ -1,5 +1,6 @@
 package com.project.dto.request;
 
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,17 +10,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaveEmployeeRequestDto {
-
-    private String token;
-    private Long managerId;
+public class UpdateManagerRequestDto {
+    @Id
+    private Long id;
     private String name;
     private String surname;
-    private String identityNumber;
-    private String phoneNumber;
+    private String avatar;
+    private String birthDate;
+    private String phone;
+    private String taxNumber;
     private String address;
-    private String position;
-    private String department;
-    private String occupation;
-
+    private String gender;
 }
