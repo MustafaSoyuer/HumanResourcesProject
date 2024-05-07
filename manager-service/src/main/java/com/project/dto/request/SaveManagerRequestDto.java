@@ -3,6 +3,7 @@ package com.project.dto.request;
 
 import com.project.utility.enums.ERole;
 import com.project.utility.enums.EStatus;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class SaveManagerRequestDto {
     @NotNull
     private String surname;
     @Email
+    @Column(unique = true)
     private String email;
     @NotNull
     private String password;
@@ -35,6 +37,7 @@ public class SaveManagerRequestDto {
     @NotNull
     private String company;
     @NotNull
+    @Column(unique = true)
     private String taxNumber;
     private ERole role;
     private Long createAt;

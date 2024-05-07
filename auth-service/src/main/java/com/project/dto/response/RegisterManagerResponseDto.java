@@ -21,5 +21,5 @@ public class RegisterManagerResponseDto {
     private String phone;
     private String address;
     private String company;
-    private String taxNo;
+    private String taxNumber;
 }

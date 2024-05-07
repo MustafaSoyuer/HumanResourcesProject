@@ -59,6 +59,7 @@
 - HOCAYA SORULACAKLAR
 
 - ConfigServer ve Gateway hata veriyor
+- mail doğrulaması nasıl oluacak?
 - 
 
 -       GENEL DTO'suna email ve anotasyonlar vs eklenecek (NE EKSİK OLURSA)
@@ -78,7 +79,15 @@
 
 ## EKSİKLİKLER
 
-- 1- logine tıklayınca admin panele yönelmedi.
-- 2- aktivasyon gerçekleşmeden login olmaya çalışınca hesap aktif değil uyarısı verdir.
-- 3- regsiter olunca role status null geliyor 
+- 1- aktivasyon gerçekleşmeden login olmaya çalışınca hesap aktif değil uyarısı verdir.
+- 2- front kısmında telefon için sabit ülke kodu eklenebilinir mi? ya da @Size giricez
+- 3-employee mail oluştururken mail ismi ile olmalı.. @şirket isim.com
+- 4-register ve login kısmı için hataların çıktıları verilecek.
+- 5-register da taxnumberın uniqe olması lazım 
+- 6-parolasını unuttuysa mail ile şifremi unuttum yazılacak.
+- 7-üye ana sayfasında resmi tatilleri görebilmeli.
+- 8-ayarlar sayfası oluşturulacak. 
+- 9-ayarlar hesabı pasifleştir/ employee update / bütün bilgilerini görüntüleyecek
+- 
+
      

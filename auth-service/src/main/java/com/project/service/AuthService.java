@@ -60,10 +60,15 @@ public class AuthService {
      * @return
      */
     public RegisterManagerResponseDto registerManager(RegisterManagerRequestDto dto) {
+        Optional<Auth> authEmail = authRepository.findOptionalByEmail(dto.getEmail());
+        if(authEmail.isPresent()) {
+            throw new AuthServiceException(ErrorType.EMAIL_ALREADY_EXISTS);
+        }
+
 
         Auth auth = AuthMapper.INSTANCE.fromRegisterManagerRequestToAuth(dto);
         auth.setRole(ERole.MANAGER);
-        auth.setPassword(dto.getName() + CodeGenerator.generateCode());
+        auth.setPassword(dto.getName() + CodeGenerator.generateCode()+".");
         auth.setCreateAt(System.currentTimeMillis());
         authRepository.save(auth);
         createManagerProducer.sendMessage(CreateManagerModel.builder()  //
