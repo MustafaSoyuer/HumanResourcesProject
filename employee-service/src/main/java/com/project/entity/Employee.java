@@ -34,7 +34,6 @@ public class Employee {
     private String gender;
     private String avatar;
     private String shiftId;
-
     private Long createAt;
     private Long updateAt;
     private boolean state;

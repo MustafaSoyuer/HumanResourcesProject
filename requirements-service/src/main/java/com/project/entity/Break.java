@@ -18,10 +18,10 @@ import lombok.experimental.SuperBuilder;
 public class Break extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    EBreakType breakType;
-    String companyId;
-    Long managerId;
-    Long startTime;
-    Long endTime;
+    private Long id;
+    private EBreakType breakType;
+    private String companyId;
+    private Long managerId;
+    private Long startTime;
+    private Long endTime;
 }
