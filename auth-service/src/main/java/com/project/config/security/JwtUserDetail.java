@@ -2,7 +2,6 @@ package com.project.config.security;
 
 import com.project.entity.Auth;
 import com.project.repository.AuthRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
