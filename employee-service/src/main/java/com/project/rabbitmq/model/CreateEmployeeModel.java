@@ -1,27 +1,28 @@
-package com.project.dto.request;
+package com.project.rabbitmq.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import com.project.utility.EStatus;
+import lombok.*;
+
+import java.io.Serializable;
+
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddEmployeeRequestDto {
+public class CreateEmployeeModel implements Serializable {
 
-    private String token;
-    private Long managerId;
+    private Long authId;
     private String name;
     private String surname;
     private String identityNumber;
     private String phoneNumber;
+    private String email;
     private String address;
     private String position;
     private String department;
     private String occupation;
     private String companyName;
-
-
+    private EStatus status;
 }

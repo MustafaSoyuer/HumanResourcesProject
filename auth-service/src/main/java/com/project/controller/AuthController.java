@@ -1,9 +1,6 @@
 package com.project.controller;
 
-import com.project.dto.request.AuthLoginRequestDto;
-import com.project.dto.request.ChangePasswordDto;
-import com.project.dto.request.RegisterAdminRequestDto;
-import com.project.dto.request.RegisterManagerRequestDto;
+import com.project.dto.request.*;
 import com.project.dto.response.AuthLoginResponseDto;
 import com.project.dto.response.BasicResponse;
 import com.project.dto.response.RegisterManagerResponseDto;
@@ -49,6 +46,16 @@ public class AuthController {
                 .status(200)
                 .message("Manager Register successful")
                 .data(authService.registerManager(dto))
+                .build());
+    }
+
+    @PostMapping(REGISTER_EMPLOYEE)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<Boolean>> registerEmployee(@RequestBody @Valid RegisterEmployeeRequestDto dto) {
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .status(200)
+                .message("Employee Register successful")
+                .data(authService.registerEmployee(dto))
                 .build());
     }
 

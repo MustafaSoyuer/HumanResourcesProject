@@ -28,20 +28,15 @@ public class RabbitMQConfig {
     }
 
     /**
-     * Employee -> Auth; addEmployee methodu ile iletisime gecen kuyruk
+     * Auth -> Employee; saveEmployee methodu ile iletisime gecen kuyruk
      */
-    private final String QUEUE_ADD_EMPLOYEE = "add-employee-queue";
-    private final String BINDING_KEY_ADD_EMPLOYEE = "add-employee-binding-key";
+    private final String QUEUE_AUTH_CREATE_EMPLOYEE = "auth-create-employee-queue";
 
     @Bean
-    Queue queueAddEmployee(){
-        return new Queue(QUEUE_ADD_EMPLOYEE);
+    Queue queueSaveEmployee(){
+        return new Queue(QUEUE_AUTH_CREATE_EMPLOYEE);
     }
 
-    @Bean
-    Binding bindingAddEmployee(final DirectExchange directExchange, final Queue queueAddEmployee){
-        return BindingBuilder.bind(queueAddEmployee).to(directExchange).with(BINDING_KEY_ADD_EMPLOYEE);
-    }
 
 
 }

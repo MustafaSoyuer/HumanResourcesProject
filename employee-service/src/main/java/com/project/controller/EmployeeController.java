@@ -1,7 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
-import com.project.dto.request.AddEmployeeRequestDto;
+import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.BasicResponse;
 import com.project.service.EmployeeService;
@@ -16,23 +16,6 @@ import static com.project.constants.RestApiUrls.*;
 @RequestMapping(EMPLOYEE)
 public class EmployeeController {
     private final EmployeeService employeeService;
-
-    /**
-     * Employee kayıt etme methodu
-     * @param dto
-     * @return
-     */
-    @PostMapping(ADD_EMPLOYEE)
-    @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> addEmployee(@RequestBody AddEmployeeRequestDto dto) {
-
-        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
-                .status(200)
-                .message("Employee saved successfully")
-                .data(employeeService.addEmployee(dto))
-                .build()
-        );
-    }
 
     /**
      * Employeenin kendi bilgilerini güncellemesi icin method

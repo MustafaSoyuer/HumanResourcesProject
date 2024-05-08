@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterManagerRequestDto {
 
-
     @Column(length = 50, nullable = false)
     private String name;
     @NotNull
@@ -33,7 +32,5 @@ public class RegisterManagerRequestDto {
     @NotNull
     @Column(unique = true)
     private String taxNumber;
-
-
 
 }

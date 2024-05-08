@@ -7,9 +7,11 @@ import com.project.entity.Auth;
 import com.project.exception.AuthServiceException;
 import com.project.exception.ErrorType;
 import com.project.mapper.AuthMapper;
+import com.project.rabbitmq.model.CreateEmployeeModel;
 import com.project.rabbitmq.model.CreateManagerModel;
 import com.project.rabbitmq.model.SendMailActivationModel;
 import com.project.rabbitmq.model.SendMailRejectModel;
+import com.project.rabbitmq.producer.CreateEmployeeProducer;
 import com.project.rabbitmq.producer.CreateManagerProducer;
 import com.project.rabbitmq.producer.SendMailActivationProducer;
 import com.project.rabbitmq.producer.SendMailRejectProducer;
@@ -32,6 +34,7 @@ public class AuthService {
     private final CreateManagerProducer createManagerProducer;
     private final SendMailActivationProducer sendMailActivationProducer;
     private final SendMailRejectProducer sendMailRejectProducer;
+    private final CreateEmployeeProducer createEmployeeProducer;
 
     public AuthLoginResponseDto login(AuthLoginRequestDto dto) {
         Optional<Auth> auth = authRepository.findOptionalByEmailAndPassword(dto.getEmail(), dto.getPassword());
@@ -62,7 +65,7 @@ public class AuthService {
         if (OptionalAuth.isPresent())
             throw new AuthServiceException(ErrorType.USER_ALREADY_EXISTS);
 
-        Auth auth = AuthMapper.INSTANCE.fromRegisterManagerRequestToAuth(dto);
+        Auth auth = AuthMapper.INSTANCE.fromRegisterManagerRequestDtoToAuth(dto);
         auth.setRole(ERole.MANAGER);
         auth.setPassword(dto.getName() + CodeGenerator.generateCode() + ".");
         auth.setCreateAt(System.currentTimeMillis());
@@ -82,6 +85,44 @@ public class AuthService {
         return true;
     }
 
+    public Boolean registerEmployee(RegisterEmployeeRequestDto dto) {
+        Auth auth = AuthMapper.INSTANCE.fromRegisterEmployeeRequestDtoToAuth(dto);
+        String name = normalizeAndRemoveSpaces(dto.getName().toLowerCase());
+        String surname = normalizeAndRemoveSpaces(dto.getSurname().toLowerCase());
+        String password = name + surname+ CodeGenerator.generateCode() +".";
+        String employeeEmail = name + "." + surname + "@" + dto.getCompanyName() + ".com";
+
+        Optional<Auth> OptionalAuth = authRepository.findOptionalByEmail(employeeEmail);
+        if (OptionalAuth.isPresent())
+            throw new AuthServiceException(ErrorType.USER_ALREADY_EXISTS);
+
+        auth.setPassword(password);
+        auth.setEmail(employeeEmail);
+
+        auth.setStatus(EStatus.ACTIVE);
+        auth.setCreateAt(System.currentTimeMillis());
+        auth.setUpdateAt(System.currentTimeMillis());
+        auth.setRole(ERole.EMPLOYEE);
+        authRepository.save(auth);
+
+        createEmployeeProducer.sendMessage(CreateEmployeeModel.builder()
+                .authId(auth.getId())
+                .name(dto.getName())
+                .surname(dto.getSurname())
+                .identityNumber(dto.getIdentityNumber())
+                .phoneNumber(dto.getPhoneNumber())
+                .email(auth.getEmail())
+                .address(dto.getAddress())
+                .position(dto.getPosition())
+                .department(dto.getDepartment())
+                .occupation(dto.getOccupation())
+                .companyName(dto.getCompanyName())
+                .status(EStatus.ACTIVE)
+                .build());
+
+        return true;
+
+    }
 
     public boolean isCompanyEmail(String email, String company) {
         //TODO: kontrol edilecek. email doğrulaması yapmayı amaçladım. Şirket maili ile girmeli. Ayrıca bir domain istenebilir?
@@ -160,28 +201,7 @@ public class AuthService {
         authRepository.save(auth.get());
         return true;
     }
-    public void addEmployee(AddEmployeeRequestDto dto) {
-        Optional<Auth> OptionalAuth = authRepository.findOptionalByEmail(dto.getEmail());
-        if (OptionalAuth.isPresent()) {
-            throw new AuthServiceException(ErrorType.USER_ALREADY_EXISTS);
-        }
 
-        Auth auth = AuthMapper.INSTANCE.fromAddEmployeeRequestDtoToAuth(dto);
-
-        String name = normalizeAndRemoveSpaces(dto.getName().toLowerCase());
-        String surname = normalizeAndRemoveSpaces(dto.getSurname().toLowerCase());
-        String password = name + surname+".";
-        auth.setPassword(password);
-
-        auth.setStatus(EStatus.ACTIVE);
-        auth.setCreateAt(System.currentTimeMillis());
-        auth.setUpdateAt(System.currentTimeMillis());
-        auth.setRole(ERole.EMPLOYEE);
-        authRepository.save(auth);
-
-
-
-    }
 
     public String normalizeAndRemoveSpaces(String input) {
         String normalizedString = Normalizer.normalize(input,Normalizer.Form.NFD);
@@ -198,5 +218,6 @@ public class AuthService {
 
         return normalizedString;
     }
+
 
 }

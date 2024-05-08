@@ -1,7 +1,7 @@
 package com.project.mapper;
 
-import com.project.dto.request.AddEmployeeRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
+import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.entity.Employee;
 import org.mapstruct.Mapper;
@@ -17,5 +17,5 @@ public interface EmployeeMapper {
 
     Employee fromManagerOrAdminUpdateEmployeeRequestDtoToEmployee(final ManagerOrAdminUpdateEmployeeRequestDto dto);
 
-    Employee fromAddEmployeeRequestDtoToEmployee(final AddEmployeeRequestDto dto);
+    Employee fromSaveEmployeeRequestDtoToEmployee(final SaveEmployeeRequestDto dto);
 }
