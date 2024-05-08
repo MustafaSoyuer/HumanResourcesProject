@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddEmployeeRequestDto {
     private String email;
-    private String password;
+    private String name;
+    private String surname;
 
 }

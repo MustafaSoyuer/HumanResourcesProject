@@ -21,7 +21,6 @@ public class AddEmployeeRequestDto {
     private String position;
     private String department;
     private String occupation;
-    // TODO email ve şifre otomatik olıuşturulacak? maaş? gibi başka bir şey girmek gerekir mi?
 
 
 }

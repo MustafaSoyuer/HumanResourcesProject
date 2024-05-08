@@ -21,6 +21,8 @@ public class ManagerOrAdminUpdateEmployeeRequestDto {
     private String birthDate;
     private String phoneNumber;
     private String address;
+    private Boolean militaryService;
+    private String driverLicense;
     private String jobStartDate;
     private String jobEndDate;
     private String position;

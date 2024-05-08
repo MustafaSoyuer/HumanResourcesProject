@@ -27,8 +27,6 @@ public class SaveManagerRequestDto {
     @Email
     private String email;
     @NotNull
-    private String password;
-    @NotNull
     private String phone;
     @NotNull
     private String address;

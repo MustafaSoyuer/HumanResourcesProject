@@ -22,7 +22,6 @@ public class EmployeeController {
      * @param dto
      * @return
      */
-    //TODO: identity number unique mi kontrol et
     @PostMapping(ADD_EMPLOYEE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> addEmployee(@RequestBody AddEmployeeRequestDto dto) {

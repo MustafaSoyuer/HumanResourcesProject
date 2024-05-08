@@ -22,12 +22,11 @@ public class Employee {
     private String surname;
     private Long authId;
     private Long managerId;
-    private String companyId;
+    private String companyName;
     @Column(unique = true)
     private String identityNumber;
     private String birthDate;
     @Email
-    //TODO: email kontrolu ekle wp dan
     private String email;
     private String phoneNumber;
     private String address;
@@ -38,6 +37,8 @@ public class Employee {
     private String department;
     private String occupation;
     private String gender;
+    private Boolean militaryService;
+    private String driverLicense;
     private String avatar;
     private String shiftId;
     private EStatus status;
