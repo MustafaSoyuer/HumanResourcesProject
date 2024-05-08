@@ -36,10 +36,13 @@ public class LeaveService {
      */
 
     public Boolean addLeaveToEmployee(AddLeaveRequestDto dto) {
-        Optional<Long> authId=  jwtTokenManager.validateToken(dto.getToken());
+        Optional<Long> authId = jwtTokenManager.getIdFromToken(dto.getToken());
         if (authId.isEmpty()){
             throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
         }
+        /**
+         * auhtId'den managerId bulabilecek bir metot ()
+         */
          leaveRepository.save(
                 Leave.builder()
                         .managerId(dto.getManagerId())
@@ -75,7 +78,7 @@ public class LeaveService {
     }
 
     public List<BaseLeaveResponseDto> findAllLeavesOfAnEmployee(BaseRequestForEmployeeDto dto) {
-        Optional<Long> authId=  jwtTokenManager.validateToken(dto.getToken());
+        Optional<Long> authId=  jwtTokenManager.getIdFromToken(dto.getToken());
         if (authId.isEmpty()){
             throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
         }
@@ -95,7 +98,7 @@ public class LeaveService {
 
 
     public List<BaseLeaveResponseDto> findAllPendingLeavesOfEmployees(BaseRequestPendingLeavesDto dto) {
-        Optional<Long> authId=  jwtTokenManager.validateToken(dto.getToken());
+        Optional<Long> authId=  jwtTokenManager.getIdFromToken(dto.getToken());
         if (authId.isEmpty()){
             throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
         }
@@ -114,7 +117,7 @@ public class LeaveService {
     }
 
     public List<BaseLeaveResponseDto> findAllMyLeavesForEmployee(BaseRequestDto dto) {
-        Optional<Long> authId=  jwtTokenManager.validateToken(dto.getToken());
+        Optional<Long> authId=  jwtTokenManager.getIdFromToken(dto.getToken());
         if (authId.isEmpty()){
             throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
         }
@@ -132,7 +135,7 @@ public class LeaveService {
 
     //TODO: Bu metodu beraber inceleyebiliriz hem gün hesabı hem belli enum seçebilmesi için yazdım
     public Boolean requestLeaveFromEmployee(RequestLeaveDto dto) {
-        Optional<Long> authId=  jwtTokenManager.validateToken(dto.getToken());
+        Optional<Long> authId=  jwtTokenManager.getIdFromToken(dto.getToken());
         if (authId.isEmpty()){
             throw new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
         }

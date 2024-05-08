@@ -3,13 +3,13 @@ package com.project.utility.constants;
 public class RestApiUrls {
     //ROOTS
     private static final String VERSION = "/v1";
-    private static final String API = "/api";
-    private static final String TEST = "/test";
     private static final String DEV = "/dev";
 
     public static final String ROOT = DEV + VERSION;
-    public static final String MANAGER = DEV + VERSION + "/requirements/manager";
-    public static final String EMPLOYEE = DEV + VERSION + "/requirements/employee";
+    public static final String REQUIREMENTS = ROOT + "/requirements";
+
+    public static final String MANAGER = REQUIREMENTS + "/manager";
+    public static final String EMPLOYEE = REQUIREMENTS + "/employee";
 
     //MANAGER
     public static final String ADD_LEAVE = "/add-leave";

@@ -2,6 +2,10 @@ server:
   port: 9096
 
 spring:
+  security:
+    user:
+      name: elif
+      password: root
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPRequirementsDB
