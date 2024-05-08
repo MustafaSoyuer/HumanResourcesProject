@@ -12,13 +12,9 @@ public enum ErrorType {
     INTERNAL_ERROR(4000, "Sunucuda beklenmeye hata oluştu, lütfen terar deneyiniz",HttpStatus.INTERNAL_SERVER_ERROR),
     BAD_REQUEST_ERROR(4001, "Girilen parametreler hatalıdır. Lütfen düzelterek tekrar deneyiniz", HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(4002,"Girdiğiniz token hatalıdır. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.UNAUTHORIZED),
-    EMPLOYEE_IS_ALREADY_REGISTERED(4003,"Bu employee zaten kayıtlıdır.",HttpStatus.BAD_REQUEST),
+    EMPLOYEE_NOT_FOUND(4003,"Employee bulunamadı",HttpStatus.INTERNAL_SERVER_ERROR),
+    EMPLOYEE_ALREADY_EXISTS(4004,"Employee zaten kayıtlı",HttpStatus.INTERNAL_SERVER_ERROR),
     ;
-
-    INTERNAL_ERROR(1000, "Sunucuda beklenmeye hata oluştu, lütfen terar deneyiniz",HttpStatus.INTERNAL_SERVER_ERROR),
-    BAD_REQUEST_ERROR(1001, "Girilen parametreler hatalıdır. Lütfen düzelterek tekrar deneyiniz", HttpStatus.BAD_REQUEST),
-    INVALID_TOKEN(1006,"Girdiğiniz token hatalıdır. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.UNAUTHORIZED),
-    EMPLOYEE_NOT_FOUND(1007,"Employee bulunamadı",HttpStatus.INTERNAL_SERVER_ERROR);
 
     int code;
     String message;

@@ -11,9 +11,11 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     private final String EXCHANGE_EMPLOYEE = "employee-exchange";
-    private final String QUEUE_EMPLOYEE = "employee-queue";
-    private final String QUEUE_MANAGER = "manager-queue";
-    private final String BINDING_KEY_EMPLOYEE = "employee-binding-key";
+
+    @Bean
+    DirectExchange directExchange(){
+        return new DirectExchange(EXCHANGE_EMPLOYEE);
+    }
 
     /**
      * Manager -> Employee; ManagerOrAdminUpdateEmployee methodu ile iletisime gecen kuyruk
@@ -32,7 +34,7 @@ public class RabbitMQConfig {
     private final String BINDING_KEY_ADD_EMPLOYEE = "add-employee-binding-key";
 
     @Bean
-    Queue queueSendMailReject(){
+    Queue queueAddEmployee(){
         return new Queue(QUEUE_ADD_EMPLOYEE);
     }
 

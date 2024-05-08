@@ -20,7 +20,6 @@ public class CreateManagerModel implements Serializable {
     private String name;
     private String surname;
     private String email;
-    private String password;
     private String phone;
     private String address;
     private String company;

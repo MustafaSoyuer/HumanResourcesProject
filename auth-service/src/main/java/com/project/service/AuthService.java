@@ -1,9 +1,6 @@
 package com.project.service;
 
-import com.project.dto.request.AuthLoginRequestDto;
-import com.project.dto.request.ChangePasswordDto;
-import com.project.dto.request.RegisterAdminRequestDto;
-import com.project.dto.request.RegisterManagerRequestDto;
+import com.project.dto.request.*;
 import com.project.dto.response.AuthLoginResponseDto;
 import com.project.dto.response.RegisterManagerResponseDto;
 import com.project.entity.Auth;
@@ -24,6 +21,7 @@ import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.Normalizer;
 import java.util.Optional;
 
 @Service
@@ -59,16 +57,14 @@ public class AuthService {
      * @param dto
      * @return
      */
-    public RegisterManagerResponseDto registerManager(RegisterManagerRequestDto dto) {
-        Optional<Auth> authEmail = authRepository.findOptionalByEmail(dto.getEmail());
-        if(authEmail.isPresent()) {
-            throw new AuthServiceException(ErrorType.EMAIL_ALREADY_EXISTS);
-        }
-
+    public Boolean registerManager(RegisterManagerRequestDto dto) {
+        Optional<Auth> OptionalAuth = authRepository.findOptionalByEmail(dto.getEmail());
+        if (OptionalAuth.isPresent())
+            throw new AuthServiceException(ErrorType.USER_ALREADY_EXISTS);
 
         Auth auth = AuthMapper.INSTANCE.fromRegisterManagerRequestToAuth(dto);
         auth.setRole(ERole.MANAGER);
-        auth.setPassword(dto.getName() + CodeGenerator.generateCode()+".");
+        auth.setPassword(dto.getName() + CodeGenerator.generateCode() + ".");
         auth.setCreateAt(System.currentTimeMillis());
         authRepository.save(auth);
         createManagerProducer.sendMessage(CreateManagerModel.builder()  //
@@ -80,11 +76,10 @@ public class AuthService {
                 .phone(dto.getPhone())
                 .surname(dto.getSurname())
                 .taxNumber(dto.getTaxNumber())
-                .password(auth.getPassword()) //todo: burası düzeltilmeli.
                 .createAt(System.currentTimeMillis())
                 .status(EStatus.PENDING)
                 .build());
-        return AuthMapper.INSTANCE.fromAuthToRegisterManagerResponseDto(auth);
+        return true;
     }
 
 
@@ -165,16 +160,43 @@ public class AuthService {
         authRepository.save(auth.get());
         return true;
     }
-    public Boolean addEmployee(String email) {
-        Optional<Auth> auth = authRepository.findOptionalByEmail(email);
-        if (auth.isEmpty()){
-            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
+    public void addEmployee(AddEmployeeRequestDto dto) {
+        Optional<Auth> OptionalAuth = authRepository.findOptionalByEmail(dto.getEmail());
+        if (OptionalAuth.isPresent()) {
+            throw new AuthServiceException(ErrorType.USER_ALREADY_EXISTS);
         }
-        auth.get().setStatus(EStatus.ACTIVE);
-        auth.get().setCreateAt(System.currentTimeMillis());
-        auth.get().setUpdateAt(System.currentTimeMillis());
-        auth.get().setRole(ERole.EMPLOYEE);;
-        authRepository.save(auth.get());
-        return true;
+
+        Auth auth = AuthMapper.INSTANCE.fromAddEmployeeRequestDtoToAuth(dto);
+
+        String name = normalizeAndRemoveSpaces(dto.getName().toLowerCase());
+        String surname = normalizeAndRemoveSpaces(dto.getSurname().toLowerCase());
+        String password = name + surname+".";
+        auth.setPassword(password);
+
+        auth.setStatus(EStatus.ACTIVE);
+        auth.setCreateAt(System.currentTimeMillis());
+        auth.setUpdateAt(System.currentTimeMillis());
+        auth.setRole(ERole.EMPLOYEE);
+        authRepository.save(auth);
+
+
+
     }
+
+    public String normalizeAndRemoveSpaces(String input) {
+        String normalizedString = Normalizer.normalize(input,Normalizer.Form.NFD);
+        // Add the following lines to preserve the following characters
+        normalizedString = normalizedString.replace("ı","i");
+        normalizedString = normalizedString.replace("ö","o");
+        normalizedString = normalizedString.replace("ü","u");
+        normalizedString = normalizedString.replace("ç","c");
+        normalizedString = normalizedString.replace("ş","s");
+        normalizedString = normalizedString.replace("ğ","g");
+
+        normalizedString = normalizedString.replaceAll("[^\\p{ASCII}]","");
+        normalizedString = normalizedString.replaceAll("\\s+","");
+
+        return normalizedString;
+    }
+
 }

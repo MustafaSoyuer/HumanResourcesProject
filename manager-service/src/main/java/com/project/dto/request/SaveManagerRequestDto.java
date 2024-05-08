@@ -29,8 +29,6 @@ public class SaveManagerRequestDto {
     @Column(unique = true)
     private String email;
     @NotNull
-    private String password;
-    @NotNull
     private String phone;
     @NotNull
     private String address;

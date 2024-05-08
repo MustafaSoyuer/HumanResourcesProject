@@ -26,7 +26,6 @@ public class Manager {
     private String identityNumber;
     private String taxNumber;
     private String email;
-    private String password;
     private String address;
     private Long occupation;
     private String companyId;

@@ -1,5 +1,6 @@
 package com.project.rabbitmq.consumer;
 
+import com.project.dto.request.AddEmployeeRequestDto;
 import com.project.rabbitmq.model.AddEmployeeModel;
 import com.project.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,11 @@ public class AddEmployeeConsumer {
     @RabbitListener(queues = "add-employee-queue")
     public void createUserListener(AddEmployeeModel model){
         System.out.println("Kuyruk gelen mesaj: " + model);
-        authService.addEmployee(AddEmployeeRequestDto);
+        authService.addEmployee(AddEmployeeRequestDto.builder()
+                .email(model.getEmail())
+                .name(model.getName())
+                .surname(model.getSurname())
+                .build());
     }
 
 }

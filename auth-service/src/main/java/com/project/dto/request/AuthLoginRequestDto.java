@@ -17,6 +17,7 @@ public class AuthLoginRequestDto {
     @NotNull
     private String email;
 
+    //TODO: validation dependencies nerede?
     @Size(min=8, max=20)
     @NotNull
     private String password;

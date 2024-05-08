@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateEmployeeRequestDto {
-    @Id
-    private Long employeeId;
+
+    private Long id;
     private String token;
     private String name;
     private String surname;
