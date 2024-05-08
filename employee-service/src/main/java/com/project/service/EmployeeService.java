@@ -1,14 +1,12 @@
 package com.project.service;
 
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
-import com.project.dto.request.AddEmployeeRequestDto;
+import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
 import com.project.mapper.EmployeeMapper;
-import com.project.rabbitmq.model.AddEmployeeModel;
-import com.project.rabbitmq.producer.AddEmployeeProducer;
 import com.project.repository.EmployeeRepository;
 import com.project.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
@@ -22,35 +20,18 @@ import java.util.Optional;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final JwtTokenManager jwtTokenManager;
-    private final AddEmployeeProducer addEmployeeProducer;
 
-    public Boolean addEmployee(AddEmployeeRequestDto dto) {
-        Optional<Employee> optionalEmployee = employeeRepository.findOptionalByIdentityNumber(dto.getIdentityNumber());
-        if(optionalEmployee.isPresent()) {
+
+    public Boolean saveEmployee(SaveEmployeeRequestDto dto) {
+        Optional<Employee> employee = employeeRepository.findOptionalByIdentityNumber(dto.getIdentityNumber());
+        if (employee.isPresent()) {
             throw new EmployeeServiceException(ErrorType.EMPLOYEE_ALREADY_EXISTS);
         }
 
-        Employee employee = EmployeeMapper.INSTANCE.fromAddEmployeeRequestDtoToEmployee(dto);
-        String name = normalizeAndRemoveSpaces(dto.getName().toLowerCase());
-        String surname = normalizeAndRemoveSpaces(dto.getSurname().toLowerCase());
-        String companyName = normalizeAndRemoveSpaces(dto.getCompanyName().toLowerCase());
-
-        String employeeEmail = name + "." + surname + "@" + companyName + ".com";
-
-
-
-        employee.setEmail(employeeEmail);
-
-        employee.setCreateAt(System.currentTimeMillis());
-        employee.setUpdateAt(System.currentTimeMillis());
-        employeeRepository.save(employee);
-        addEmployeeProducer.sendMessage(AddEmployeeModel.builder()
-                        .email(employeeEmail)
-                        .name(dto.getName())
-                        .surname(dto.getSurname())
-                .build());
-
+        employeeRepository.save(EmployeeMapper.INSTANCE.fromSaveEmployeeRequestDtoToEmployee(dto));
         return true;
+
+
     }
 
     //TODO: Employee bilgilerini guncellerken girmediğim bilgiler null geliyor

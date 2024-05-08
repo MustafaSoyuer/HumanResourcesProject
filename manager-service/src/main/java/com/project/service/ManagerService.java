@@ -33,7 +33,9 @@ public class ManagerService {
     private final RejectAuthProducer rejectAuthProducer;
 
     public SaveManagerResponseDto createManager(SaveManagerRequestDto dto) {
-        Manager manager= managerRepository.save(ManagerMapper.INSTANCE.fromSaveManagerRequestDtoToManager(dto));
+        Manager manager= ManagerMapper.INSTANCE.fromSaveManagerRequestDtoToManager(dto);
+        manager.setUpdateAt(System.currentTimeMillis());
+        managerRepository.save(manager);
         createCompanyProducer.sendMessage(CreateCompanyModel.builder()
                         .managerId(manager.getId())
                         .name(dto.getCompany())
