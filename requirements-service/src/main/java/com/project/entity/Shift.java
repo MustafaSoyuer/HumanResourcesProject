@@ -18,11 +18,11 @@ import lombok.experimental.SuperBuilder;
 public class Shift extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    EShiftType shiftType;
-    String companyId;
-    Long managerId;
-    Long startTime;
-    Long endTime;
+    private Long id;
+    private EShiftType shiftType;
+    private String companyId;
+    private Long managerId;
+    private Long startTime;
+    private Long endTime;
 
 }

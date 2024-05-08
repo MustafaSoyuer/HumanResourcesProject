@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 public class JwtTokenManager {
-    private final String SECRETKEY ="secretkey";
+    private final String SECRETKEY ="Ha6Ua15ALxb$dn7nL'HEJuKeG5YN4m,s5&b!NYaG_]9VlbA#3i";
     private final String ISSUER ="workforce";
     private final Long EXDATE = 1000L * 60 * 5 ; // 5 minutes
 
@@ -55,7 +55,6 @@ public class JwtTokenManager {
             if (decodedJWT==null){
                 throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
             }
-
             Long id=decodedJWT.getClaim("authId").asLong();
             return Optional.of(id);
 
@@ -64,5 +63,26 @@ public class JwtTokenManager {
             throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
         }
     }
+    public Optional<String> getRoleFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC512(SECRETKEY);
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            if (decodedJWT == null) {
+                throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
+            }
+            String role = decodedJWT.getClaim("role").asString();
+            return Optional.of(role);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
+        }
+    }
+    /**
+     * TODO: ManagerId ile bir metot yazmamız çok doğru değil kullanımı da burada eğer createToken metodunu
+     * kullansaydık ve onu valide etmek isteseydik okey ama auth için bile bu mikroserviste create kullanmıyoruz. sadece
+     * valide etmek ya da o tokenı alıp authId bulmak için bu sınıf kullanışlı onun dışında değil
+     */
+
 
 }

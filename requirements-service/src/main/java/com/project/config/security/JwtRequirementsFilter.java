@@ -1,6 +1,5 @@
 package com.project.config.security;
 
-
 import com.project.utility.JwtTokenManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +17,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
-public class JwtAuthFilter extends OncePerRequestFilter {
+public class JwtRequirementsFilter extends OncePerRequestFilter {
+
     @Autowired
     private JwtTokenManager jwtTokenManager;
     @Autowired
@@ -28,16 +28,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-
         final String authHeader=request.getHeader("Authorization");
 
+        log.info("gelen token...: "  + authHeader);
+        log.info("Tüm istekler Requirements serviste buraya düşecek ve burada kontrol yapılacak.");
         if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")){
             String token=authHeader.substring(7);
             log.info("Token...: " + token);
 
-            Optional<Long> id=jwtTokenManager.getIdFromToken(token);
-            if (id.isPresent()){
-                UserDetails userDetails= userDetail.getAuthById(id.get());
+            Optional<String> role=jwtTokenManager.getRoleFromToken(token);
+            if (role.isPresent()){
+                UserDetails userDetails= userDetail.loadUserByUserRole(role.get());
                 UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(
                         userDetails,null,userDetails.getAuthorities()
                 );

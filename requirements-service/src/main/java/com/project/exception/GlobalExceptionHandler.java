@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
-        ErrorType errorType = ErrorType.BAD_REQUEST;
+        ErrorType errorType = ErrorType.BAD_REQUEST_ERROR;
         List<String> fields = new ArrayList<>();
         exception.getBindingResult().getFieldErrors().forEach(e-> fields.add(e.getField()+": "+e.getDefaultMessage()));
         ErrorMessage errorMessage = createError(errorType,exception);
@@ -39,14 +39,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public final ResponseEntity<ErrorMessage> handleMessageNotReadableException(
             HttpMessageNotReadableException exception) {
-        ErrorType errorType = ErrorType.BAD_REQUEST;
+        ErrorType errorType = ErrorType.BAD_REQUEST_ERROR;
         return new ResponseEntity<>(createError(errorType, exception), errorType.getHttpStatus());
     }
 
     @ExceptionHandler(InvalidFormatException.class)
     public final ResponseEntity<ErrorMessage> handleInvalidFormatException(
             InvalidFormatException exception) {
-        ErrorType errorType = ErrorType.BAD_REQUEST;
+        ErrorType errorType = ErrorType.BAD_REQUEST_ERROR;
         return new ResponseEntity<>(createError(errorType, exception), errorType.getHttpStatus());
     }
 
@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
     public final ResponseEntity<ErrorMessage> handleMethodArgumentMisMatchException(
             MethodArgumentTypeMismatchException exception) {
 
-        ErrorType errorType = ErrorType.BAD_REQUEST;
+        ErrorType errorType = ErrorType.BAD_REQUEST_ERROR;
         return new ResponseEntity<>(createError(errorType, exception), errorType.getHttpStatus());
     }
 

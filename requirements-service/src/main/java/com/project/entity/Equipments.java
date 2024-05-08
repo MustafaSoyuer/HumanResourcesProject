@@ -18,13 +18,13 @@ import lombok.experimental.SuperBuilder;
 public class Equipments extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    Long employeeId;
-    EEquipmentType equipmentType;
-    Long authId;
-    Long managerId;
-    String document;
-    Long receivingDate;
-    Long returningDate;
+    private Long id;
+    private Long employeeId;
+    private EEquipmentType equipmentType;
+    private Long authId;
+    private Long managerId;
+    private String document;
+    private Long receivingDate;
+    private Long returningDate;
 
 }

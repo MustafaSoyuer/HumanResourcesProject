@@ -51,9 +51,6 @@ allprojects {
 		implementation libs.jwt
 		implementation libs.springBootStarterAmqp
 		implementation libs.springBootStarterSecurity
-
-
-
 	}
 
 	test {
