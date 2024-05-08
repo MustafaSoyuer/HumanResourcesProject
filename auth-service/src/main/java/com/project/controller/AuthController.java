@@ -44,8 +44,8 @@ public class AuthController {
 
     @PostMapping(REGISTER_MANAGER)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<RegisterManagerResponseDto>> registerManager(@RequestBody @Valid RegisterManagerRequestDto dto) {
-        return ResponseEntity.ok(BasicResponse.<RegisterManagerResponseDto>builder()
+    public ResponseEntity<BasicResponse<Boolean>> registerManager(@RequestBody @Valid RegisterManagerRequestDto dto) {
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Manager Register successful")
                 .data(authService.registerManager(dto))

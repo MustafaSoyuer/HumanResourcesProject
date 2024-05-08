@@ -1,5 +1,6 @@
 package com.project.mapper;
 
+import com.project.dto.request.AddEmployeeRequestDto;
 import com.project.dto.request.AuthLoginRequestDto;
 import com.project.dto.request.RegisterManagerRequestDto;
 import com.project.dto.response.AuthLoginResponseDto;
@@ -15,6 +16,8 @@ public interface AuthMapper {
     AuthMapper INSTANCE = Mappers.getMapper(AuthMapper.class);
 
     Auth fromRegisterManagerRequestToAuth(final RegisterManagerRequestDto dto);
+
+    Auth fromAddEmployeeRequestDtoToAuth(final AddEmployeeRequestDto dto);
 
     RegisterManagerResponseDto fromAuthToRegisterManagerResponseDto(final Auth auth);
 

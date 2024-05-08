@@ -21,6 +21,7 @@ public class AddEmployeeRequestDto {
     private String position;
     private String department;
     private String occupation;
-    private String email;
+    private String companyName;
+
 
 }
