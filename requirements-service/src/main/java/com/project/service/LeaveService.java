@@ -25,7 +25,6 @@ public class LeaveService {
     private final LeaveRepository leaveRepository;
     private final JwtTokenManager jwtTokenManager;
     private final LeaveCalculator leaveCalculator;
-
     /**
      * TODO: Bu metotlarda token authId buluyor ya, yapılan örnekler değişken baya
      * mesela authId ile managerIdsini bulup işlem yapılan metotlar var genelde dto ile ıd almıyorlar

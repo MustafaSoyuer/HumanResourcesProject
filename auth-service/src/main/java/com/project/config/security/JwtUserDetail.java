@@ -25,7 +25,6 @@ public class JwtUserDetail implements UserDetailsService {
         return null;
     }
 
-
     public UserDetails getAuthById(Long authId){
        Optional<Auth> authUser=repository.findOptionalById(authId);
         if (authUser.isEmpty()) return null;
