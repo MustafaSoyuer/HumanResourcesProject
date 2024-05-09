@@ -43,10 +43,11 @@ public class LeaveEmployeeController {
     @PostMapping(REQUEST_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> requestLeave(@RequestBody RequestLeaveDto dto) {
+        leaveService.requestLeaveFromEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Leave requested by employee.")
-                .data(leaveService.requestLeaveFromEmployee(dto))
+                .data(true)
                 .build());
     }
 }

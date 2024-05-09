@@ -47,8 +47,6 @@ public class ManagerController {
     @PutMapping(UPDATE_MANAGER)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> updateManager(@RequestBody UpdateManagerRequestDto dto) {
-
-
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Manager updated successfully")
@@ -65,8 +63,6 @@ public class ManagerController {
     @PutMapping(ADMIN_UPDATE_MANAGER)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> adminUpdateManager(@RequestBody AdminUpdateManagerRequestDto dto) {
-
-
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Manager updated successfully")

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 public class JwtTokenManager {
-    private final String SECRETKEY ="Ha6Ua15ALxb$dn7nL'HEJuKeG5YN4m,s5&b!NYaG_]9VlbA#3i";
+    private final String SECRETKEY ="secretkey";
     private final String ISSUER ="workforce";
     private final Long EXDATE = 1000L * 60 * 5 ; // 5 minutes
 

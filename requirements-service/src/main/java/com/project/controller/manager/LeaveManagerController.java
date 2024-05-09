@@ -27,10 +27,11 @@ public class LeaveManagerController {
     @PostMapping(ADD_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> addLeaveToEmployee(@RequestBody AddLeaveRequestDto dto){
+        leaveService.addLeaveToEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                         .status(200)
                         .message("Leave added")
-                        .data(leaveService.addLeaveToEmployee(dto))
+                        .data(true)
                 .build());
     }
 
@@ -42,10 +43,11 @@ public class LeaveManagerController {
     @PostMapping(APPROVE_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> approveLeave(@RequestBody BaseRequestForRequirementsDto dto){
+        leaveService.approveLeaveForEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Leave approved.")
-                .data(leaveService.approveLeaveForEmployee(dto))
+                .data(true)
                 .build());
     }
 
@@ -57,10 +59,11 @@ public class LeaveManagerController {
     @PostMapping(REJECT_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> rejectLeaveOfEmployee(@RequestBody RejectLeaveRequestDto dto){
+        leaveService.rejectLeaveForEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Leave rejected")
-                .data(leaveService.rejectLeaveForEmployee(dto))
+                .data(true)
                 .build());
     }
 
