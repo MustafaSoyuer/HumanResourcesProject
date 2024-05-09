@@ -1,8 +1,10 @@
 package com.project.service;
 
+import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
+import com.project.dto.response.GetEmployeesByManagerIdResponseDto;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -71,6 +74,19 @@ public class EmployeeService {
         normalizedString = normalizedString.replaceAll("\\s+","");
 
         return normalizedString;
+    }
+
+
+
+
+    /**
+     * Manager employee listesini getirir.
+     * @param dto
+     * @return
+     */
+    public List<GetEmployeesByManagerIdResponseDto> getEmployeesByManagerId(GetEmployeesByManagerIdRequestDto dto) {
+
+        return employeeRepository.findByManagerId(dto);
     }
 
 

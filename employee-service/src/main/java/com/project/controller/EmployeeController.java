@@ -1,13 +1,16 @@
 package com.project.controller;
 
+import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
-import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.BasicResponse;
+import com.project.dto.response.GetEmployeesByManagerIdResponseDto;
 import com.project.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.project.constants.RestApiUrls.*;
 
@@ -49,6 +52,20 @@ public class EmployeeController {
                 .build()
         );
     }
+
+    @GetMapping(GET_EMPLOYEES_BY_MANAGER_ID)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<List<GetEmployeesByManagerIdResponseDto>>> getEmployeesByManagerId(GetEmployeesByManagerIdRequestDto dto) {
+
+        return ResponseEntity.ok(BasicResponse.<List<GetEmployeesByManagerIdResponseDto>>builder()
+                .status(200)
+                .message("Employees list turned successfully")
+                .data(employeeService.getEmployeesByManagerId(dto))
+                .build()
+        );
+    }
+
+
 
 
 // email _> ad.soyad@şirketadı.com

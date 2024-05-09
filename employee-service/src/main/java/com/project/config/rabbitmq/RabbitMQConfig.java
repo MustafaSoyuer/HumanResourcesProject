@@ -37,6 +37,16 @@ public class RabbitMQConfig {
         return new Queue(QUEUE_AUTH_CREATE_EMPLOYEE);
     }
 
+    /**
+     * Manager -> Employee getEmployeesByManagerId methodu ile iletisime gecen kuyruk
+     */
+    private final String QUEUE_GET_EMPLOYEES_BY_MANAGER_ID = "get-employees-by-manager-id-queue";
+
+    @Bean
+    Queue queueGetEmployeesByManagerId(){
+        return new Queue(QUEUE_GET_EMPLOYEES_BY_MANAGER_ID);
+    }
+
 
 
 }
