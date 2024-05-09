@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddEmployeeRequestDto {
-    private String email;
-    private String name;
-    private String surname;
+public class GetEmployeesByManagerIdRequestDto {
 
+    private Long managerId;
 }
