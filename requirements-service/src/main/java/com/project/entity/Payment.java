@@ -18,10 +18,10 @@ import lombok.experimental.SuperBuilder;
 public class Payment extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    Double amount;
-    Long employeeId;
-    Long authId;
-    Long paymentDate;
-    String document;
+    private Long id;
+    private Double amount;
+    private Long employeeId;
+    private Long authId;
+    private Long paymentDate;
+    private String document;
 }

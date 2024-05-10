@@ -10,6 +10,6 @@ public class RestApiUrls {
     public static final String APPROVE_MANAGER = ROOT + "/approve-manager";
     public static final String ADD= "/add";
     public static final String GET_ALL= "/get-all";
-
+    public static final String UPDATE_ADMIN= "/update-admin";
 
 }

@@ -31,8 +31,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         final String authHeader=request.getHeader("Authorization");
 
-        log.info("gelen token...: "  + authHeader);
-        log.info("Tüm istekler buraya düşecek ve burada auth kontrol yapılacak.");
         if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")){
             String token=authHeader.substring(7);
             log.info("Token...: " + token);

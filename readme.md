@@ -52,15 +52,10 @@
     Bu envirenment ı eklemek için user microservisin main class üzerine sağ tıklayarak
     run modify configuration diyerek environment variable eklememiz gerekmektedir.
 
-
-
-
 ## YAPILACAKLAR
 - HOCAYA SORULACAKLAR
 
 - ConfigServer ve Gateway hata veriyor
-- 
-
 -       GENEL DTO'suna email ve anotasyonlar vs eklenecek (NE EKSİK OLURSA)
         Admin onaylaması
         Company servis manager save  rabbit ile haberleştirilecek.  
@@ -81,4 +76,8 @@
 - 1- logine tıklayınca admin panele yönelmedi.
 - 2- aktivasyon gerçekleşmeden login olmaya çalışınca hesap aktif değil uyarısı verdir.
 - 3- regsiter olunca role status null geliyor 
+
+- authId employee a gelmedi
+- updateAt status set/get ile metod içinde
+- emplooye autha gönderilecek 
      

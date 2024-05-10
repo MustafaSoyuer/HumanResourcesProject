@@ -12,26 +12,26 @@ import org.springframework.stereotype.Service;
 public class CreateEmployeeConsumer {
     private final EmployeeService employeeService;
 
-    @RabbitListener(queues = "manager-queue")
-    public void createEmployeeListener(CreateEmployeeModel model){
+    @RabbitListener(queues = "auth-create-employee-queue")
+    public void createUserListener(CreateEmployeeModel model){
         System.out.println("Kuyruk gelen mesaj: " + model);
-        employeeService.save(SaveEmployeeRequestDto.builder()
-                .managerId(model.getManagerId())
-                .name(model.getName())
-                .surname(model.getSurname())
-                .identityNumber(model.getIdentityNumber())
-                .phoneNumber(model.getPhoneNumber())
-                .address(model.getAddress())
-                .position(model.getPosition())
-                .department(model.getDepartment())
-                .occupation(model.getOccupation())
-                .build()
-        );
-
+        employeeService.saveEmployee(SaveEmployeeRequestDto.builder()
+                        .authId(model.getAuthId())
+                        .name(model.getName())
+                        .surname(model.getSurname())
+                        .identityNumber(model.getIdentityNumber())
+                        .phoneNumber(model.getPhoneNumber())
+                        .email(model.getEmail())
+                        .address(model.getAddress())
+                        .position(model.getPosition())
+                        .department(model.getDepartment())
+                        .occupation(model.getOccupation())
+                        .companyName(model.getCompanyName())
+                        .status(model.getStatus())
+                        .managerId(model.getManagerId())
+                        .jobStartDate(model.getJobStartDate())
+                        .createAt(model.getCreateAt())
+                        .updateAt(model.getUpdateAt())
+                .build());
     }
-//TODO admin manager ı onaylayacak
-//     add-employee da managerId?
-
-
-
 }

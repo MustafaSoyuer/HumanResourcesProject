@@ -9,17 +9,15 @@ import org.springframework.http.HttpStatus;
 public enum ErrorType {
 
     INTERNAL_SERVER_ERROR(5300, "Sunucu Hatasi",HttpStatus.INTERNAL_SERVER_ERROR),
-    RENTING_ERROR(5301, "Kiralama gerçekleşmedi",HttpStatus.INTERNAL_SERVER_ERROR),
-    RENTING_NOT_FOUND(2001, "Kiralama bulunamadı",HttpStatus.BAD_REQUEST),
-    NOT_ENOUGH_BALANCE(2002,"Yetersiz Bakiye", HttpStatus.BAD_REQUEST),
-    BAD_REQUEST (4300,"Parametre hatasi", HttpStatus.BAD_REQUEST),
-    VEHICLE_NOT_FOUND(4310,"Böyle bir kullanici bulunamadi...",HttpStatus.BAD_REQUEST),
-    POST_NOT_FOUND(4312,"Böyle bir araç bulunamadi" ,HttpStatus.BAD_REQUEST),
-    VEHICLE_ALREADY_EXISTS(4313,"Bu araç daha önceden kayıt edilmiştir." ,HttpStatus.BAD_REQUEST),
-    VEHICLE_NOT_AVAILABLE(2002, "Bu araç kiralama için uygun değildir.",HttpStatus.BAD_REQUEST),
-    VEHICLE_CANNOT_FOUND(2003, "Bu ID'de bir araç bulunamadı",HttpStatus.BAD_REQUEST),
-    INVALID_TOKEN(2004, "Geçersiz token bilgisi girildi. Lütfen tekrar deneyiniz", HttpStatus.BAD_REQUEST);
-
+    INVALID_TOKEN(4001,"Invalid token information",HttpStatus.BAD_REQUEST),
+    NO_LEAVES_FOR_AN_EMPLOYEE(2002,"There is no leave for an employee",HttpStatus.BAD_REQUEST),
+    BAD_REQUEST_ERROR(1202,"You have entered an invalid parameter",HttpStatus.BAD_REQUEST),
+    ADD_LEAVE_ERROR(5301, "Kiralama gerçekleşmedi",HttpStatus.INTERNAL_SERVER_ERROR),
+    LEAVE_NOT_FOUND(2001, "Leave cannot found.",HttpStatus.BAD_REQUEST),
+    EMPLOYEE_NOT_FOUND(2001, "Employee cannot found.",HttpStatus.BAD_REQUEST),
+    LEAVE_TYPE_NOT_FOUND(2001, "Leave type cannot found.",HttpStatus.BAD_REQUEST),
+    LEAVE_DATE_NOT_VALID(2001, "Leave date is not valid.",HttpStatus.BAD_REQUEST),
+    NO_PENDING_LEAVES_FOR_MANAGER(2002, "There is no pending leave for manager.",HttpStatus.BAD_REQUEST);
 
     private int code;
     private String message;

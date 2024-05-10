@@ -3,9 +3,12 @@ package com.project.entity;
 import com.project.utility.enums.ERole;
 import com.project.utility.enums.EStatus;
 import jakarta.persistence.*;
+
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
+
 
 
 @Data
@@ -19,7 +22,9 @@ public class Auth  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Email
+    @Column(unique = true)
     private String email;
+    @Size(min = 8,max = 64, message = "Sifre en az 8 karakterden oluşmalıdır.")
     private String password;
 
     @Enumerated(EnumType.ORDINAL)

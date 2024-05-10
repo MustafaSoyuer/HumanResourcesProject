@@ -1,6 +1,8 @@
 package com.project.entity;
 
+import com.project.utility.enums.EStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,9 +21,12 @@ public class Employee {
     private String name;
     private String surname;
     private Long authId;
-    private String companyId;
+    private Long managerId;
+    private String companyName;
+    @Column(unique = true)
     private String identityNumber;
     private String birthDate;
+    @Email
     private String email;
     private String phoneNumber;
     private String address;
@@ -32,11 +37,14 @@ public class Employee {
     private String department;
     private String occupation;
     private String gender;
+    private Boolean militaryService;
+    private String driverLicense;
     private String avatar;
     private String shiftId;
+    private EStatus status;
 
     private Long createAt;
     private Long updateAt;
-    private boolean state;
+
 
 }

@@ -1,6 +1,5 @@
 package com.project.dto.request;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApproveManagerRequestDto {
-
+public class BaseRequestPendingLeavesDto {
     private String token;
-    private Long authId;
-    private String name;
-    private String surname;
-    private String company;
-    private String taxNumber;
-
+    private Long managerId; //TODO: bunun yerine sadece token da istemiş mesela buseler öyle mi yapsak? bu kısmı silelim mi
 }

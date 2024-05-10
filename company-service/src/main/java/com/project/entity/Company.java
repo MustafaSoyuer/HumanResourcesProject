@@ -23,7 +23,6 @@ public class Company extends BaseEntity {
     private String title;
     private String description;
     private String address;
-    @Size(min = 11, max = 14)
     private String phone;
     @Email
     private String email;

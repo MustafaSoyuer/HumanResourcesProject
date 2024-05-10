@@ -1,10 +1,10 @@
 package com.project.controller;
 
-import com.project.dto.request.AddEmployeeRequestDto;
+import com.project.dto.request.AdminUpdateManagerRequestDto;
 import com.project.dto.request.SaveManagerRequestDto;
+import com.project.dto.request.UpdateManagerRequestDto;
 import com.project.dto.response.BasicResponse;
 import com.project.dto.response.SaveManagerResponseDto;
-import com.project.entity.Manager;
 import com.project.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,15 +28,44 @@ public class ManagerController {
                 .build());
     }
 
-    @PostMapping(ADD_EMPLOYEE)
+
+    /**
+     * Manager kendi bilgilerini güncellemesi icin method
+     * @param dto
+     * @return
+     */
+    @PutMapping(UPDATE_MANAGER)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> addEmployee(@RequestBody AddEmployeeRequestDto dto) {
+    public ResponseEntity<BasicResponse<Boolean>> updateManager(@RequestBody UpdateManagerRequestDto dto) {
+        managerService.updateManager(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
-                .message("Employee added")
-                .data(managerService.addEmployee(dto))
-                .build());
+                .message("Manager updated successfully")
+                .data(true)
+                .build()
+        );
     }
+
+    /**
+     * Admin manager bilgilerini güncellemesi icin method
+     * @param dto
+     * @return
+     */
+    @PutMapping(ADMIN_UPDATE_MANAGER)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<Boolean>> adminUpdateManager(@RequestBody AdminUpdateManagerRequestDto dto) {
+
+
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .status(200)
+                .message("Manager updated successfully")
+                .data(managerService.adminUpdateManager(dto))
+                .build()
+        );
+    }
+
+
+
 
 
 }

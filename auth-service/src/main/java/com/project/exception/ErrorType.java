@@ -20,6 +20,7 @@ public enum ErrorType {
     USER_NOT_FOUND(1007,"Kullanıcı bulunamadı. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.NOT_FOUND),
     USER_IS_NOT_ACTIVE(1008,"Kullanıcı aktif değildir.",HttpStatus.NOT_FOUND),
     PASSWORD_NOT_MATCH(1009,"Sifreler uyusmuyor. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.BAD_REQUEST),
+    USER_ALREADY_EXISTS(1010,"Bu Kullanıcı adı zaten kayıtlıdır. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.BAD_REQUEST)
     ;
 
 

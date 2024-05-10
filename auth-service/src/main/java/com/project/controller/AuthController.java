@@ -1,12 +1,8 @@
 package com.project.controller;
 
-import com.project.dto.request.AuthLoginRequestDto;
-import com.project.dto.request.ChangePasswordDto;
-import com.project.dto.request.RegisterAdminRequestDto;
-import com.project.dto.request.RegisterManagerRequestDto;
+import com.project.dto.request.*;
 import com.project.dto.response.AuthLoginResponseDto;
 import com.project.dto.response.BasicResponse;
-import com.project.dto.response.RegisterManagerResponseDto;
 import com.project.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,11 +40,21 @@ public class AuthController {
 
     @PostMapping(REGISTER_MANAGER)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<RegisterManagerResponseDto>> registerManager(@RequestBody @Valid RegisterManagerRequestDto dto) {
-        return ResponseEntity.ok(BasicResponse.<RegisterManagerResponseDto>builder()
+    public ResponseEntity<BasicResponse<Boolean>> registerManager(@RequestBody @Valid RegisterManagerRequestDto dto) {
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Manager Register successful")
                 .data(authService.registerManager(dto))
+                .build());
+    }
+
+    @PostMapping(REGISTER_EMPLOYEE)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<Boolean>> registerEmployee(@RequestBody @Valid RegisterEmployeeRequestDto dto) {
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .status(200)
+                .message("Employee Register successful")
+                .data(authService.registerEmployee(dto))
                 .build());
     }
 

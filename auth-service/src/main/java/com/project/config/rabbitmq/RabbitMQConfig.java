@@ -19,7 +19,7 @@ public class RabbitMQConfig {
 
 
     /**
-     * Auth -> Manager; createMAnager methoduna mesaj gönderir.
+     * Auth -> Manager; createManager methoduna mesaj gönderir.
      */
     private final String QUEUE_AUTH_CREATE_MANAGER = "auth-create-manager-queue";
     private final String BINDING_KEY_AUTH_CREATE_MANAGER = "auth-create-manager-binding-key";
@@ -85,5 +85,21 @@ public class RabbitMQConfig {
     @Bean
     Binding bindingSendMailReject(final DirectExchange directExchange, final Queue queueSendMailReject){
         return BindingBuilder.bind(queueSendMailReject).to(directExchange).with(BINDING_KEY_SEND_MAIL_REJECT);
+    }
+
+    /**
+     * Auth -> Employee; saveEmployee methodu ile iletisime gecen kuyruk
+     */
+    private final String QUEUE_AUTH_CREATE_EMPLOYEE = "auth-create-employee-queue";
+    private final String BINDING_KEY_AUTH_CREATE_EMPLOYEE = "auth-create-employee-binding-key";
+
+    @Bean
+    Queue queueAuthCreateEmployee(){
+        return new Queue(QUEUE_AUTH_CREATE_EMPLOYEE);
+    }
+
+    @Bean
+    Binding bindingAuthCreateEmployee(final DirectExchange directExchange, final Queue queueAuthCreateEmployee){
+        return BindingBuilder.bind(queueAuthCreateEmployee).to(directExchange).with(BINDING_KEY_AUTH_CREATE_EMPLOYEE);
     }
 }

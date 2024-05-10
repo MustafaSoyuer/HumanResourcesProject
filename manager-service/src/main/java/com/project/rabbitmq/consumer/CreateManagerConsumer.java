@@ -26,7 +26,6 @@ public class CreateManagerConsumer {
                         .company(model.getCompany())
                         .name(model.getName())
                         .surname(model.getSurname())
-                        .password(model.getPassword())  //todo burası doğru mu
                         .role(ERole.MANAGER)
                         .createAt(System.currentTimeMillis())
                         .status(model.getStatus())
