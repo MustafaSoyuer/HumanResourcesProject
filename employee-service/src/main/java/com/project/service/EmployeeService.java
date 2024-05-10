@@ -4,12 +4,15 @@ import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
+import com.project.dto.response.EmployeeResponseDto;
+import com.project.dto.request.*;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
 import com.project.mapper.EmployeeMapper;
 import com.project.repository.EmployeeRepository;
 import com.project.utility.JwtTokenManager;
+import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -78,9 +81,29 @@ public class EmployeeService {
         return employeeRepository.findByManagerId(managerId);
     }
 
+    public void activateEmployee(ActivateEmployeeRequestDto dto) {
+        Optional<Long> token = jwtTokenManager.getIdFromToken(dto.getToken());
+        if (token.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.INVALID_TOKEN);
+        }
+        Optional<Employee> employee = employeeRepository.findById(dto.getId());
+        if (employee.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        employee.get().setUpdateAt(System.currentTimeMillis());
+        employee.get().setStatus(EStatus.ACTIVE);
+        employeeRepository.save(employee.get());
+    }
 
 
-
+    public EmployeeResponseDto findEmployeeByToken(String token) {
+        Optional<Long> authId = jwtTokenManager.getIdFromToken(token);
+        if(authId.isPresent()){
+            Employee employee = employeeRepository.findByAuthId(authId.get()).get();
+            return  EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
+        }
+        throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+    }
 
 
 //TODO
