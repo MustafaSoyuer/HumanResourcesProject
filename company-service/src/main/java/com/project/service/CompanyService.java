@@ -6,11 +6,10 @@ import com.project.dto.request.CompanyCreateRequestDto;
 import com.project.dto.request.CompanyUpdateRequestDto;
 import com.project.dto.response.CompanyGetAllResponseDto;
 import com.project.dto.response.CompanyManagerResponseDto;
-import com.project.dto.response.ManagerCompanyResponseDto;
+import com.project.dto.response.ManagerResponseDto;
 import com.project.entity.Company;
 import com.project.exception.CompanyServiceException;
 import com.project.exception.ErrorType;
-import com.project.manager.ManagerManager;
 import com.project.mapper.CompanyMapper;
 import com.project.rabbitmq.model.ApproveManagerModel;
 import com.project.rabbitmq.model.RejectManagerModel;
@@ -33,7 +32,7 @@ public class CompanyService {
     private final CompanyMapper companyMapper;
     private final ApproveManagerProducer approveManagerProducer;
     private final RejectManagerProducer rejectManagerProducer;
-    private final ManagerManager managerManager;
+
 
 
     public void createCompany(CompanyCreateRequestDto dto) {
@@ -41,16 +40,12 @@ public class CompanyService {
     }
 
     public Boolean updateCompany(CompanyUpdateRequestDto dto) {
+//        ManagerResponseDto companyResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+//                .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
 
-        ManagerCompanyResponseDto companyResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
-                .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
+        Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
 
-       // Company company = companyRepository.findById(dto.getC()).orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
-
-        Optional<Company> optionalCompany = companyRepository.findById(dto.getId());
         System.out.println("Sorun bura mı?");
-        if (optionalCompany.isPresent()) {
-            Company company = optionalCompany.get();
             company.setManagerId(dto.getManagerId());
             company.setName(dto.getName());
             company.setTitle(dto.getTitle());
@@ -78,10 +73,7 @@ public class CompanyService {
             System.out.println("yoksa bura mı?");
             companyRepository.save(company);
             return true;
-        } else {
-            System.out.println("ya da burası?");
-            throw new CompanyServiceException(ErrorType.ERROR_INVALID_COMPANY_ID);
-        }
+
     }
 
 

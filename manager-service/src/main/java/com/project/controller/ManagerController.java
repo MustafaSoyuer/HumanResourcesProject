@@ -5,6 +5,7 @@ import com.project.dto.request.SaveManagerRequestDto;
 import com.project.dto.request.UpdateManagerRequestDto;
 import com.project.dto.response.BasicResponse;
 import com.project.dto.response.ManagerCompanyResponseDto;
+import com.project.dto.response.ManagerResponseDto;
 import com.project.dto.response.SaveManagerResponseDto;
 import com.project.service.ManagerService;
 import lombok.RequiredArgsConstructor;
@@ -55,18 +56,17 @@ public class ManagerController {
     @PutMapping(ADMIN_UPDATE_MANAGER)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> adminUpdateManager(@RequestBody AdminUpdateManagerRequestDto dto) {
-
-
+        managerService.adminUpdateManager(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Manager updated successfully")
-                .data(managerService.adminUpdateManager(dto))
+                .data(true)
                 .build()
         );
     }
 
     @GetMapping("/find-by-token")
-    public ResponseEntity<ManagerCompanyResponseDto> findByToken(@RequestParam String token){
+    public ResponseEntity<ManagerResponseDto> findByToken(@RequestParam String token){
         return ResponseEntity.ok(managerService.findByToken(token));
     }
 
