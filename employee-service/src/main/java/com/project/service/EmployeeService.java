@@ -1,5 +1,10 @@
 package com.project.service;
 
+import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
+import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
+import com.project.dto.request.SaveEmployeeRequestDto;
+import com.project.dto.request.UpdateEmployeeRequestDto;
+import com.project.dto.response.EmployeeResponseDto;
 import com.project.dto.request.*;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
@@ -91,7 +96,24 @@ public class EmployeeService {
     }
 
 
+    public EmployeeResponseDto findEmployeeByToken(String token) {
+        Optional<Long> authId = jwtTokenManager.getIdFromToken(token);
+        if(authId.isPresent()){
+            Employee employee = employeeRepository.findByAuthId(authId.get()).get();
+            return  EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
+        }
+        throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+    }
 
+
+//TODO
+    /**
+     *  String companyEmail = "manager" + dto.getName() + "@" + dto.getCompanyName() + ".com";
+     *         auth.setCompanyEmail(companyEmail.toLowerCase());
+     *         auth.setUserType(EUserType.MANAGER);
+     *         auth.setCompanyName(auth.getCompanyName().toLowerCase());
+     *         save(auth);
+     */
 
 
 
