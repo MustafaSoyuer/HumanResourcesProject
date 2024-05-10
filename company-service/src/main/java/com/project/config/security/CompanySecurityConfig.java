@@ -29,7 +29,6 @@ public class CompanySecurityConfig {
                         ).permitAll()
                         .requestMatchers("/dev/v1/company/**").permitAll()
                         .requestMatchers("/dev/v1/manager/**").permitAll()
-//                        .requestMatchers("/dev/v1/company/activate-company-status").hasRole("ADMIN")
 //                        .requestMatchers("/dev/v1/company/**").hasRole("MANAGER")
                         .anyRequest()
                         .authenticated()

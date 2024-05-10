@@ -10,6 +10,7 @@ import com.project.dto.response.ManagerResponseDto;
 import com.project.entity.Company;
 import com.project.exception.CompanyServiceException;
 import com.project.exception.ErrorType;
+import com.project.manager.ManagerManager;
 import com.project.mapper.CompanyMapper;
 import com.project.rabbitmq.model.ApproveManagerModel;
 import com.project.rabbitmq.model.RejectManagerModel;
@@ -33,6 +34,9 @@ public class CompanyService {
     private final ApproveManagerProducer approveManagerProducer;
     private final RejectManagerProducer rejectManagerProducer;
 
+    private final ManagerManager managerManager;
+
+
 
 
     public void createCompany(CompanyCreateRequestDto dto) {
@@ -40,23 +44,24 @@ public class CompanyService {
     }
 
     public Boolean updateCompany(CompanyUpdateRequestDto dto) {
-//        ManagerResponseDto companyResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
-//                .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
-
-        Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
+        System.out.println("1. ....company hatası mı?" + dto.getId());
+        ManagerResponseDto managerResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
+        System.out.println("company hatası mı?" + managerResponseDto.getId());
+        Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND));
 
         System.out.println("Sorun bura mı?");
-            company.setManagerId(dto.getManagerId());
-            company.setName(dto.getName());
+            company.setManagerId(managerResponseDto.getId());
+            company.setName(managerResponseDto.getName());
             company.setTitle(dto.getTitle());
             company.setDescription(dto.getDescription());
             company.setAddress(dto.getAddress());
             company.setPhone(dto.getPhone());
-            company.setEmail(dto.getEmail());
+            company.setEmail(managerResponseDto.getEmail());
             company.setWebsite(dto.getWebsite());
             company.setLogo(dto.getLogo());
             company.setSector(dto.getSector());
-            company.setTaxNumber(dto.getTaxNumber());
+            company.setTaxNumber(managerResponseDto.getTaxNumber());
             company.setTaxOffice(dto.getTaxOffice());
             company.setMersisNo(dto.getMersisNo());
             company.setVision(dto.getVision());

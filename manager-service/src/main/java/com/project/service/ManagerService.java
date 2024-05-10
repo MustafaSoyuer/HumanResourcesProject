@@ -99,13 +99,18 @@ public class ManagerService {
     }
 
     public ManagerResponseDto findByToken(String token) {
+        System.out.println("token var mı?" + token);
         Optional<Long> authId = jwtTokenManager.getIdFromToken(token);
         if (authId.isPresent()){
             Manager manager = managerRepository.findByAuthId(authId.get()).get();
             return ManagerMapper.INSTANCE.fromManagerToManagerResponseDto(manager);
         }
+        System.out.println("manager not found mı?");
         throw new ManagerServiceException(ErrorType.USER_NOT_FOUND);
     }
+
+
+
 
 
 
