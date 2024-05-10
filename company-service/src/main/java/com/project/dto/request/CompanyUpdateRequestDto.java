@@ -1,5 +1,6 @@
 package com.project.dto.request;
 
+import com.project.utility.enums.EMemberShipPlan;
 import com.project.utility.enums.EStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -16,16 +17,13 @@ import org.springframework.data.annotation.Id;
 
 public class CompanyUpdateRequestDto {
 
-    @Id
     private String id;
     private Long managerId;
     private String name;
     private String title;
     private String description;
     private String address;
-    @Size(min = 11, max = 14)
     private String phone;
-    @Email
     private String email;
     private String website;
     private String logo;
@@ -41,9 +39,8 @@ public class CompanyUpdateRequestDto {
     private String founded;
     private String foundingYear;
     private String linkedin;
-    private String membershipPlan;
-    private EStatus status;
-    private Long createAt;
+    private EMemberShipPlan membershipPlan;
     private Long updateAt;
+    private EStatus status;
 
 }
