@@ -42,12 +42,10 @@ public class CompanyService {
 
     public Boolean updateCompany(CompanyUpdateRequestDto dto) {
 
-
-
         ManagerCompanyResponseDto companyResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
                 .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
 
-      //  Company company = companyRepository.findById(dto.getC()).orElseThrow(()->new PostServiceException(ErrorType.POST_NOT_FOUND));
+       // Company company = companyRepository.findById(dto.getC()).orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
 
         Optional<Company> optionalCompany = companyRepository.findById(dto.getId());
         System.out.println("Sorun bura mı?");
