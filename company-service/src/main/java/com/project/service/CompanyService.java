@@ -1,6 +1,7 @@
 package com.project.service;
 
-import com.project.dto.request.ActivateCompanyStatusRequestDto;
+
+import com.project.dto.request.ApproveAndRejectCompanyRequestDto;
 import com.project.dto.request.CompanyCreateRequestDto;
 import com.project.dto.request.CompanyUpdateRequestDto;
 import com.project.dto.response.CompanyGetAllResponseDto;
@@ -14,7 +15,6 @@ import com.project.rabbitmq.model.RejectManagerModel;
 import com.project.rabbitmq.producer.ApproveManagerProducer;
 import com.project.rabbitmq.producer.RejectManagerProducer;
 import com.project.repository.CompanyRepository;
-import com.project.utility.JwtTokenManager;
 import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,22 +37,52 @@ public class CompanyService {
         companyRepository.save(CompanyMapper.INSTANCE.fromCompanyCreateRequestDtoToCompany(dto));
     }
 
-    public void updateCompany(CompanyUpdateRequestDto dto) {
-        //TODO: token eklemesi yapılacak.
-        Optional<Company> company = companyRepository.findById(dto.getId());
-        if (company.isEmpty()) {
+    public Boolean updateCompany(CompanyUpdateRequestDto dto) {
+        Optional<Company> optionalCompany = companyRepository.findById(dto.getId());
+        System.out.println("Sorun bura mı?");
+        if (optionalCompany.isPresent()) {
+            Company company = optionalCompany.get();
+            company.setManagerId(dto.getManagerId());
+            company.setName(dto.getName());
+            company.setTitle(dto.getTitle());
+            company.setDescription(dto.getDescription());
+            company.setAddress(dto.getAddress());
+            company.setPhone(dto.getPhone());
+            company.setEmail(dto.getEmail());
+            company.setWebsite(dto.getWebsite());
+            company.setLogo(dto.getLogo());
+            company.setSector(dto.getSector());
+            company.setTaxNumber(dto.getTaxNumber());
+            company.setTaxOffice(dto.getTaxOffice());
+            company.setMersisNo(dto.getMersisNo());
+            company.setVision(dto.getVision());
+            company.setMission(dto.getMission());
+            company.setCountry(dto.getCountry());
+            company.setCity(dto.getCity());
+            company.setEmployeeCount(dto.getEmployeeCount());
+            company.setFounded(dto.getFounded());
+            company.setFoundingYear(dto.getFoundingYear());
+            company.setLinkedin(dto.getLinkedin());
+            company.setMembershipPlan(dto.getMembershipPlan());
+            company.setUpdateAt(System.currentTimeMillis());
+            company.setStatus(EStatus.ACTIVE);
+            System.out.println("yoksa bura mı?");
+            companyRepository.save(company);
+            return true;
+        } else {
+            System.out.println("ya da burası?");
             throw new CompanyServiceException(ErrorType.ERROR_INVALID_COMPANY_ID);
         }
-        companyRepository.save(CompanyMapper.INSTANCE.fromCompanyUpdateRequestDtoToCompany(dto));
     }
 
 
     public List<CompanyGetAllResponseDto> getAll() {
         //TODO: token eklemesi yapılacak.
-       return companyRepository.findAll()
-               .stream()
-               .map(companyMapper::fromCompanyToCompanyGetAllResponseDto)
-               .collect(Collectors.toList());
+        return companyRepository.findAll()
+                .stream()
+                .filter(company -> company.getStatus().equals(EStatus.ACTIVE))
+                .map(companyMapper::fromCompanyToCompanyGetAllResponseDto)
+                .collect(Collectors.toList());
     }
 
 
@@ -63,8 +93,8 @@ public class CompanyService {
                 .map(companyMapper::fromCompanyToCompanyManagerResponseDto).collect(Collectors.toList());
     }
 
-    public Boolean approveCompany(String id) {
-        Optional<Company> optionalCompany= companyRepository.findById(id);
+    public Boolean approveCompany(ApproveAndRejectCompanyRequestDto dto) {
+        Optional<Company> optionalCompany= companyRepository.findById(dto.getId());
         if (optionalCompany.isEmpty())
             throw new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND);
         Company company=optionalCompany.get();
@@ -80,8 +110,8 @@ public class CompanyService {
         return true;
     }
 
-    public Boolean rejectCompany(String id) {
-        Optional<Company> optionalCompany= companyRepository.findById(id);
+    public Boolean rejectCompany(ApproveAndRejectCompanyRequestDto dto) {
+        Optional<Company> optionalCompany= companyRepository.findById(dto.getId());
         if (optionalCompany.isEmpty())
             throw new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND);
         Company company=optionalCompany.get();

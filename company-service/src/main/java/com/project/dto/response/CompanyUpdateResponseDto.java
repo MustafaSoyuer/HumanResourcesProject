@@ -1,21 +1,22 @@
-package com.project.entity;
+package com.project.dto.response;
 
 import com.project.utility.enums.EMemberShipPlan;
 import com.project.utility.enums.EStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
-public class Company extends BaseEntity {
+
+public class CompanyUpdateResponseDto {
+
     @Id
     private String id;
     private Long managerId;
@@ -23,6 +24,7 @@ public class Company extends BaseEntity {
     private String title;
     private String description;
     private String address;
+    @Size(min = 11, max = 14)
     private String phone;
     @Email
     private String email;
@@ -42,5 +44,6 @@ public class Company extends BaseEntity {
     private String linkedin;
     private EMemberShipPlan membershipPlan;
     private EStatus status;
+    private Long updateAt;
 
 }

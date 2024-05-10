@@ -13,16 +13,12 @@ import lombok.NoArgsConstructor;
 
 public class CompanyGetAllResponseDto {
 
+    private String id;
     private String name;
-    private String title;
-    private String description;
+    private String taxNumber;
     private String address;
     private String phone;
     private String email;
-    private String website;
-    private String logo;
     private String sector;
-    private String country;
-    private String city;
     private String employeeCount;
 }

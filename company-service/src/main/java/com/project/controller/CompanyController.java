@@ -1,6 +1,6 @@
 package com.project.controller;
 
-import com.project.dto.request.ActivateCompanyStatusRequestDto;
+import com.project.dto.request.ApproveAndRejectCompanyRequestDto;
 import com.project.dto.request.CompanyCreateRequestDto;
 import com.project.dto.request.CompanyUpdateRequestDto;
 import com.project.dto.response.BasicResponse;
@@ -9,7 +9,6 @@ import com.project.dto.response.CompanyManagerResponseDto;
 import com.project.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -109,25 +108,28 @@ public class CompanyController {
      * @param
      * @return
      */
-    @PostMapping(APPROVE_COMPANY + "/{id}")
+    @PostMapping(APPROVE_COMPANY)
     @CrossOrigin("*")
    // @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<BasicResponse<Boolean>> approveCompany(@PathVariable String id) {
+    public ResponseEntity<BasicResponse<Boolean>> approveCompany(@RequestBody ApproveAndRejectCompanyRequestDto dto) {
+        companyService.approveCompany(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                         .status(200)
                         .message("Company approved successfully")
-                        .data(companyService.approveCompany(id))
+                        .data(true)
                 .build());
     }
 
-    @PostMapping(REJECT_COMPANY + "/{id}")
+    @PostMapping(REJECT_COMPANY )
     @CrossOrigin("*")
     // @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<BasicResponse<Boolean>> rejectCompany(@PathVariable String id) {
+    public ResponseEntity<BasicResponse<Boolean>> rejectCompany(@RequestBody ApproveAndRejectCompanyRequestDto dto) {
+        System.out.println("dto burada.....:  "+dto);
+        companyService.rejectCompany(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Company rejected.")
-                .data(companyService.rejectCompany(id))
+                .data(true)
                 .build());
     }
 

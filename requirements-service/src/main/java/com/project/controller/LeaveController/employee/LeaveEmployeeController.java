@@ -1,4 +1,4 @@
-package com.project.controller.employee;
+package com.project.controller.LeaveController.employee;
 
 import com.project.dto.request.BaseRequestDto;
 import com.project.dto.request.RequestLeaveDto;

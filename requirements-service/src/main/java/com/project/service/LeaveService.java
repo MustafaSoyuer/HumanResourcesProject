@@ -25,6 +25,9 @@ public class LeaveService {
     private final LeaveRepository leaveRepository;
     private final JwtTokenManager jwtTokenManager;
     private final LeaveCalculator leaveCalculator;
+
+
+
     /**
      * TODO: Bu metotlarda token authId buluyor ya, yapılan örnekler değişken baya
      * mesela authId ile managerIdsini bulup işlem yapılan metotlar var genelde dto ile ıd almıyorlar
@@ -39,9 +42,10 @@ public class LeaveService {
         if (authId.isEmpty()){
             throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
         }
-        /**
-         * auhtId'den managerId bulabilecek bir metot ()
-         */
+
+            /**
+             * auhtId'den managerId bulabilecek bir metot ()
+             */
          leaveRepository.save(
                 Leave.builder()
                         .managerId(dto.getManagerId())
