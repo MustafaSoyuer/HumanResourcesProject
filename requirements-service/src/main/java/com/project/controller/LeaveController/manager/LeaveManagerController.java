@@ -1,4 +1,4 @@
-package com.project.controller.manager;
+package com.project.controller.LeaveController.manager;
 
 import com.project.dto.request.*;
 import com.project.dto.response.BaseLeaveResponseDto;
