@@ -51,7 +51,6 @@ public class JwtTokenManager {
             Algorithm algorithm=Algorithm.HMAC512(SECRETKEY);
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(ISSUER).build();
             DecodedJWT decodedJWT= verifier.verify(token);
-
             if (decodedJWT==null){
                 throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
             }
