@@ -3,6 +3,7 @@ package com.project.service;
 import com.project.dto.request.AdminUpdateManagerRequestDto;
 import com.project.dto.request.SaveManagerRequestDto;
 import com.project.dto.request.UpdateManagerRequestDto;
+import com.project.dto.response.ManagerCompanyResponseDto;
 import com.project.dto.response.SaveManagerResponseDto;
 import com.project.entity.Manager;
 import com.project.exception.ErrorType;
@@ -96,6 +97,16 @@ public class ManagerService {
         managerRepository.save(ManagerMapper.INSTANCE.fromAdminUpdateManagerRequestDtoToManager(dto));
         return true;
     }
+
+    public ManagerCompanyResponseDto findByToken(String token) {
+        Optional<Long> authId = jwtTokenManager.getIdFromToken(token);
+        if (authId.isPresent()){
+            Manager manager = managerRepository.findByAuthId(authId.get()).get();
+            return ManagerMapper.INSTANCE.fromManagerToManagerCompanyResponseDto(manager);
+        }
+        throw new ManagerServiceException(ErrorType.USER_NOT_FOUND);
+    }
+
 
 
 }
