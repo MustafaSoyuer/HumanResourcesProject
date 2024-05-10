@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.dto.request.ActivateEmployeeRequestDto;
 import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
@@ -65,8 +66,15 @@ public class EmployeeController {
         );
     }
 
+    public ResponseEntity<BasicResponse<Boolean>> activateEmployee(@RequestBody ActivateEmployeeRequestDto dto) {
+            employeeService.activateEmployee(dto);
+            return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                    .status(200)
+                    .message("Employee activated successfully")
+                    .data(true)
+                    .build()
+            );
+    }
 
 
-
-// email _> ad.soyad@şirketadı.com
 }

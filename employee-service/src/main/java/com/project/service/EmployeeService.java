@@ -1,15 +1,13 @@
 package com.project.service;
 
-import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
-import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
-import com.project.dto.request.SaveEmployeeRequestDto;
-import com.project.dto.request.UpdateEmployeeRequestDto;
+import com.project.dto.request.*;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
 import com.project.mapper.EmployeeMapper;
 import com.project.repository.EmployeeRepository;
 import com.project.utility.JwtTokenManager;
+import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -78,19 +76,22 @@ public class EmployeeService {
         return employeeRepository.findByManagerId(managerId);
     }
 
+    public void activateEmployee(ActivateEmployeeRequestDto dto) {
+        Optional<Long> token = jwtTokenManager.getIdFromToken(dto.getToken());
+        if (token.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.INVALID_TOKEN);
+        }
+        Optional<Employee> employee = employeeRepository.findById(dto.getId());
+        if (employee.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        employee.get().setUpdateAt(System.currentTimeMillis());
+        employee.get().setStatus(EStatus.ACTIVE);
+        employeeRepository.save(employee.get());
+    }
 
 
 
-
-
-//TODO
-    /**
-     *  String companyEmail = "manager" + dto.getName() + "@" + dto.getCompanyName() + ".com";
-     *         auth.setCompanyEmail(companyEmail.toLowerCase());
-     *         auth.setUserType(EUserType.MANAGER);
-     *         auth.setCompanyName(auth.getCompanyName().toLowerCase());
-     *         save(auth);
-     */
 
 
 
