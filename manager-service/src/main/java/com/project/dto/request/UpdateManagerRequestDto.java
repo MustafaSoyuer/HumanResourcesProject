@@ -1,6 +1,6 @@
 package com.project.dto.request;
 
-import jakarta.persistence.Id;
+import com.project.utility.enums.EGender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateManagerRequestDto {
-    @Id
+
     private Long id;
     private String name;
     private String surname;
@@ -20,5 +20,5 @@ public class UpdateManagerRequestDto {
     private String phone;
     private String taxNumber;
     private String address;
-    private String gender;
+    private EGender gender;
 }

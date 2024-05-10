@@ -4,7 +4,7 @@ import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.BasicResponse;
-import com.project.dto.response.GetEmployeesByManagerIdResponseDto;
+import com.project.entity.Employee;
 import com.project.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -55,12 +55,12 @@ public class EmployeeController {
 
     @GetMapping(GET_EMPLOYEES_BY_MANAGER_ID)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<List<GetEmployeesByManagerIdResponseDto>>> getEmployeesByManagerId(GetEmployeesByManagerIdRequestDto dto) {
+    public ResponseEntity<BasicResponse<List<Employee>>> getEmployeesByManagerId(Long managerId) {
 
-        return ResponseEntity.ok(BasicResponse.<List<GetEmployeesByManagerIdResponseDto>>builder()
+        return ResponseEntity.ok(BasicResponse.<List<Employee>>builder()
                 .status(200)
                 .message("Employees list turned successfully")
-                .data(employeeService.getEmployeesByManagerId(dto))
+                .data(employeeService.getEmployeesByManagerId(managerId))
                 .build()
         );
     }

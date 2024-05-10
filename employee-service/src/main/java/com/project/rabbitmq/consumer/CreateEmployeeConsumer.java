@@ -28,6 +28,10 @@ public class CreateEmployeeConsumer {
                         .occupation(model.getOccupation())
                         .companyName(model.getCompanyName())
                         .status(model.getStatus())
+                        .managerId(model.getManagerId())
+                        .jobStartDate(model.getJobStartDate())
+                        .createAt(model.getCreateAt())
+                        .updateAt(model.getUpdateAt())
                 .build());
     }
 }

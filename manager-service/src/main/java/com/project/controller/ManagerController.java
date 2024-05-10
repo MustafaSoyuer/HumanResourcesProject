@@ -1,6 +1,5 @@
 package com.project.controller;
 
-import com.project.dto.request.AddEmployeeRequestDto;
 import com.project.dto.request.AdminUpdateManagerRequestDto;
 import com.project.dto.request.SaveManagerRequestDto;
 import com.project.dto.request.UpdateManagerRequestDto;
@@ -29,15 +28,6 @@ public class ManagerController {
                 .build());
     }
 
-    @PostMapping(ADD_EMPLOYEE)
-    @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> addEmployee(@RequestBody AddEmployeeRequestDto dto) {
-        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
-                .status(200)
-                .message("Employee added")
-                .data(managerService.addEmployee(dto))
-                .build());
-    }
 
     /**
      * Manager kendi bilgilerini güncellemesi icin method
@@ -47,10 +37,11 @@ public class ManagerController {
     @PutMapping(UPDATE_MANAGER)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> updateManager(@RequestBody UpdateManagerRequestDto dto) {
+        managerService.updateManager(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Manager updated successfully")
-                .data(managerService.updateManager(dto))
+                .data(true)
                 .build()
         );
     }
@@ -63,6 +54,8 @@ public class ManagerController {
     @PutMapping(ADMIN_UPDATE_MANAGER)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> adminUpdateManager(@RequestBody AdminUpdateManagerRequestDto dto) {
+
+
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
                 .message("Manager updated successfully")

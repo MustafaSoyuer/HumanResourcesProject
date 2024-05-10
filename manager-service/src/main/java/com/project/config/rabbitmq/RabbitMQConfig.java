@@ -98,19 +98,6 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(queueRejectAuth).to(directExchange).with(BINDING_KEY_REJECT_AUTH);
     }
 
-    /**
-     * Manager -> Employee ; managerOrAdminUpdateEmployee methodu ile iletisime gecen kuyruk
-     */
-    private final String QUEUE_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE = "manager-or-admin-update-employee-queue";
-    private final String BINDING_KEY_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE = "manager-or-admin-update-employee-binding-key";
-    @Bean
-    Queue queueManagerOrAdminUpdateEmployee(){
-        return new Queue(QUEUE_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE);
-    }
-    @Bean
-    Binding bindingManagerOrAdminUpdateEmployee(final DirectExchange directExchange, final Queue queueManagerOrAdminUpdateEmployee){
-        return BindingBuilder.bind(queueManagerOrAdminUpdateEmployee).to(directExchange).with(BINDING_KEY_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE);
-    }
 
     /**
      * Admin -> Manager; adminUpdateManager methodu ile iletisime gecen kuyruk
@@ -121,21 +108,6 @@ public class RabbitMQConfig {
         return new Queue(QUEUE_ADMIN_UPDATE_MANAGER);
     }
 
-
-    /**
-     * Manager -> Employee ; getEmployeesByManagerId methodu ile iletişime geçen kuyruk.
-     */
-
-    private final String QUEUE_GET_EMPLOYEES_BY_MANAGER_ID = "get-employees-by-manager-id-queue";
-    private final String BINDING_KEY_GET_EMPLOYEES_BY_MANAGER_ID = "get-employees-by-manager-id-binding-key";
-    @Bean
-    Queue queueGetEmployeesByManagerId(){
-        return new Queue(QUEUE_GET_EMPLOYEES_BY_MANAGER_ID);
-    }
-    @Bean
-    Binding bindingGetEmployeesByManagerId(final DirectExchange directExchange, final Queue queueGetEmployeesByManagerId){
-        return BindingBuilder.bind(queueGetEmployeesByManagerId).to(directExchange).with(BINDING_KEY_GET_EMPLOYEES_BY_MANAGER_ID);
-    }
 
 
 

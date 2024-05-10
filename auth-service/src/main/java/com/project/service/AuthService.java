@@ -2,7 +2,6 @@ package com.project.service;
 
 import com.project.dto.request.*;
 import com.project.dto.response.AuthLoginResponseDto;
-import com.project.dto.response.RegisterManagerResponseDto;
 import com.project.entity.Auth;
 import com.project.exception.AuthServiceException;
 import com.project.exception.ErrorType;
@@ -67,7 +66,7 @@ public class AuthService {
 
         Auth auth = AuthMapper.INSTANCE.fromRegisterManagerRequestDtoToAuth(dto);
         auth.setRole(ERole.MANAGER);
-        auth.setPassword(dto.getName() + CodeGenerator.generateCode() + ".");
+        auth.setPassword(dto.getName().substring(0,1).toUpperCase()+ dto.getName().toLowerCase() + CodeGenerator.generateCode() + ".");
         auth.setCreateAt(System.currentTimeMillis());
         authRepository.save(auth);
         createManagerProducer.sendMessage(CreateManagerModel.builder()  //
@@ -90,7 +89,7 @@ public class AuthService {
         String name = normalizeAndRemoveSpaces(dto.getName().toLowerCase());
         String surname = normalizeAndRemoveSpaces(dto.getSurname().toLowerCase());
         String password = name + surname+ CodeGenerator.generateCode() +".";
-        String employeeEmail = name + "." + surname + "@" + dto.getCompanyName() + ".com";
+        String employeeEmail = name + "." + surname + "@" + dto.getCompanyName().toLowerCase() + ".com";
 
         Optional<Auth> OptionalAuth = authRepository.findOptionalByEmail(employeeEmail);
         if (OptionalAuth.isPresent())
@@ -118,6 +117,10 @@ public class AuthService {
                 .occupation(dto.getOccupation())
                 .companyName(dto.getCompanyName())
                 .status(EStatus.ACTIVE)
+                .managerId(dto.getManagerId())
+                .jobStartDate(dto.getJobStartDate())
+                .createAt(System.currentTimeMillis())
+                .updateAt(System.currentTimeMillis())
                 .build());
 
         return true;

@@ -18,34 +18,15 @@ public class RabbitMQConfig {
     }
 
     /**
-     * Manager -> Employee; ManagerOrAdminUpdateEmployee methodu ile iletisime gecen kuyruk
-     * Admin -> Employee; ManagerOrAdminUpdateEmployee methodu ile iletisime gecen kuyruk
-     */
-    private final String QUEUE_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE = "manager-or-admin-update-employee-queue";
-    @Bean
-    Queue queueManagerOrAdminUpdateEmployee(){
-        return new Queue(QUEUE_MANAGER_OR_ADMIN_UPDATE_EMPLOYEE);
-    }
-
-    /**
      * Auth -> Employee; saveEmployee methodu ile iletisime gecen kuyruk
      */
     private final String QUEUE_AUTH_CREATE_EMPLOYEE = "auth-create-employee-queue";
 
     @Bean
-    Queue queueSaveEmployee(){
+    Queue queueAuthCreateEmployee(){
         return new Queue(QUEUE_AUTH_CREATE_EMPLOYEE);
     }
 
-    /**
-     * Manager -> Employee getEmployeesByManagerId methodu ile iletisime gecen kuyruk
-     */
-    private final String QUEUE_GET_EMPLOYEES_BY_MANAGER_ID = "get-employees-by-manager-id-queue";
-
-    @Bean
-    Queue queueGetEmployeesByManagerId(){
-        return new Queue(QUEUE_GET_EMPLOYEES_BY_MANAGER_ID);
-    }
 
 
 

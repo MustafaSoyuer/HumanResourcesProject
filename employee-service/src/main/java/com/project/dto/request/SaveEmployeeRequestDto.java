@@ -1,6 +1,6 @@
 package com.project.dto.request;
 
-import com.project.utility.EStatus;
+import com.project.utility.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class SaveEmployeeRequestDto {
 
     private Long authId;
-    private Long managerId; //TODO: model de istemiyoruz nasıl yapılacak. authtan geliyor getIdFromToken?
+    private Long managerId;
     private String name;
     private String surname;
     private String identityNumber;
@@ -25,6 +25,9 @@ public class SaveEmployeeRequestDto {
     private String occupation;
     private String companyName;
     private EStatus status;
+    private Long jobStartDate;
+    private Long createAt;
+    private Long updateAt;
 
 
 

@@ -2,7 +2,10 @@ package com.project.rabbitmq.model;
 
 
 import com.project.utility.enums.EStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -25,4 +28,8 @@ public class CreateEmployeeModel implements Serializable {
     private String occupation;
     private String companyName;
     private EStatus status;
+    private Long createAt;
+    private Long updateAt;
+    private Long managerId;
+    private Long jobStartDate;
 }
