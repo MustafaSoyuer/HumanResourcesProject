@@ -4,7 +4,6 @@ import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
-import com.project.dto.response.GetEmployeesByManagerIdResponseDto;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
@@ -39,14 +38,21 @@ public class EmployeeService {
 
     //TODO: Employee bilgilerini guncellerken girmediğim bilgiler null geliyor
     public Boolean updateEmployee(UpdateEmployeeRequestDto dto) {
-        Optional<Employee> employee = employeeRepository.findById(dto.getId());
-        if (employee.isEmpty()) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(dto.getId());
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            employee.setName(dto.getName());
+            employee.setSurname(dto.getSurname());
+            employee.setBirthDate(dto.getBirthDate());
+            employee.setPhoneNumber(dto.getPhoneNumber());
+            employee.setAddress(dto.getAddress());
+            employee.setAvatar(dto.getAvatar());
+            employee.setUpdateAt(System.currentTimeMillis());
+            employeeRepository.save(employee);
+            return true;
+        }else{
             throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
         }
-        employee.get().setUpdateAt(System.currentTimeMillis());
-
-        employeeRepository.save(EmployeeMapper.INSTANCE.fromUpdateEmployeeRequestDtoToEmployee(dto));
-        return true;
     }
 
     public Boolean managerOrAdminUpdateEmployee(ManagerOrAdminUpdateEmployeeRequestDto dto) {
@@ -60,33 +66,16 @@ public class EmployeeService {
         return true;
     }
 
-    public String normalizeAndRemoveSpaces(String input) {
-        String normalizedString = Normalizer.normalize(input,Normalizer.Form.NFD);
-        // Add the following lines to preserve the following characters
-        normalizedString = normalizedString.replace("ı","i");
-        normalizedString = normalizedString.replace("ö","o");
-        normalizedString = normalizedString.replace("ü","u");
-        normalizedString = normalizedString.replace("ç","c");
-        normalizedString = normalizedString.replace("ş","s");
-        normalizedString = normalizedString.replace("ğ","g");
-
-        normalizedString = normalizedString.replaceAll("[^\\p{ASCII}]","");
-        normalizedString = normalizedString.replaceAll("\\s+","");
-
-        return normalizedString;
-    }
-
-
 
 
     /**
      * Manager employee listesini getirir.
-     * @param dto
+     * @param managerId
      * @return
      */
-    public List<GetEmployeesByManagerIdResponseDto> getEmployeesByManagerId(GetEmployeesByManagerIdRequestDto dto) {
+    public List<Employee> getEmployeesByManagerId(Long managerId) {
 
-        return employeeRepository.findByManagerId(dto);
+        return employeeRepository.findByManagerId(managerId);
     }
 
 

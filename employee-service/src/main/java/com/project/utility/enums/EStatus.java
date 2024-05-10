@@ -1,4 +1,4 @@
-package com.project.utility;
+package com.project.utility.enums;
 
 public enum EStatus {
 

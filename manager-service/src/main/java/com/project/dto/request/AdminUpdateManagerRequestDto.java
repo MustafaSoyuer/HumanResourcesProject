@@ -1,7 +1,7 @@
 package com.project.dto.request;
 
+import com.project.utility.enums.EGender;
 import com.project.utility.enums.EStatus;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,9 +23,9 @@ public class AdminUpdateManagerRequestDto {
     private String email;
     private String password;
     private String address;
-    private Long occupation;
+    private String occupation;
     private String companyId;
-    private String gender;
+    private EGender gender;
     private String jobStartDate;
     private Long updateAt;
     private EStatus status;

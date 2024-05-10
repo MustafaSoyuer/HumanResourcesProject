@@ -1,7 +1,5 @@
 package com.project.repository;
 
-import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
-import com.project.dto.response.GetEmployeesByManagerIdResponseDto;
 import com.project.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,5 +11,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Optional<Employee> findOptionalByIdentityNumber(String identityNumber);
 
-    List<GetEmployeesByManagerIdResponseDto> findByManagerId(GetEmployeesByManagerIdRequestDto dto);
+    List<Employee> findByManagerId(Long managerId);
 }

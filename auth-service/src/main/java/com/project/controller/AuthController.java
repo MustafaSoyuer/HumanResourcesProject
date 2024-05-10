@@ -3,7 +3,6 @@ package com.project.controller;
 import com.project.dto.request.*;
 import com.project.dto.response.AuthLoginResponseDto;
 import com.project.dto.response.BasicResponse;
-import com.project.dto.response.RegisterManagerResponseDto;
 import com.project.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

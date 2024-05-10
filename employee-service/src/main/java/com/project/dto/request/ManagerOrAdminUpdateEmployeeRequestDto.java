@@ -1,7 +1,6 @@
 package com.project.dto.request;
 
-import com.project.utility.EStatus;
-import jakarta.persistence.Id;
+import com.project.utility.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

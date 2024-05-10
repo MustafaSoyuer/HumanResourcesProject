@@ -1,6 +1,6 @@
 package com.project.entity;
 
-import com.project.utility.EStatus;
+import com.project.utility.enums.EStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
