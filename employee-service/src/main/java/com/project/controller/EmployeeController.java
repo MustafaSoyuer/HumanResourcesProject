@@ -4,6 +4,7 @@ import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.BasicResponse;
+import com.project.dto.response.EmployeeResponseDto;
 import com.project.entity.Employee;
 import com.project.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +64,12 @@ public class EmployeeController {
                 .data(employeeService.getEmployeesByManagerId(managerId))
                 .build()
         );
+    }
+
+    @GetMapping(FIND_BY_TOKEN)
+    @CrossOrigin("*")
+    public ResponseEntity<EmployeeResponseDto> findUserByToken(@RequestParam String token) {
+        return ResponseEntity.ok(employeeService.findEmployeeByToken(token));
     }
 
 

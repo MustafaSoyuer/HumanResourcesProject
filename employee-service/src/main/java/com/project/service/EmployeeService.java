@@ -4,6 +4,7 @@ import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
+import com.project.dto.response.EmployeeResponseDto;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
@@ -78,9 +79,14 @@ public class EmployeeService {
         return employeeRepository.findByManagerId(managerId);
     }
 
-
-
-
+    public EmployeeResponseDto findEmployeeByToken(String token) {
+        Optional<Long> authId = jwtTokenManager.getIdFromToken(token);
+        if(authId.isPresent()){
+            Employee employee = employeeRepository.findByAuthId(authId.get()).get();
+            return  EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
+        }
+        throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+    }
 
 
 //TODO

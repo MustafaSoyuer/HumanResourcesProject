@@ -17,8 +17,12 @@ public class RestApiUrls {
     public static final String REJECT_LEAVE = "/reject-leave";
     public static final String GET_ALL_LEAVES_OF_EMPLOYEE = "/get-all-leaves-of-employee";
     public static final String GET_ALL_PENDING_LEAVES_OF_EMPLOYEES = "/get-all-pending-leaves-of-employees";
+    public static final String FIND_MANAGER_BY_TOKEN= EMPLOYEE +"/find-manager-by-token";
+
 
     //EMPLOYEE
     public static final String FIND_ALL_MY_LEAVES = "/find-all-my-leaves";
     public static final String REQUEST_LEAVE = "/request-leave";
+    public static final String FIND_EMPLOYEE_BY_TOKEN= EMPLOYEE +"/find-employee-by-token";
+
 }
