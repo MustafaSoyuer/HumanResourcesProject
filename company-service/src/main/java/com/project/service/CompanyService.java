@@ -10,7 +10,6 @@ import com.project.dto.response.ManagerCompanyResponseDto;
 import com.project.entity.Company;
 import com.project.exception.CompanyServiceException;
 import com.project.exception.ErrorType;
-import com.project.manager.ManagerManager;
 import com.project.mapper.CompanyMapper;
 import com.project.rabbitmq.model.ApproveManagerModel;
 import com.project.rabbitmq.model.RejectManagerModel;
@@ -33,7 +32,7 @@ public class CompanyService {
     private final CompanyMapper companyMapper;
     private final ApproveManagerProducer approveManagerProducer;
     private final RejectManagerProducer rejectManagerProducer;
-    private final ManagerManager managerManager;
+
 
 
     public void createCompany(CompanyCreateRequestDto dto) {
@@ -42,8 +41,6 @@ public class CompanyService {
 
     public Boolean updateCompany(CompanyUpdateRequestDto dto) {
 
-        ManagerCompanyResponseDto companyResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
-                .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
 
        // Company company = companyRepository.findById(dto.getC()).orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
 
