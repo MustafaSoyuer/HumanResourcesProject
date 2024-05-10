@@ -18,6 +18,7 @@ import org.springframework.data.annotation.Id;
 public class CompanyUpdateRequestDto {
 
     private String id;
+    private String token;
     private Long managerId;
     private String name;
     private String title;
