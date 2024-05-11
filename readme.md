@@ -80,4 +80,8 @@
 - authId employee a gelmedi
 - updateAt status set/get ile metod içinde
 - emplooye autha gönderilecek 
-     
+
+## 11 Mayıs;
+
+- Identity kontrolü gerekiyor employee için. kayıt işlemlerinde aynı identityNo ile kayıt yapılmasın serviste kontrol edilcek. (AUTH'TA emaile bakıyo değişcek)
+- Tekrar uygulamayı çalıştırmadan önce employee tbl silinecek
