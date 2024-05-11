@@ -33,4 +33,8 @@ public class RestApiUrls {
     public static final String ADD_EXPENSE = "/add-expenses";
     public static final String UPDATE_SALARY_EMPLOYEE = "/update-salary-employee";
 
+    public static final String GET_ALL_EQUIPMENT_OF_EMPLOYEE = "/get-all-equipment-of-employee";
+    public static final String ADD_EQUIPMENT = "/add-equipment";
+    public static final String RETURN_EQUIPMENT = "/return-equipment";
+    public static final String REQUEST_EQUIPMENT = "/request-equipment";
 }
