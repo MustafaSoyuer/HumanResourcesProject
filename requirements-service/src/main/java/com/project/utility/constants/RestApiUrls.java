@@ -21,5 +21,5 @@ public class RestApiUrls {
     //EMPLOYEE
     public static final String FIND_ALL_MY_LEAVES = "/find-all-my-leaves";
     public static final String REQUEST_LEAVE = "/request-leave";
-
+    public static final String FIND_EMPLOYEE_BY_TOKEN = "/find-employee-by-token";
 }

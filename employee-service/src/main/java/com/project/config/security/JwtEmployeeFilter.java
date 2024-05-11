@@ -21,24 +21,25 @@ public class JwtEmployeeFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenManager jwtTokenManager;
     @Autowired
-    private JwtUserDetail userDetail;
+    private JwtUserDetail employeeDetail;
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
 
-        final String employeeHeader=request.getHeader("Authorization");
+        final String authHeader=request.getHeader("Authorization");
 
-        log.info("gelen token...: "  + employeeHeader);
+        log.info("gelen token...: "  + authHeader);
         log.info("Tüm istekler buraya düşecek ve burada auth kontrol yapılacak.");
-        if (Objects.nonNull(employeeHeader) && employeeHeader.startsWith("Bearer ")){
-            String token=employeeHeader.substring(7);
+        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")){
+            String token=authHeader.substring(7);
             log.info("Token...: " + token);
 
-            Optional<Long> id=jwtTokenManager.validateToken(token);
+            Optional<Long> id=jwtTokenManager.getIdFromToken(token);
+
             if (id.isPresent()){
-                UserDetails userDetails= userDetail.getEmployeeById(id.get());
+                UserDetails userDetails= employeeDetail.getAuthById(id.get());
                 UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(
                         userDetails,null,userDetails.getAuthorities()
                 );

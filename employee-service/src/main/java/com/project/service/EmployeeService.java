@@ -1,6 +1,5 @@
 package com.project.service;
 
-import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
@@ -16,7 +15,6 @@ import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.Normalizer;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,8 +67,6 @@ public class EmployeeService {
         return true;
     }
 
-
-
     /**
      * Manager employee listesini getirir.
      * @param managerId
@@ -103,6 +99,16 @@ public class EmployeeService {
             return  EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
         }
         throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+    }
+
+    public EmployeeResponseDto findById(Long id) {
+
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        if (optionalEmployee.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        Employee employee = optionalEmployee.get();
+        return EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
     }
 
 

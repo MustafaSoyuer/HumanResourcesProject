@@ -24,13 +24,13 @@ public class LeaveManagerController {
      * @param dto
      * @return
      */
-    @PostMapping(ADD_LEAVE)
+    @PutMapping(ADD_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> addLeaveToEmployee(@RequestBody AddLeaveRequestDto dto){
         leaveService.addLeaveToEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                         .status(200)
-                        .message("Leave added")
+                        .message("Leave added successfully to employee from manager.")
                         .data(true)
                 .build());
     }
@@ -40,7 +40,7 @@ public class LeaveManagerController {
      * @param dto
      * @return
      */
-    @PostMapping(APPROVE_LEAVE)
+    @PutMapping(APPROVE_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> approveLeave(@RequestBody BaseRequestForRequirementsDto dto){
         leaveService.approveLeaveForEmployee(dto);
@@ -56,9 +56,9 @@ public class LeaveManagerController {
      * @param dto
      * @return
      */
-    @PostMapping(REJECT_LEAVE)
+    @PutMapping(REJECT_LEAVE)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> rejectLeaveOfEmployee(@RequestBody RejectLeaveRequestDto dto){
+    public ResponseEntity<BasicResponse<Boolean>> rejectLeaveOfEmployee(@RequestBody BaseRequestForRequirementsDto dto){
         leaveService.rejectLeaveForEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
@@ -74,11 +74,11 @@ public class LeaveManagerController {
      */
     @GetMapping(GET_ALL_LEAVES_OF_EMPLOYEE)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<List<BaseLeaveResponseDto>>> getAllLeavesOfEmployee(@RequestBody BaseRequestForEmployeeDto dto){
-        return ResponseEntity.ok(BasicResponse.<List<BaseLeaveResponseDto>>builder()
+    public ResponseEntity<BasicResponse<List<Leave>>> getAllLeavesOfEmployee(@RequestParam String token,@RequestParam Long employeeId){
+        return ResponseEntity.ok(BasicResponse.<List<Leave>>builder()
                 .status(200)
                 .message("Leaves for an employee are found.")
-                .data(leaveService.findAllLeavesOfAnEmployee(dto))
+                .data(leaveService.findAllLeavesOfAnEmployee(token,employeeId))
                 .build());
     }
 
@@ -89,11 +89,11 @@ public class LeaveManagerController {
      */
     @GetMapping(GET_ALL_PENDING_LEAVES_OF_EMPLOYEES)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<List<BaseLeaveResponseDto>>> getAllPendingLeavesOfEmployees(@RequestBody BaseRequestPendingLeavesDto dto){
-        return ResponseEntity.ok(BasicResponse.<List<BaseLeaveResponseDto>>builder()
+    public ResponseEntity<BasicResponse<List<Leave>>> getAllPendingLeavesOfEmployees(@RequestParam String token){
+        return ResponseEntity.ok(BasicResponse.<List<Leave>>builder()
                 .status(200)
                 .message("Pending leaves for manager are found.")
-                .data(leaveService.findAllPendingLeavesOfEmployees(dto))
+                .data(leaveService.findAllPendingLeavesOfEmployees(token))
                 .build());
     }
 

@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseRequestDto {
-    String token; //authId'yi bulacak.
+    private String token; //authId'yi bulacak.
 }

@@ -20,6 +20,6 @@ public interface EmployeeMapper {
 
     Employee fromSaveEmployeeRequestDtoToEmployee(final SaveEmployeeRequestDto dto);
 
-    EmployeeResponseDto fromEmployeeToEmployeeResponseDto(Employee employee);
+    EmployeeResponseDto fromEmployeeToEmployeeResponseDto(final Employee employee);
 
 }

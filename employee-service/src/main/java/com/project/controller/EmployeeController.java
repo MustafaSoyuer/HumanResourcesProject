@@ -1,7 +1,5 @@
 package com.project.controller;
 
-import com.project.dto.request.ActivateEmployeeRequestDto;
-import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.BasicResponse;
@@ -67,20 +65,14 @@ public class EmployeeController {
         );
     }
 
-    @GetMapping(FIND_BY_TOKEN)
-    @CrossOrigin("*")
-    public ResponseEntity<EmployeeResponseDto> findUserByToken(@RequestParam String token) {
+    @GetMapping(FIND_EMPLOYEE_BY_TOKEN)
+    public ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam String token) {
         return ResponseEntity.ok(employeeService.findEmployeeByToken(token));
     }
 
-    public ResponseEntity<BasicResponse<Boolean>> activateEmployee(@RequestBody ActivateEmployeeRequestDto dto) {
-            employeeService.activateEmployee(dto);
-            return ResponseEntity.ok(BasicResponse.<Boolean>builder()
-                    .status(200)
-                    .message("Employee activated successfully")
-                    .data(true)
-                    .build()
-            );
+    @GetMapping(FIND_BY_ID)
+    public ResponseEntity<EmployeeResponseDto> findById(@RequestParam Long id) {
+        return ResponseEntity.ok(employeeService.findById(id));
     }
 
 
