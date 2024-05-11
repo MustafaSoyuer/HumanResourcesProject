@@ -69,6 +69,7 @@ public class LeaveService {
             Leave leave = optionalLeave.get();
             leave.setStatus(EStatus.ACTIVE);
             leave.setApprovalDate(System.currentTimeMillis());
+            leaveRepository.save(leave);
             return true;
         }else{
             throw new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD);
@@ -87,6 +88,7 @@ public class LeaveService {
             Leave leave = optionalLeave.get();
             leave.setStatus(EStatus.PASSIVE);
             leave.setApprovalDate(System.currentTimeMillis());
+            leaveRepository.save(leave);
             return true;
         }else{
             throw new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD);
