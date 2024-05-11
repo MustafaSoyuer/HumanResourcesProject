@@ -108,7 +108,7 @@ public class CompanyController {
      * @param
      * @return
      */
-    @PostMapping(APPROVE_COMPANY)
+    @PutMapping(APPROVE_COMPANY)
     @CrossOrigin("*")
    // @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<BasicResponse<Boolean>> approveCompany(@RequestBody CompanyTokenRequestDto dto) {
@@ -120,7 +120,7 @@ public class CompanyController {
                 .build());
     }
 
-    @PostMapping(REJECT_COMPANY )
+    @PutMapping(REJECT_COMPANY )
     @CrossOrigin("*")
     // @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<BasicResponse<Boolean>> rejectCompany(@RequestBody CompanyTokenRequestDto dto) {

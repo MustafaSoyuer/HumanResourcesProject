@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
+import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.BasicResponse;
 import com.project.dto.response.EmployeeResponseDto;
@@ -20,6 +21,10 @@ import static com.project.constants.RestApiUrls.*;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
+
+
+
+
     /**
      * Employeenin kendi bilgilerini güncellemesi icin method
      * @param dto
@@ -36,6 +41,7 @@ public class EmployeeController {
                 .build()
         );
     }
+
     /**
      * Managerin vey adminin employee bilgilerini güncellemesi icin method
      * @param dto
@@ -74,6 +80,25 @@ public class EmployeeController {
     public ResponseEntity<EmployeeResponseDto> findById(@RequestParam Long id) {
         return ResponseEntity.ok(employeeService.findById(id));
     }
+
+
+    /**
+     * RequirementsService ile feignclient ile haberleştirilen methodtur.
+     * Managerın employeenin expensesleini onaylamak için ihtiyaç duyduğu bir methodtur.
+     * @param id
+     * @return
+     */
+    @PutMapping(UPDATE_SALARY_EMPLOYEE)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<EmployeeResponseDto>> updateEmployeeSalary(@RequestParam Long id, @RequestParam Double salary) {
+        return ResponseEntity.ok(BasicResponse.<EmployeeResponseDto>builder()
+                .status(200)
+                .message("Employee salary updated successfully")
+                .data(employeeService.updateEmployeeSalary(id, salary))
+                .build()
+        );
+    }
+
 
 
 

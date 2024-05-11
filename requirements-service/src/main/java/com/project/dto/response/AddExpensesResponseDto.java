@@ -1,20 +1,19 @@
-package com.project.entity;
+package com.project.dto.response;
 
 import com.project.utility.enums.EExpenseType;
 import com.project.utility.enums.EStatus;
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tbl_expenses")
-public class Expenses {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AddExpensesResponseDto {
+
+
     private Long id;
     private Long employeeId;
     private Long managerId;
@@ -22,6 +21,5 @@ public class Expenses {
     private EExpenseType expenseType;
     private String document;
     private Long requestDate;
-    private Long approvalDate;
     private EStatus status;
 }

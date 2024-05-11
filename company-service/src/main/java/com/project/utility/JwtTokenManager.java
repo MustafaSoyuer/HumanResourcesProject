@@ -17,11 +17,11 @@ public class JwtTokenManager {
     private final String ISSUER ="workforce";
     private final Long EXDATE = 1000L * 60 * 5 ; // 5 minutes
 
-    public Optional<String> createToken (Long authId){
+    public Optional<String> createToken (Long id){
         String token;
         try{
             token = JWT.create().withAudience()
-                    .withClaim("authId", authId)
+                    .withClaim("id", id)
                     .withIssuer(ISSUER)
                     .withIssuedAt(new Date())
                     .withExpiresAt(new Date(System.currentTimeMillis() + EXDATE))
@@ -39,7 +39,7 @@ public class JwtTokenManager {
             DecodedJWT decodedJWT = verifier.verify(token);
             if(decodedJWT == null)
                 return Optional.empty();
-            Long companyId = decodedJWT.getClaim("authId").asLong();
+            Long companyId = decodedJWT.getClaim("id").asLong();
             return Optional.of(companyId);
         }catch (Exception e){
             return Optional.empty();
@@ -56,7 +56,7 @@ public class JwtTokenManager {
                 throw new CompanyServiceException(ErrorType.INVALID_TOKEN);
             }
 
-            Long id=decodedJWT.getClaim("authId").asLong();
+            Long id=decodedJWT.getClaim("id").asLong();
             return Optional.of(id);
 
         }catch (Exception e){

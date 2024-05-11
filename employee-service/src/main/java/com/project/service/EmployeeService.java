@@ -25,16 +25,13 @@ public class EmployeeService {
     private final JwtTokenManager jwtTokenManager;
 
 
-    public Boolean saveEmployee(SaveEmployeeRequestDto dto) {
-        Optional<Employee> employee = employeeRepository.findOptionalByIdentityNumber(dto.getIdentityNumber());
-        if (employee.isPresent()) {
+    public EmployeeResponseDto saveEmployee(SaveEmployeeRequestDto dto) {
+        Optional<Employee> optionalEmployee = employeeRepository.findOptionalByIdentityNumber(dto.getIdentityNumber());
+        if (optionalEmployee.isPresent()) {
             throw new EmployeeServiceException(ErrorType.EMPLOYEE_ALREADY_EXISTS);
         }
-
-        employeeRepository.save(EmployeeMapper.INSTANCE.fromSaveEmployeeRequestDtoToEmployee(dto));
-        return true;
-
-
+        Employee employee= employeeRepository.save(EmployeeMapper.INSTANCE.fromSaveEmployeeRequestDtoToEmployee(dto));
+        return EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
     }
 
     //TODO: Employee bilgilerini guncellerken girmediğim bilgiler null geliyor
@@ -108,6 +105,19 @@ public class EmployeeService {
             throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
         }
         Employee employee = optionalEmployee.get();
+        return EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
+    }
+
+    public EmployeeResponseDto updateEmployeeSalary(Long id, Double salary) {
+
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        if (optionalEmployee.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        Employee employee = optionalEmployee.get();
+        employee.setUpdateAt(System.currentTimeMillis());
+        employee.setSalary(salary);
+        employeeRepository.save(employee);
         return EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
     }
 

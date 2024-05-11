@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseRequestForRequirementsDto {
+public class BaseRequestExpensesDto {
     private String token;
     private Long requirementId;
+    private Long employeeId;
 
 }

@@ -20,6 +20,6 @@ public class RestApiUrls {
 
     public static final String GET_EMPLOYEES_BY_MANAGER_ID = "/get-employees-by-manager-id";
     public static final String FIND_BY_ID = "find-by-id";
-
+    public static final String UPDATE_SALARY_EMPLOYEE =  "/update-salary-employee";
 
 }

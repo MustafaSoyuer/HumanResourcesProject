@@ -33,7 +33,7 @@ public class Employee {
     private String jobStartDate;
     private String jobEndDate;
     private String position;
-    private String salary;
+    private Double salary;
     private String department;
     private String occupation;
     private String gender;

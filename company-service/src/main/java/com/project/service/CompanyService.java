@@ -44,9 +44,11 @@ public class CompanyService {
     }
 
     public Boolean updateCompany(CompanyUpdateRequestDto dto) {
+        System.out.println("Update mi sorun");
         ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
                 .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
         Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND));
+        System.out.println("2. update");
             company.setManagerId(manager.getId());
             company.setName(manager.getName());
             company.setTitle(dto.getTitle());
@@ -78,11 +80,8 @@ public class CompanyService {
 
 
     public List<CompanyGetAllResponseDto> getAll(String token) {
-        System.out.println("hata burada mı?");
         ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(token).getBody())
                 .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
-        System.out.println("yokas bura mı???");
-
         return companyRepository.findAll()
                 .stream()
                 .filter(company -> company.getStatus().equals(EStatus.ACTIVE))
@@ -103,14 +102,13 @@ public class CompanyService {
     }
 
     public Boolean approveCompany(CompanyTokenRequestDto dto) {
-        //todo ekle:
         ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
                 .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
         Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND));
 
         company.setStatus(EStatus.ACTIVE);
         company.setUpdateAt(System.currentTimeMillis());
-        updateCompany(CompanyMapper.INSTANCE.fromCompanyToCompanyUpdateRequestDto(company));
+        companyRepository.save(company);
         approveManagerProducer.sendMessage(ApproveManagerModel.builder()
                         .id(company.getId())
                         .managerId(company.getManagerId())
@@ -121,15 +119,12 @@ public class CompanyService {
     }
 
     public Boolean rejectCompany(CompanyTokenRequestDto dto) {
-        System.out.println("reject methodu..");
         ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
                 .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
-        System.out.println("kontrol2");
         Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND));
-        System.out.println("kontrol3");
         company.setStatus(EStatus.PASSIVE);
         company.setUpdateAt(System.currentTimeMillis());
-        updateCompany(CompanyMapper.INSTANCE.fromCompanyToCompanyUpdateRequestDto(company));
+        companyRepository.save(company);
         rejectManagerProducer.sendMessage(RejectManagerModel.builder()
                         .id(company.getId())
                         .managerId(company.getManagerId())
