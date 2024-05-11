@@ -7,6 +7,5 @@ buildscript {
 dependencies {
     implementation libs.springBootStarterDataJpa
     implementation libs.postgreSQL
-    implementation libs.springOpenFeign
-
+    implementation libs.springCloudOpenFeign
 }

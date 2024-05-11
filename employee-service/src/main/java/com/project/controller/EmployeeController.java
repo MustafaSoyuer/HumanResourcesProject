@@ -1,6 +1,5 @@
 package com.project.controller;
 
-import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.BasicResponse;
@@ -70,6 +69,13 @@ public class EmployeeController {
     public ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam String token) {
         return ResponseEntity.ok(employeeService.findEmployeeByToken(token));
     }
+
+    @GetMapping(FIND_BY_ID)
+    public ResponseEntity<EmployeeResponseDto> findById(@RequestParam Long id) {
+        return ResponseEntity.ok(employeeService.findById(id));
+    }
+
+
 
 // email _> ad.soyad@şirketadı.com
 }

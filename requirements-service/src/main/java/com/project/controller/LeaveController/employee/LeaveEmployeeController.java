@@ -4,6 +4,7 @@ import com.project.dto.request.BaseRequestDto;
 import com.project.dto.request.RequestLeaveDto;
 import com.project.dto.response.BaseLeaveResponseDto;
 import com.project.dto.response.BasicResponse;
+import com.project.entity.Leave;
 import com.project.service.LeaveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,19 +28,14 @@ public class LeaveEmployeeController {
 
     @GetMapping(FIND_ALL_MY_LEAVES)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<List<BaseLeaveResponseDto>>> findAllMyLeaves(@RequestBody BaseRequestDto dto) {
-        return ResponseEntity.ok(BasicResponse.<List<BaseLeaveResponseDto>>builder()
+    public ResponseEntity<BasicResponse<List<Leave>>> findAllMyLeaves(@RequestParam String token) {
+        return ResponseEntity.ok(BasicResponse.<List<Leave>>builder()
                 .status(200)
-                .message("Leaves are found.")
-                .data(leaveService.findAllMyLeavesForEmployee(dto))
+                .message("Leaves are successfully found.")
+                .data(leaveService.findAllMyLeavesForEmployee(token))
                 .build());
     }
-    /**
-     * TODO: Bu metoda beraber bakalımm servis kısmına da :D
-     *     Request leave yapalım mı? managerın onaylayacağı bir request gibii.
-     *     ama parametre token ve izin tarihi vs istememiz lazm
-     *     Bunu employee kendi ekleyecek.
-     */
+
     @PutMapping(REQUEST_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> requestLeave(@RequestBody RequestLeaveDto dto) {

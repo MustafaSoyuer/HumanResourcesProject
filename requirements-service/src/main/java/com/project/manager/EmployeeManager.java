@@ -13,4 +13,7 @@ public interface EmployeeManager {
 
     @GetMapping(FIND_EMPLOYEE_BY_TOKEN)
     ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam String token);
+
+    @GetMapping("/find-by-id")
+    public ResponseEntity<EmployeeResponseDto> findById(@RequestParam Long id);
 }
