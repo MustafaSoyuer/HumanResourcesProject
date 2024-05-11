@@ -30,7 +30,6 @@ ext{
             springCloudCircuitBreaker           : "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:${versions.springCircuit}",
             springCloudCircuitBreakerReactive   : "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j:${versions.springCircuit}",
             springBootMailSender                : "org.springframework.boot:spring-boot-starter-mail:${versions.springBoot}",
-            springOpenFeign                     : "org.springframework.cloud:spring-cloud-starter-openfeign:${versions.springCloud}",
             jwt                                 : "com.auth0:java-jwt:${versions.jwt}"
 
     ]

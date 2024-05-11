@@ -4,9 +4,11 @@ import com.project.dto.request.AdminUpdateManagerRequestDto;
 import com.project.dto.request.SaveManagerRequestDto;
 import com.project.dto.request.UpdateManagerRequestDto;
 import com.project.dto.response.ManagerCompanyResponseDto;
+import com.project.dto.response.ManagerResponseDto;
 import com.project.dto.response.SaveManagerResponseDto;
 import com.project.entity.Manager;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -24,5 +26,7 @@ public interface ManagerMapper {
 
     Manager fromAdminUpdateManagerRequestDtoToManager(final AdminUpdateManagerRequestDto dto);
 
-    ManagerCompanyResponseDto fromManagerToManagerCompanyResponseDto(final Manager manager);
+
+    //@Mapping(source = "id",target = "managerId")
+    ManagerResponseDto fromManagerToManagerResponseDto(final Manager manager);
 }

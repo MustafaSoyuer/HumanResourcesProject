@@ -1,6 +1,7 @@
 package com.project.manager;
 
-import com.project.dto.response.ManagerCompanyResponseDto;
+
+import com.project.dto.response.ManagerResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ManagerManager {
 
     @GetMapping("/find-by-token")
-    ResponseEntity<ManagerCompanyResponseDto> findByToken(@RequestParam String token);
-
-
+   ResponseEntity<ManagerResponseDto> findByToken(@RequestParam String token);
 }

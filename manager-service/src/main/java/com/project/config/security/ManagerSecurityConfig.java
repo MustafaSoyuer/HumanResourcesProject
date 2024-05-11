@@ -28,6 +28,7 @@ public class ManagerSecurityConfig {
                                 "/v3/api-docs/**"
                         ).permitAll()
                         .requestMatchers("/dev/v1/manager/**").permitAll()
+                        .requestMatchers("/dev/v1/company/**").permitAll()
                         .anyRequest()
                         .authenticated()
                 );

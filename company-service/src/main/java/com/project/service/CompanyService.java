@@ -6,7 +6,7 @@ import com.project.dto.request.CompanyCreateRequestDto;
 import com.project.dto.request.CompanyUpdateRequestDto;
 import com.project.dto.response.CompanyGetAllResponseDto;
 import com.project.dto.response.CompanyManagerResponseDto;
-import com.project.dto.response.ManagerCompanyResponseDto;
+import com.project.dto.response.ManagerResponseDto;
 import com.project.entity.Company;
 import com.project.exception.CompanyServiceException;
 import com.project.exception.ErrorType;
@@ -33,7 +33,10 @@ public class CompanyService {
     private final CompanyMapper companyMapper;
     private final ApproveManagerProducer approveManagerProducer;
     private final RejectManagerProducer rejectManagerProducer;
+
     private final ManagerManager managerManager;
+
+
 
 
     public void createCompany(CompanyCreateRequestDto dto) {
@@ -41,27 +44,24 @@ public class CompanyService {
     }
 
     public Boolean updateCompany(CompanyUpdateRequestDto dto) {
-
-        ManagerCompanyResponseDto companyResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+        System.out.println("1. ....company hatası mı?" + dto.getId());
+        ManagerResponseDto managerResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
                 .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
+        System.out.println("company hatası mı?" + managerResponseDto.getId());
+        Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND));
 
-       // Company company = companyRepository.findById(dto.getC()).orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
-
-        Optional<Company> optionalCompany = companyRepository.findById(dto.getId());
         System.out.println("Sorun bura mı?");
-        if (optionalCompany.isPresent()) {
-            Company company = optionalCompany.get();
-            company.setManagerId(dto.getManagerId());
-            company.setName(dto.getName());
+            company.setManagerId(managerResponseDto.getId());
+            company.setName(managerResponseDto.getName());
             company.setTitle(dto.getTitle());
             company.setDescription(dto.getDescription());
             company.setAddress(dto.getAddress());
             company.setPhone(dto.getPhone());
-            company.setEmail(dto.getEmail());
+            company.setEmail(managerResponseDto.getEmail());
             company.setWebsite(dto.getWebsite());
             company.setLogo(dto.getLogo());
             company.setSector(dto.getSector());
-            company.setTaxNumber(dto.getTaxNumber());
+            company.setTaxNumber(managerResponseDto.getTaxNumber());
             company.setTaxOffice(dto.getTaxOffice());
             company.setMersisNo(dto.getMersisNo());
             company.setVision(dto.getVision());
@@ -78,10 +78,7 @@ public class CompanyService {
             System.out.println("yoksa bura mı?");
             companyRepository.save(company);
             return true;
-        } else {
-            System.out.println("ya da burası?");
-            throw new CompanyServiceException(ErrorType.ERROR_INVALID_COMPANY_ID);
-        }
+
     }
 
 

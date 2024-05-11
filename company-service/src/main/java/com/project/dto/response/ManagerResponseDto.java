@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ManagerCompanyResponseDto {
+public class ManagerResponseDto {
 
     private Long id;
     private Long authId;
