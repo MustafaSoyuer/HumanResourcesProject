@@ -66,14 +66,10 @@ public class EmployeeController {
         );
     }
 
-    @GetMapping(FIND_BY_TOKEN)
-    @CrossOrigin("*")
-    public ResponseEntity<EmployeeResponseDto> findUserByToken(@RequestParam String token) {
+    @GetMapping(FIND_EMPLOYEE_BY_TOKEN)
+    public ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam String token) {
         return ResponseEntity.ok(employeeService.findEmployeeByToken(token));
     }
-
-
-
 
 // email _> ad.soyad@şirketadı.com
 }

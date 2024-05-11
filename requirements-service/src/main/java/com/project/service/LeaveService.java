@@ -2,9 +2,11 @@ package com.project.service;
 
 import com.project.dto.request.*;
 import com.project.dto.response.BaseLeaveResponseDto;
+import com.project.dto.response.EmployeeResponseDto;
 import com.project.entity.Leave;
 import com.project.exception.ErrorType;
 import com.project.exception.RequirementsServiceException;
+import com.project.manager.EmployeeManager;
 import com.project.mapper.LeaveMapper;
 import com.project.repository.LeaveRepository;
 import com.project.utility.JwtTokenManager;
@@ -25,6 +27,7 @@ public class LeaveService {
     private final LeaveRepository leaveRepository;
     private final JwtTokenManager jwtTokenManager;
     private final LeaveCalculator leaveCalculator;
+    private final EmployeeManager employeeManager;
 
     /**
      * TODO: Bu metotlarda token authId buluyor ya, yapılan örnekler değişken baya
@@ -122,6 +125,8 @@ public class LeaveService {
         if (authId.isEmpty()){
             throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
         }
+        // employee ıd dönen ve benim authId ilettiğim eployee servisteki bir metot
+
         System.out.println("managerin auth id si olması lazım ");
         Optional<List<Leave>> leaves= leaveRepository.findOptionalByAuthId(authId.get());
         if (leaves.isEmpty()){
@@ -135,9 +140,13 @@ public class LeaveService {
     }
 
     //TODO: Bu metodu beraber inceleyebiliriz hem gün hesabı hem belli enum seçebilmesi için yazdım
+
     public Boolean requestLeaveFromEmployee(RequestLeaveDto dto) {
-        Optional<Long> authId=  jwtTokenManager.getIdFromToken(dto.getToken());
-        if (authId.isEmpty()){
+
+        EmployeeResponseDto responseDto = Optional.ofNullable(employeeManager.findEmployeeByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND));
+        System.out.println("responseDto.getId() değeri null mu?" + responseDto.getId());
+        if (responseDto.getId() == null){
             throw new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
         }
         Double numberOfDays = leaveCalculator.calculateNumberOfDays(dto.getStartDate(), dto.getEndDate());
@@ -148,7 +157,8 @@ public class LeaveService {
         ELeaveType leaveType = ELeaveType.valueOf(leaveTypeString);
         leaveRepository.save(Leave.builder()
                 .leaveType(leaveType)
-                .employeeId(authId.get())
+                .employeeId(responseDto.getId())
+                .managerId(responseDto.getManagerId())
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
                 .numberOfDays(numberOfDays)

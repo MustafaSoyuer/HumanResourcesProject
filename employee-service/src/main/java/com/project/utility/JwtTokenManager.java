@@ -17,11 +17,11 @@ public class JwtTokenManager {
     private final String ISSUER ="workforce";
     private final Long EXDATE = 1000L * 60 * 5 ; // 5 minutes
 
-    public Optional<String> createToken (Long authId){
+    public Optional<String> createToken (Long id){
         String token;
         try{
             token = JWT.create().withAudience()
-                    .withClaim("authId", authId)
+                    .withClaim("id", id)
                     .withIssuer(ISSUER)
                     .withIssuedAt(new Date())
                     .withExpiresAt(new Date(System.currentTimeMillis() + EXDATE))
@@ -39,8 +39,8 @@ public class JwtTokenManager {
             DecodedJWT decodedJWT = verifier.verify(token);
             if(decodedJWT == null)
                 return Optional.empty();
-            Long employeeId = decodedJWT.getClaim("authId").asLong();
-            return Optional.of(employeeId);
+            Long authId = decodedJWT.getClaim("authid").asLong();
+            return Optional.of(authId);
         }catch (Exception e){
             return Optional.empty();
         }
@@ -51,18 +51,16 @@ public class JwtTokenManager {
             Algorithm algorithm=Algorithm.HMAC512(SECRETKEY);
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(ISSUER).build();
             DecodedJWT decodedJWT= verifier.verify(token);
-
             if (decodedJWT==null){
                 throw new EmployeeServiceException(ErrorType.INVALID_TOKEN);
             }
-
-            Long id=decodedJWT.getClaim("authId").asLong();
+            Long id=decodedJWT.getClaim("id").asLong();
             return Optional.of(id);
-
         }catch (Exception e){
             System.out.println(e.getMessage());
             throw new EmployeeServiceException(ErrorType.INVALID_TOKEN);
         }
     }
+
 
 }

@@ -12,7 +12,7 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI customize (){
-        String securitySchemaName="bearerUser";
+        String securitySchemaName="bearearAuth";
         return  new OpenAPI()
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemaName))
                 .components(new Components().addSecuritySchemes(securitySchemaName,new SecurityScheme()

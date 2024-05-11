@@ -9,7 +9,7 @@ public class RestApiUrls {
     public static final String EMPLOYEE = ROOT + "/employee";
 
     public static final String ADD_EMPLOYEE =  "/add-employee";
-    public static final String FIND_BY_TOKEN = "/find-by-token";
+    public static final String FIND_EMPLOYEE_BY_TOKEN = "/find-employee-by-token";
 
     public static final String UPDATE_EMPLOYEE =  "/update-employee";
 

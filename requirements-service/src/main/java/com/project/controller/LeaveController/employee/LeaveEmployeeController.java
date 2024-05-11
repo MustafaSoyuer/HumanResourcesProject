@@ -40,13 +40,13 @@ public class LeaveEmployeeController {
      *     ama parametre token ve izin tarihi vs istememiz lazm
      *     Bunu employee kendi ekleyecek.
      */
-    @PostMapping(REQUEST_LEAVE)
+    @PutMapping(REQUEST_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> requestLeave(@RequestBody RequestLeaveDto dto) {
         leaveService.requestLeaveFromEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
-                .message("Leave requested by employee.")
+                .message("Leave requested by employee successfully.")
                 .data(true)
                 .build());
     }
