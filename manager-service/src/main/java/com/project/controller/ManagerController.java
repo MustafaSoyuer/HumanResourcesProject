@@ -67,6 +67,7 @@ public class ManagerController {
 
     @GetMapping("/find-by-token")
     public ResponseEntity<ManagerResponseDto> findByToken(@RequestParam String token){
+        System.out.println("token = " + token);
         return ResponseEntity.ok(managerService.findByToken(token));
     }
 

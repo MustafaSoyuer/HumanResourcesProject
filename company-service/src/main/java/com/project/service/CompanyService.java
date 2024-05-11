@@ -1,7 +1,7 @@
 package com.project.service;
 
 
-import com.project.dto.request.ApproveAndRejectCompanyRequestDto;
+import com.project.dto.request.CompanyTokenRequestDto;
 import com.project.dto.request.CompanyCreateRequestDto;
 import com.project.dto.request.CompanyUpdateRequestDto;
 import com.project.dto.response.CompanyGetAllResponseDto;
@@ -44,24 +44,20 @@ public class CompanyService {
     }
 
     public Boolean updateCompany(CompanyUpdateRequestDto dto) {
-        System.out.println("1. ....company hatası mı?" + dto.getId());
-        ManagerResponseDto managerResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+        ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
                 .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
-        System.out.println("company hatası mı?" + managerResponseDto.getId());
         Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND));
-
-        System.out.println("Sorun bura mı?");
-            company.setManagerId(managerResponseDto.getId());
-            company.setName(managerResponseDto.getName());
+            company.setManagerId(manager.getId());
+            company.setName(manager.getName());
             company.setTitle(dto.getTitle());
             company.setDescription(dto.getDescription());
             company.setAddress(dto.getAddress());
             company.setPhone(dto.getPhone());
-            company.setEmail(managerResponseDto.getEmail());
+            company.setEmail(manager.getEmail());
             company.setWebsite(dto.getWebsite());
             company.setLogo(dto.getLogo());
             company.setSector(dto.getSector());
-            company.setTaxNumber(managerResponseDto.getTaxNumber());
+            company.setTaxNumber(manager.getTaxNumber());
             company.setTaxOffice(dto.getTaxOffice());
             company.setMersisNo(dto.getMersisNo());
             company.setVision(dto.getVision());
@@ -75,15 +71,18 @@ public class CompanyService {
             company.setMembershipPlan(dto.getMembershipPlan());
             company.setUpdateAt(System.currentTimeMillis());
             company.setStatus(EStatus.ACTIVE);
-            System.out.println("yoksa bura mı?");
             companyRepository.save(company);
             return true;
 
     }
 
 
-    public List<CompanyGetAllResponseDto> getAll() {
-        //TODO: token eklemesi yapılacak.
+    public List<CompanyGetAllResponseDto> getAll(String token) {
+        System.out.println("hata burada mı?");
+        ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(token).getBody())
+                .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
+        System.out.println("yokas bura mı???");
+
         return companyRepository.findAll()
                 .stream()
                 .filter(company -> company.getStatus().equals(EStatus.ACTIVE))
@@ -93,17 +92,22 @@ public class CompanyService {
 
 
     //statusu pending olan şirketleri listelemeye yarar
-    public List<CompanyManagerResponseDto> getAllPendingCompanies() {
+    public List<CompanyManagerResponseDto> getAllPendingCompanies(String token) {
+        ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(token).getBody())
+                .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
+
        return companyRepository.findAll().stream().
                 filter(company -> company.getStatus().equals(EStatus.PENDING))
-                .map(companyMapper::fromCompanyToCompanyManagerResponseDto).collect(Collectors.toList());
+                .map(companyMapper::fromCompanyToCompanyManagerResponseDto)
+               .collect(Collectors.toList());
     }
 
-    public Boolean approveCompany(ApproveAndRejectCompanyRequestDto dto) {
-        Optional<Company> optionalCompany= companyRepository.findById(dto.getId());
-        if (optionalCompany.isEmpty())
-            throw new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND);
-        Company company=optionalCompany.get();
+    public Boolean approveCompany(CompanyTokenRequestDto dto) {
+        //todo ekle:
+        ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
+        Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND));
+
         company.setStatus(EStatus.ACTIVE);
         company.setUpdateAt(System.currentTimeMillis());
         updateCompany(CompanyMapper.INSTANCE.fromCompanyToCompanyUpdateRequestDto(company));
@@ -116,11 +120,13 @@ public class CompanyService {
         return true;
     }
 
-    public Boolean rejectCompany(ApproveAndRejectCompanyRequestDto dto) {
-        Optional<Company> optionalCompany= companyRepository.findById(dto.getId());
-        if (optionalCompany.isEmpty())
-            throw new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND);
-        Company company=optionalCompany.get();
+    public Boolean rejectCompany(CompanyTokenRequestDto dto) {
+        System.out.println("reject methodu..");
+        ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
+        System.out.println("kontrol2");
+        Company company = companyRepository.findById(dto.getId()).orElseThrow(()->new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND));
+        System.out.println("kontrol3");
         company.setStatus(EStatus.PASSIVE);
         company.setUpdateAt(System.currentTimeMillis());
         updateCompany(CompanyMapper.INSTANCE.fromCompanyToCompanyUpdateRequestDto(company));
