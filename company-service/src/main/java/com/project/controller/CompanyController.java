@@ -9,6 +9,7 @@ import com.project.dto.response.CompanyManagerResponseDto;
 import com.project.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -94,7 +95,7 @@ public class CompanyController {
 
     @GetMapping(GET_ALL_PENDING_COMPANIES)
     @CrossOrigin("*")
-   // @PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<BasicResponse<List<CompanyManagerResponseDto>>> getAllPendingCompanies(@RequestParam String token) {
         return ResponseEntity.ok(BasicResponse.<List<CompanyManagerResponseDto>>builder()
                 .status(200)

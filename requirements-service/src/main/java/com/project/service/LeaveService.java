@@ -99,7 +99,7 @@ public class LeaveService {
         Optional.ofNullable(managerManager.findByToken(token).getBody())
                 .orElseThrow(()->new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD));
 
-        Optional<List<Leave>> leaveList = leaveRepository.findAllByEmployeeId(employeeId);
+       Optional<List<Leave>> leaveList = leaveRepository.findAllByEmployeeId(employeeId);
         if(leaveList.isEmpty()){
             throw new RequirementsServiceException(ErrorType.NO_LEAVES_FOR_AN_EMPLOYEE);
         }
@@ -120,18 +120,14 @@ public class LeaveService {
     }
 
     public List<Leave> findAllMyLeavesForEmployee(String token) {
-        EmployeeResponseDto responseDto = Optional.ofNullable(employeeManager.findEmployeeByToken(token).getBody())
+        EmployeeResponseDto employee = Optional.ofNullable(employeeManager.findEmployeeByToken(token).getBody())
                 .orElseThrow(()->new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND));
 
-        if (responseDto.getId() == null){
-            throw new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
-        }
-
-        List<Leave> leaves= leaveRepository.findAllByAuthId(responseDto.getAuthId());
+        Optional<List<Leave>> leaves= leaveRepository.findAllByEmployeeId(employee.getId());
         if (leaves.isEmpty()){
             throw new RequirementsServiceException(ErrorType.LEAVE_NOT_FOUND);
         }
-        return leaves;
+        return leaves.get();
     }
 
     public Boolean requestLeaveFromEmployee(RequestLeaveDto dto) {
