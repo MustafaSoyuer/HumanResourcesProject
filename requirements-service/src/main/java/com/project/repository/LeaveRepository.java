@@ -12,5 +12,5 @@ public interface LeaveRepository extends JpaRepository<Leave,Long> {
 
     Optional<List<Leave>> findAllByManagerIdAndStatus(Long managerId, EStatus eStatus);
 
-    Optional<List<Leave>> findOptionalByAuthId(Long authId);
+    List<Leave> findAllByAuthId(Long authId);
 }

@@ -1,6 +1,7 @@
 package com.project.entity;
 
 import com.project.utility.enums.EEquipmentType;
+import com.project.utility.enums.EStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +21,11 @@ public class Equipments extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long employeeId;
+    private String name;
     private EEquipmentType equipmentType;
     private Long authId;
     private Long managerId;
     private String document;
     private Long receivingDate;
     private Long returningDate;
-
 }

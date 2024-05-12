@@ -1,9 +1,10 @@
 package com.project.controller;
 
-import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
+import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.BasicResponse;
+import com.project.dto.response.EmployeeResponseDto;
 import com.project.entity.Employee;
 import com.project.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,10 @@ import static com.project.constants.RestApiUrls.*;
 @RequestMapping(EMPLOYEE)
 public class EmployeeController {
     private final EmployeeService employeeService;
+
+
+
+
 
     /**
      * Employeenin kendi bilgilerini güncellemesi icin method
@@ -36,6 +41,7 @@ public class EmployeeController {
                 .build()
         );
     }
+
     /**
      * Managerin vey adminin employee bilgilerini güncellemesi icin method
      * @param dto
@@ -61,6 +67,34 @@ public class EmployeeController {
                 .status(200)
                 .message("Employees list turned successfully")
                 .data(employeeService.getEmployeesByManagerId(managerId))
+                .build()
+        );
+    }
+
+    @GetMapping(FIND_EMPLOYEE_BY_TOKEN)
+    public ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam String token) {
+        return ResponseEntity.ok(employeeService.findEmployeeByToken(token));
+    }
+
+    @GetMapping(FIND_BY_ID)
+    public ResponseEntity<EmployeeResponseDto> findById(@RequestParam Long id) {
+        return ResponseEntity.ok(employeeService.findById(id));
+    }
+
+
+    /**
+     * RequirementsService ile feignclient ile haberleştirilen methodtur.
+     * Managerın employeenin expensesleini onaylamak için ihtiyaç duyduğu bir methodtur.
+     * @param id
+     * @return
+     */
+    @PutMapping(UPDATE_SALARY_EMPLOYEE)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<EmployeeResponseDto>> updateEmployeeSalary(@RequestParam Long id, @RequestParam Double salary) {
+        return ResponseEntity.ok(BasicResponse.<EmployeeResponseDto>builder()
+                .status(200)
+                .message("Employee salary updated successfully")
+                .data(employeeService.updateEmployeeSalary(id, salary))
                 .build()
         );
     }

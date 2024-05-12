@@ -24,4 +24,6 @@ public class Payment extends BaseEntity{
     private Long authId;
     private Long paymentDate;
     private String document;
+
+    //todo: burası maas. expenses harcama kısmı. tek tek ekleme onaylama olacak maaşa.
 }

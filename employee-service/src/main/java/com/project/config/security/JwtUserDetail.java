@@ -23,20 +23,18 @@ public class JwtUserDetail implements UserDetailsService {
         return null;
     }
 
-
-    public UserDetails getEmployeeById(Long employeeId){
-        Optional<Employee> employeeUser=repository.findOptionalById(employeeId);
-        if (employeeUser.isEmpty()) return null;
+    public UserDetails getAuthById(Long employeeId){
+        Optional<Employee> employee=repository.findOptionalById(employeeId);
+        if (employee.isEmpty()) return null;
 
         List<GrantedAuthority> authorizedList=new ArrayList<>();
-        authorizedList.add(new SimpleGrantedAuthority("EMPLOYEE")); //employee
         authorizedList.add(new SimpleGrantedAuthority("MANAGER")); //manager
         authorizedList.add(new SimpleGrantedAuthority("ADMIN")); //site yöneticisi
-
+        authorizedList.add(new SimpleGrantedAuthority("EMPLOYEE")); //site yöneticisi
 
 
         return org.springframework.security.core.userdetails.User.builder()
-                .username(employeeUser.get().getEmail()) //TODO company id kismi degisebiliir!!
+                .username(employee.get().getEmail())
                 .password("")
                 .accountLocked(false)
                 .accountExpired(false)

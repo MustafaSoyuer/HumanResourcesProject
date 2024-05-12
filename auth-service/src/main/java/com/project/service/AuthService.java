@@ -88,8 +88,9 @@ public class AuthService {
         Auth auth = AuthMapper.INSTANCE.fromRegisterEmployeeRequestDtoToAuth(dto);
         String name = normalizeAndRemoveSpaces(dto.getName().toLowerCase());
         String surname = normalizeAndRemoveSpaces(dto.getSurname().toLowerCase());
-        String password = name + surname+ CodeGenerator.generateCode() +".";
-        String employeeEmail = name + "." + surname + "@" + dto.getCompanyName().toLowerCase() + ".com";
+        String password = name.substring(0,1).toUpperCase()+ name.substring(1) + surname+ CodeGenerator.generateCode() +".";
+        String company = normalizeAndRemoveSpaces(dto.getCompanyName().toLowerCase());
+        String employeeEmail = name + "." + surname + "@" + company + ".com";
 
         Optional<Auth> OptionalAuth = authRepository.findOptionalByEmail(employeeEmail);
         if (OptionalAuth.isPresent())

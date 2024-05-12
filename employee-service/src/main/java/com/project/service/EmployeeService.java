@@ -1,19 +1,20 @@
 package com.project.service;
 
-import com.project.dto.request.GetEmployeesByManagerIdRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
+import com.project.dto.response.EmployeeResponseDto;
+import com.project.dto.request.*;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
 import com.project.mapper.EmployeeMapper;
 import com.project.repository.EmployeeRepository;
 import com.project.utility.JwtTokenManager;
+import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.Normalizer;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,16 +25,13 @@ public class EmployeeService {
     private final JwtTokenManager jwtTokenManager;
 
 
-    public Boolean saveEmployee(SaveEmployeeRequestDto dto) {
-        Optional<Employee> employee = employeeRepository.findOptionalByIdentityNumber(dto.getIdentityNumber());
-        if (employee.isPresent()) {
+    public EmployeeResponseDto saveEmployee(SaveEmployeeRequestDto dto) {
+        Optional<Employee> optionalEmployee = employeeRepository.findOptionalByIdentityNumber(dto.getIdentityNumber());
+        if (optionalEmployee.isPresent()) {
             throw new EmployeeServiceException(ErrorType.EMPLOYEE_ALREADY_EXISTS);
         }
-
-        employeeRepository.save(EmployeeMapper.INSTANCE.fromSaveEmployeeRequestDtoToEmployee(dto));
-        return true;
-
-
+        Employee employee= employeeRepository.save(EmployeeMapper.INSTANCE.fromSaveEmployeeRequestDtoToEmployee(dto));
+        return EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
     }
 
     //TODO: Employee bilgilerini guncellerken girmediğim bilgiler null geliyor
@@ -66,8 +64,6 @@ public class EmployeeService {
         return true;
     }
 
-
-
     /**
      * Manager employee listesini getirir.
      * @param managerId
@@ -78,9 +74,52 @@ public class EmployeeService {
         return employeeRepository.findByManagerId(managerId);
     }
 
+    public void activateEmployee(ActivateEmployeeRequestDto dto) {
+        Optional<Long> token = jwtTokenManager.getIdFromToken(dto.getToken());
+        if (token.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.INVALID_TOKEN);
+        }
+        Optional<Employee> employee = employeeRepository.findById(dto.getId());
+        if (employee.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        employee.get().setUpdateAt(System.currentTimeMillis());
+        employee.get().setStatus(EStatus.ACTIVE);
+        employeeRepository.save(employee.get());
+    }
 
 
+    public EmployeeResponseDto findEmployeeByToken(String token) {
+        Optional<Long> authId = jwtTokenManager.getIdFromToken(token);
+        if(authId.isPresent()){
+            Employee employee = employeeRepository.findByAuthId(authId.get()).get();
+            return  EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
+        }
+        throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+    }
 
+    public EmployeeResponseDto findById(Long id) {
+
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        if (optionalEmployee.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        Employee employee = optionalEmployee.get();
+        return EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
+    }
+
+    public EmployeeResponseDto updateEmployeeSalary(Long id, Double salary) {
+
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        if (optionalEmployee.isEmpty()) {
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        Employee employee = optionalEmployee.get();
+        employee.setUpdateAt(System.currentTimeMillis());
+        employee.setSalary(salary);
+        employeeRepository.save(employee);
+        return EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
+    }
 
 
 //TODO

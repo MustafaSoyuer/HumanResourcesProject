@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.project.utility.enums.EGender;
 import com.project.utility.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +30,7 @@ public class Manager {
     private String address;
     private Long occupation;
     private String companyId;
-    private String gender;
+    private EGender gender;
     private String jobStartDate;
     private Long createAt;
     private Long updateAt;

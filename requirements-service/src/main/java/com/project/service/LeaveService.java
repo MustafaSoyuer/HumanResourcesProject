@@ -2,19 +2,20 @@ package com.project.service;
 
 import com.project.dto.request.*;
 import com.project.dto.response.BaseLeaveResponseDto;
+import com.project.dto.response.EmployeeResponseDto;
+import com.project.dto.response.ManagerResponseDto;
 import com.project.entity.Leave;
 import com.project.exception.ErrorType;
 import com.project.exception.RequirementsServiceException;
-import com.project.mapper.LeaveMapper;
+import com.project.manager.EmployeeManager;
+import com.project.manager.ManagerManager;
 import com.project.repository.LeaveRepository;
-import com.project.utility.JwtTokenManager;
 import com.project.utility.LeaveCalculator;
 import com.project.utility.enums.ELeaveType;
 import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +24,9 @@ import java.util.Optional;
 public class LeaveService {
 
     private final LeaveRepository leaveRepository;
-    private final JwtTokenManager jwtTokenManager;
     private final LeaveCalculator leaveCalculator;
-
-
+    private final EmployeeManager employeeManager;
+    private final ManagerManager managerManager;
 
     /**
      * TODO: Bu metotlarda token authId buluyor ya, yapılan örnekler değişken baya
@@ -38,108 +38,103 @@ public class LeaveService {
      */
 
     public Boolean addLeaveToEmployee(AddLeaveRequestDto dto) {
-        Optional<Long> authId = jwtTokenManager.getIdFromToken(dto.getToken());
-        if (authId.isEmpty()){
-            throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
-        }
+        ManagerResponseDto managerResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD));
+        EmployeeResponseDto employeeResponseDto = Optional.ofNullable(employeeManager.findById(dto.getEmployeeId()).getBody())
+                .orElseThrow(()->new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND));
 
-            /**
-             * auhtId'den managerId bulabilecek bir metot ()
-             */
          leaveRepository.save(
                 Leave.builder()
-                        .managerId(dto.getManagerId())
-                        .employeeId(dto.getEmployeeId())
+                        .managerId(managerResponseDto.getId())
+                        .employeeId(employeeResponseDto.getId())
+                        .companyId(employeeResponseDto.getCompanyName())
                         .approvalDate(System.currentTimeMillis())
                         .startDate(dto.getStartDate())
                         .endDate(dto.getEndDate())
-                        .status(EStatus.APPROVED) //Müdür eklediği için otomatik onaylı gitmeli
+                        .authId(employeeResponseDto.getAuthId())
+                        .status(EStatus.ACTIVE)
                 .build());
          return true;
     }
 
     public Boolean approveLeaveForEmployee(BaseRequestForRequirementsDto dto) {
+        ManagerResponseDto managerResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD));
+
         Optional<Leave> optionalLeave = leaveRepository.findById(dto.getRequirementId());
-        if (optionalLeave.isEmpty()) {
-            throw new RequirementsServiceException(ErrorType.LEAVE_NOT_FOUND);
+        if(optionalLeave.get().getManagerId().equals(managerResponseDto.getId())){
+            if (optionalLeave.isEmpty()) {
+                throw new RequirementsServiceException(ErrorType.LEAVE_NOT_FOUND);
+            }
+            Leave leave = optionalLeave.get();
+            leave.setStatus(EStatus.ACTIVE);
+            leave.setApprovalDate(System.currentTimeMillis());
+            leaveRepository.save(leave);
+            return true;
+        }else{
+            throw new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD);
         }
-        Leave leave = optionalLeave.get();
-        leave.setStatus(EStatus.APPROVED);
-        leave.setApprovalDate(System.currentTimeMillis());
-        return true;
     }
 
-    public Boolean rejectLeaveForEmployee(RejectLeaveRequestDto dto) {
-        Optional<Leave> leave = leaveRepository.findById(dto.getLeaveId());
-        if (leave.isEmpty()) {
-            throw new RequirementsServiceException(ErrorType.LEAVE_NOT_FOUND);
+    public Boolean rejectLeaveForEmployee(BaseRequestForRequirementsDto dto) {
+        ManagerResponseDto managerResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD));
+
+        Optional<Leave> optionalLeave = leaveRepository.findById(dto.getRequirementId());
+        if(optionalLeave.get().getManagerId().equals(managerResponseDto.getId())){
+            if (optionalLeave.isEmpty()) {
+                throw new RequirementsServiceException(ErrorType.LEAVE_NOT_FOUND);
+            }
+            Leave leave = optionalLeave.get();
+            leave.setStatus(EStatus.PASSIVE);
+            leave.setApprovalDate(System.currentTimeMillis());
+            leaveRepository.save(leave);
+            return true;
+        }else{
+            throw new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD);
         }
-        leave.get().setStatus(EStatus.REJECTED);
-        leave.get().setUpdateDate(System.currentTimeMillis());
-        leaveRepository.save(leave.get());
-        return true;
     }
 
-    public List<BaseLeaveResponseDto> findAllLeavesOfAnEmployee(BaseRequestForEmployeeDto dto) {
-        Optional<Long> authId=  jwtTokenManager.getIdFromToken(dto.getToken());
-        if (authId.isEmpty()){
-            throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
-        }
-        Optional<List<Leave>> leaveList = leaveRepository.findAllByEmployeeId(dto.getEmployeeId());
+    public List<Leave> findAllLeavesOfAnEmployee(String token, Long employeeId) {
+        Optional.ofNullable(managerManager.findByToken(token).getBody())
+                .orElseThrow(()->new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD));
+
+       Optional<List<Leave>> leaveList = leaveRepository.findAllByEmployeeId(employeeId);
         if(leaveList.isEmpty()){
             throw new RequirementsServiceException(ErrorType.NO_LEAVES_FOR_AN_EMPLOYEE);
         }
-        List<BaseLeaveResponseDto> dtos = new ArrayList<>();
-        for (Leave leave: leaveList.get()) {
-            dtos.add(LeaveMapper.INSTANCE.toResponseDto(leave));
-        }
-        if (dtos.isEmpty()){
-            throw new RequirementsServiceException(ErrorType.LEAVE_NOT_FOUND);
-        }
-        return dtos;
+        return leaveList.get();
     }
 
 
-    public List<BaseLeaveResponseDto> findAllPendingLeavesOfEmployees(BaseRequestPendingLeavesDto dto) {
-        Optional<Long> authId=  jwtTokenManager.getIdFromToken(dto.getToken());
-        if (authId.isEmpty()){
-            throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
-        }
-        Optional<List<Leave>> leaveList = leaveRepository.findAllByManagerIdAndStatus(authId.get(), EStatus.PENDING);
+    public List<Leave> findAllPendingLeavesOfEmployees(String token) {
+        ManagerResponseDto managerResponseDto =Optional.ofNullable(managerManager.findByToken(token).getBody())
+                .orElseThrow(()->new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD));
+
+        Optional<List<Leave>> leaveList = leaveRepository.findAllByManagerIdAndStatus(managerResponseDto.getId(), EStatus.PENDING);
         if(leaveList.isEmpty()){
             throw new RequirementsServiceException(ErrorType.NO_PENDING_LEAVES_FOR_MANAGER);
         }
-        List<BaseLeaveResponseDto> dtos = new ArrayList<>();
-        for (Leave leave: leaveList.get()) {
-            dtos.add(LeaveMapper.INSTANCE.toResponseDto(leave));
-        }
-        if (dtos.isEmpty()){
-            throw new RequirementsServiceException(ErrorType.LEAVE_NOT_FOUND);
-        }
-        return dtos;
+
+        return leaveList.get();
     }
 
-    public List<BaseLeaveResponseDto> findAllMyLeavesForEmployee(BaseRequestDto dto) {
-        Optional<Long> authId=  jwtTokenManager.getIdFromToken(dto.getToken());
-        if (authId.isEmpty()){
-            throw new RequirementsServiceException(ErrorType.INVALID_TOKEN);
-        }
-        System.out.println("managerin auth id si olması lazım ");
-        Optional<List<Leave>> leaves= leaveRepository.findOptionalByAuthId(authId.get());
+    public List<Leave> findAllMyLeavesForEmployee(String token) {
+        EmployeeResponseDto employee = Optional.ofNullable(employeeManager.findEmployeeByToken(token).getBody())
+                .orElseThrow(()->new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND));
+
+        Optional<List<Leave>> leaves= leaveRepository.findAllByEmployeeId(employee.getId());
         if (leaves.isEmpty()){
             throw new RequirementsServiceException(ErrorType.LEAVE_NOT_FOUND);
         }
-        List<BaseLeaveResponseDto> dtos= new ArrayList<>();
-        for (Leave leave: leaves.get()){
-            dtos.add(LeaveMapper.INSTANCE.toResponseDto(leave));
-        }
-        return dtos;
+        return leaves.get();
     }
 
-    //TODO: Bu metodu beraber inceleyebiliriz hem gün hesabı hem belli enum seçebilmesi için yazdım
     public Boolean requestLeaveFromEmployee(RequestLeaveDto dto) {
-        Optional<Long> authId=  jwtTokenManager.getIdFromToken(dto.getToken());
-        if (authId.isEmpty()){
+
+        EmployeeResponseDto responseDto = Optional.ofNullable(employeeManager.findEmployeeByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND));
+        if (responseDto.getId() == null){
             throw new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
         }
         Double numberOfDays = leaveCalculator.calculateNumberOfDays(dto.getStartDate(), dto.getEndDate());
@@ -150,8 +145,11 @@ public class LeaveService {
         ELeaveType leaveType = ELeaveType.valueOf(leaveTypeString);
         leaveRepository.save(Leave.builder()
                 .leaveType(leaveType)
-                .employeeId(authId.get())
+                .authId(responseDto.getAuthId())
+                .employeeId(responseDto.getId())
+                .managerId(responseDto.getManagerId())
                 .startDate(dto.getStartDate())
+                .companyId(responseDto.getCompanyName())
                 .endDate(dto.getEndDate())
                 .numberOfDays(numberOfDays)
                 .createDate(System.currentTimeMillis())

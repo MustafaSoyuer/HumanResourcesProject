@@ -4,6 +4,8 @@ import com.project.dto.request.AdminUpdateManagerRequestDto;
 import com.project.dto.request.SaveManagerRequestDto;
 import com.project.dto.request.UpdateManagerRequestDto;
 import com.project.dto.response.BasicResponse;
+import com.project.dto.response.ManagerCompanyResponseDto;
+import com.project.dto.response.ManagerResponseDto;
 import com.project.dto.response.SaveManagerResponseDto;
 import com.project.service.ManagerService;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +64,13 @@ public class ManagerController {
                 .data(true)
                 .build()
         );
+    }
+
+    @GetMapping("/find-by-token")
+    public ResponseEntity<ManagerResponseDto> findByToken(@RequestParam String token){
+        System.out.println("manager controller buraya geliyor mu ???");
+        System.out.println("token = " + token);
+        return ResponseEntity.ok(managerService.findByToken(token));
     }
 
 

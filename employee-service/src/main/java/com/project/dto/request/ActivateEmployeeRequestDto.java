@@ -1,5 +1,6 @@
 package com.project.dto.request;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseRequestDto {
-    String token; //authId'yi bulacak.
+public class ActivateEmployeeRequestDto {
+    private String token;
+    private Long id;
 }

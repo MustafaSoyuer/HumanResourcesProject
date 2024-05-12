@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseRequestPendingLeavesDto {
+public class BaseRequestExpensesDto {
     private String token;
-    private Long managerId; //TODO: bunun yerine sadece token da istemiş mesela buseler öyle mi yapsak? bu kısmı silelim mi
+    private Long requirementId;
+    private Long employeeId;
+
 }

@@ -5,5 +5,7 @@ buildscript {
 }
 dependencies {
     implementation libs.springBootStarterDataMongoDB
+    implementation libs.springCloudOpenFeign
+
 
 }

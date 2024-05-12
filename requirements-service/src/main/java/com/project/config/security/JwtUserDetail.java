@@ -1,11 +1,10 @@
 package com.project.config.security;
 
-import com.project.service.LeaveService;
+import com.project.repository.LeaveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +16,7 @@ import java.util.List;
 @Service
 public class JwtUserDetail implements UserDetailsService {
     @Autowired
-    private LeaveService leaveService;
+    private LeaveRepository leaveRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
@@ -28,7 +27,7 @@ public class JwtUserDetail implements UserDetailsService {
 
         List<GrantedAuthority> authorityList = new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority(role));
-        return User.builder()
+        return org.springframework.security.core.userdetails.User.builder()
                 .username(role)
                 .password("")
                 .accountLocked(false)

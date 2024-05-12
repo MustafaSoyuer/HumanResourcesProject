@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class BaseRequestForRequirementsDto {
     private String token;
     private Long requirementId;
+
 }

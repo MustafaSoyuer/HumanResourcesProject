@@ -1,5 +1,7 @@
 package com.project.dto.request;
 
+import com.project.utility.enums.EExpenseType;
+import com.project.utility.enums.ELeaveType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseRequestForEmployeeDto {
+public class AddExpensesRequestDto {
+
     private String token;
-    private Long employeeId;
+    private Double amount;
+    private EExpenseType expenseType;
+    private String document;
 }

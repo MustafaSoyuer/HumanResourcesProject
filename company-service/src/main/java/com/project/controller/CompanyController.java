@@ -1,6 +1,6 @@
 package com.project.controller;
 
-import com.project.dto.request.ApproveAndRejectCompanyRequestDto;
+import com.project.dto.request.CompanyTokenRequestDto;
 import com.project.dto.request.CompanyCreateRequestDto;
 import com.project.dto.request.CompanyUpdateRequestDto;
 import com.project.dto.response.BasicResponse;
@@ -9,6 +9,7 @@ import com.project.dto.response.CompanyManagerResponseDto;
 import com.project.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,11 +64,11 @@ public class CompanyController {
      */
     @GetMapping(GET_ALL)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<List<CompanyGetAllResponseDto>>> getAll() {
+    public ResponseEntity<BasicResponse<List<CompanyGetAllResponseDto>>> getAll(@RequestParam String token) {
         return ResponseEntity.ok(BasicResponse.<List<CompanyGetAllResponseDto>>builder()
                 .status(200)
                 .message("Companies get all successfully")
-                .data(companyService.getAll())
+                .data(companyService.getAll(token))
                 .build());
     }
 
@@ -78,11 +79,11 @@ public class CompanyController {
      */
     @GetMapping(GET_ALL_COMPANY_COUNT)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Long>> getAllCompanyCount() {
+    public ResponseEntity<BasicResponse<Long>> getAllCompanyCount(@RequestParam String token) {
         return ResponseEntity.ok(BasicResponse.<Long>builder()
                 .status(200)
                 .message("Company count get all successfully")
-                .data(companyService.getAll().stream().count())
+                .data(companyService.getAll(token).stream().count())
                 .build()
         );
     }
@@ -94,12 +95,12 @@ public class CompanyController {
 
     @GetMapping(GET_ALL_PENDING_COMPANIES)
     @CrossOrigin("*")
-   // @PreAuthorize("hasAuthority('MANAGER')")
-    public ResponseEntity<BasicResponse<List<CompanyManagerResponseDto>>> getAllPendingCompanies() {
+    @PreAuthorize("hasAuthority('MANAGER')")
+    public ResponseEntity<BasicResponse<List<CompanyManagerResponseDto>>> getAllPendingCompanies(@RequestParam String token) {
         return ResponseEntity.ok(BasicResponse.<List<CompanyManagerResponseDto>>builder()
                 .status(200)
                 .message("Pending Companies received all successfully")
-                .data(companyService.getAllPendingCompanies())
+                .data(companyService.getAllPendingCompanies(token))
                 .build());
     }
 
@@ -108,10 +109,10 @@ public class CompanyController {
      * @param
      * @return
      */
-    @PostMapping(APPROVE_COMPANY)
+    @PutMapping(APPROVE_COMPANY)
     @CrossOrigin("*")
    // @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<BasicResponse<Boolean>> approveCompany(@RequestBody ApproveAndRejectCompanyRequestDto dto) {
+    public ResponseEntity<BasicResponse<Boolean>> approveCompany(@RequestBody CompanyTokenRequestDto dto) {
         companyService.approveCompany(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                         .status(200)
@@ -120,10 +121,10 @@ public class CompanyController {
                 .build());
     }
 
-    @PostMapping(REJECT_COMPANY )
+    @PutMapping(REJECT_COMPANY )
     @CrossOrigin("*")
     // @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<BasicResponse<Boolean>> rejectCompany(@RequestBody ApproveAndRejectCompanyRequestDto dto) {
+    public ResponseEntity<BasicResponse<Boolean>> rejectCompany(@RequestBody CompanyTokenRequestDto dto) {
         System.out.println("dto burada.....:  "+dto);
         companyService.rejectCompany(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
