@@ -18,7 +18,6 @@ public class Comment {
     private Long id;
     private String comment;
     private Long managerId;
-    private String companyId;
     private Long point;
     private Long createAt;
     private Long updateAt;
