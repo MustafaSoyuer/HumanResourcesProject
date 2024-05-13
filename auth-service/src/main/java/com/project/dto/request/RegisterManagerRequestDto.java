@@ -27,6 +27,7 @@ public class RegisterManagerRequestDto {
     private String phone;
     @NotNull
     private String address;
+    private String avatar;
     @NotNull
     private String company;
     @NotNull

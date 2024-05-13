@@ -34,6 +34,7 @@ public class SaveManagerRequestDto {
     private String address;
     @NotNull
     private String company;
+    private String avatar;
     @NotNull
     @Column(unique = true)
     private String taxNumber;

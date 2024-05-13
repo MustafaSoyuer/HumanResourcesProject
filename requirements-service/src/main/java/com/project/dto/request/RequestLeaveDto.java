@@ -6,14 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestLeaveDto {
     private String token;
-    private Long startDate;
-    private Long endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private EEmployeeChooseLeaveType leaveType;
     private String document;
 }

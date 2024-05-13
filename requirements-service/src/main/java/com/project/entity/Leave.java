@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
@@ -26,11 +28,12 @@ public class Leave extends BaseEntity{
     private String companyId;
     private String employeeName;
     private String employeeSurname;
-    private Long startDate;
-    private Long endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Long approvalDate;
     private EStatus status;
     private ELeaveType leaveType;
     private Double numberOfDays;
     private String document;
+
 }
