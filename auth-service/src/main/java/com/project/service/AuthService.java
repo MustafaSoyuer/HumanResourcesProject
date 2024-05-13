@@ -74,6 +74,7 @@ public class AuthService {
                 .address(dto.getAddress())
                 .company(dto.getCompany())
                 .email(dto.getEmail())
+                .avatar(dto.getAvatar())
                 .name(dto.getName())
                 .phone(dto.getPhone())
                 .surname(dto.getSurname())

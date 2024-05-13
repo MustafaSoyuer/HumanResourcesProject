@@ -2,12 +2,12 @@ package com.project.utility;
 
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class LeaveCalculator {
-    public Double calculateNumberOfDays (Long startDate, Long endDate) {
-        long millisecondsPerDay = 1000 * 60 * 60 * 24;
-
-        long duration = endDate-startDate;
-        return (double) duration / millisecondsPerDay;
+    public Double calculateNumberOfDays (LocalDate startDate, LocalDate endDate) {
+        long duration = endDate.toEpochDay() - startDate.toEpochDay();
+        return (double) duration;
     }
 }

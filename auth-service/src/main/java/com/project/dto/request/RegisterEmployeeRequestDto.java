@@ -26,6 +26,7 @@ public class RegisterEmployeeRequestDto {
     @Column(unique = true, nullable = false)
     @Size(min = 11, max = 11 , message = "Telefon numarasi 11 haneli olmalidir")
     private String phoneNumber;
+    private String avatar;
     private String address;
     private String position;
     private String department;
