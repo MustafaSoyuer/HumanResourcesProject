@@ -14,6 +14,7 @@ public enum ErrorType {
     INVALID_TOKEN(4002,"Girdiğiniz token hatalıdır. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.UNAUTHORIZED),
     EMPLOYEE_NOT_FOUND(4003,"Employee bulunamadı",HttpStatus.INTERNAL_SERVER_ERROR),
     EMPLOYEE_ALREADY_EXISTS(4004,"Employee zaten kayıtlı",HttpStatus.INTERNAL_SERVER_ERROR),
+    MANAGER_NOT_FOUND(4005,"Manager bulunamadı",HttpStatus.INTERNAL_SERVER_ERROR),
     ;
 
     int code;

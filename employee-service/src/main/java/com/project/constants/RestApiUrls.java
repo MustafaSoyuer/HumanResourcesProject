@@ -11,7 +11,6 @@ public class RestApiUrls {
 
     public static final String EMPLOYEE = ROOT + "/employee";
 
-    public static final String ADD_EMPLOYEE =  "/add-employee";
     public static final String FIND_EMPLOYEE_BY_TOKEN = "/find-employee-by-token";
 
     public static final String UPDATE_EMPLOYEE =  "/update-employee";
@@ -21,5 +20,9 @@ public class RestApiUrls {
     public static final String GET_EMPLOYEES_BY_MANAGER_ID = "/get-employees-by-manager-id";
     public static final String FIND_BY_ID = "find-by-id";
     public static final String UPDATE_SALARY_EMPLOYEE =  "/update-salary-employee";
+    public static final String ACTIVATE_EMPLOYEE =  "/activate-employee";
+    public static final String DEACTIVATE_EMPLOYEE =  "/deactivate-employee";
+
+
 
 }

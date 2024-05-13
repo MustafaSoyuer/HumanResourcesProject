@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.dto.request.ActivateEmployeeRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
@@ -61,7 +62,7 @@ public class EmployeeController {
 
     @GetMapping(GET_EMPLOYEES_BY_MANAGER_ID)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<List<Employee>>> getEmployeesByManagerId(Long managerId) {
+    public ResponseEntity<BasicResponse<List<Employee>>> getEmployeesByManagerId(@RequestParam Long managerId ) {
 
         return ResponseEntity.ok(BasicResponse.<List<Employee>>builder()
                 .status(200)
@@ -99,8 +100,34 @@ public class EmployeeController {
         );
     }
 
+    @PutMapping(ACTIVATE_EMPLOYEE)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<Boolean>> activateEmployee(@RequestBody ActivateEmployeeRequestDto dto) {
+        employeeService.activateEmployee(dto);
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .status(200)
+                .message("Employee activated successfully")
+                .data(true)
+                .build()
+        );
+    }
+
+    @PutMapping(DEACTIVATE_EMPLOYEE)
+    @CrossOrigin("*")
+    public ResponseEntity<BasicResponse<Boolean>> deactivateEmployee(@RequestBody ActivateEmployeeRequestDto dto) {
+        employeeService.deactivateEmployee(dto);
+        return ResponseEntity.ok(BasicResponse.<Boolean>builder()
+                .status(200)
+                .message("Employee deactivated successfully")
+                .data(true)
+                .build()
+        );
+    }
 
 
 
-// email _> ad.soyad@şirketadı.com
+
+
+
+
 }

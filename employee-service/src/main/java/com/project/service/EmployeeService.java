@@ -5,9 +5,11 @@ import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.EmployeeResponseDto;
 import com.project.dto.request.*;
+import com.project.dto.response.ManagerResponseDto;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
+import com.project.manager.ManagerManager;
 import com.project.mapper.EmployeeMapper;
 import com.project.repository.EmployeeRepository;
 import com.project.utility.JwtTokenManager;
@@ -23,6 +25,7 @@ import java.util.Optional;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final JwtTokenManager jwtTokenManager;
+    private final ManagerManager managerManager;
 
 
     public EmployeeResponseDto saveEmployee(SaveEmployeeRequestDto dto) {
@@ -53,6 +56,7 @@ public class EmployeeService {
         }
     }
 
+    //TODO: token doğrulaması yapılacak
     public Boolean managerOrAdminUpdateEmployee(ManagerOrAdminUpdateEmployeeRequestDto dto) {
         Optional<Employee> employee = employeeRepository.findById(dto.getId());
         if (employee.isEmpty()) {
@@ -74,18 +78,42 @@ public class EmployeeService {
         return employeeRepository.findByManagerId(managerId);
     }
 
-    public void activateEmployee(ActivateEmployeeRequestDto dto) {
-        Optional<Long> token = jwtTokenManager.getIdFromToken(dto.getToken());
-        if (token.isEmpty()) {
-            throw new EmployeeServiceException(ErrorType.INVALID_TOKEN);
-        }
+    public Boolean activateEmployee(ActivateEmployeeRequestDto dto) {
+        ManagerResponseDto managerResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new EmployeeServiceException(ErrorType.MANAGER_NOT_FOUND));
+
         Optional<Employee> employee = employeeRepository.findById(dto.getId());
-        if (employee.isEmpty()) {
-            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        if(employee.get().getManagerId().equals(managerResponseDto.getId())) {
+            if (employee.isEmpty()) {
+                throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+            }
+            employee.get().setStatus(EStatus.ACTIVE);
+            employee.get().setUpdateAt(System.currentTimeMillis());
+            employeeRepository.save(employee.get());
+            return true;
+        }else {
+            throw new EmployeeServiceException(ErrorType.MANAGER_NOT_FOUND);
         }
-        employee.get().setUpdateAt(System.currentTimeMillis());
-        employee.get().setStatus(EStatus.ACTIVE);
-        employeeRepository.save(employee.get());
+
+    }
+
+    public Boolean deactivateEmployee(ActivateEmployeeRequestDto dto) {
+        ManagerResponseDto managerResponseDto = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+                .orElseThrow(()->new EmployeeServiceException(ErrorType.MANAGER_NOT_FOUND));
+
+        Optional<Employee> employee = employeeRepository.findById(dto.getId());
+        if(employee.get().getManagerId().equals(managerResponseDto.getId())) {
+            if (employee.isEmpty()) {
+                throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+            }
+            employee.get().setStatus(EStatus.PASSIVE);
+            employee.get().setUpdateAt(System.currentTimeMillis());
+            employeeRepository.save(employee.get());
+            return true;
+        }else {
+            throw new EmployeeServiceException(ErrorType.MANAGER_NOT_FOUND);
+        }
+
     }
 
 
@@ -122,14 +150,7 @@ public class EmployeeService {
     }
 
 
-//TODO
-    /**
-     *  String companyEmail = "manager" + dto.getName() + "@" + dto.getCompanyName() + ".com";
-     *         auth.setCompanyEmail(companyEmail.toLowerCase());
-     *         auth.setUserType(EUserType.MANAGER);
-     *         auth.setCompanyName(auth.getCompanyName().toLowerCase());
-     *         save(auth);
-     */
+
 
 
 
