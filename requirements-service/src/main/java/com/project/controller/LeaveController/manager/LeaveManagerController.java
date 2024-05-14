@@ -41,7 +41,6 @@ public class LeaveManagerController {
      * @return
      */
     @PutMapping(APPROVE_LEAVE)
-    @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> approveLeave(@RequestBody BaseRequestForRequirementsDto dto){
         leaveService.approveLeaveForEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
@@ -57,7 +56,6 @@ public class LeaveManagerController {
      * @return
      */
     @PutMapping(REJECT_LEAVE)
-    @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> rejectLeaveOfEmployee(@RequestBody BaseRequestForRequirementsDto dto){
         leaveService.rejectLeaveForEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()

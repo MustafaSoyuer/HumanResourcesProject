@@ -33,7 +33,7 @@ public class EquipmentsEmployeeController {
 
     @PutMapping(REQUEST_EQUIPMENT)
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<Boolean>> requestLeave(@RequestBody EquipmentRequestDto dto) {
+    public ResponseEntity<BasicResponse<Boolean>> requestEquipment(@RequestBody EquipmentRequestDto dto) {
         equipmentService.requestEquipmentFromEmployee(dto);
         return ResponseEntity.ok(BasicResponse.<Boolean>builder()
                 .status(200)
