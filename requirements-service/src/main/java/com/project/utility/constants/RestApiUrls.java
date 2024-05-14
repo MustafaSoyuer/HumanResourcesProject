@@ -21,7 +21,7 @@ public class RestApiUrls {
     public static final String GET_ALL_LEAVES_OF_EMPLOYEE = "/get-all-leaves-of-employee";
     public static final String GET_ALL_PENDING_LEAVES_OF_EMPLOYEES = "/get-all-pending-leaves-of-employees";
     public static final String APPROVE_EXPENSES = "/approve-expenses";
-
+    public static final String FIND_ALL_PENDING_EXPENSES = "/find-all-pending-expenses";
 
 
     //EMPLOYEE

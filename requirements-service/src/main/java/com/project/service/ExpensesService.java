@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class ExpensesService {
     private final ExpensesRepository expensesRepository;
     private final EmployeeManager employeeManager;
     private final ManagerManager managerManager;
+    private final ExpensesMapper expensesMapper;
 
     public List<Expenses> findAllExpensesForEmployee(String token) {
         EmployeeResponseDto employee = Optional.ofNullable(employeeManager.findEmployeeByToken(token).getBody())
@@ -95,5 +97,13 @@ public class ExpensesService {
             throw new RequirementsServiceException(ErrorType.EXPENSES_NOT_FOUND);
         }
         return true;
+    }
+
+    public List<Expenses> findAllPendingExpenses(String token) {
+        ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(token).getBody())
+                .orElseThrow(() -> new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD));
+        return expensesRepository.findAll().stream().
+                filter(expenses -> expenses.getStatus().equals(EStatus.PENDING))
+                .collect(Collectors.toList());
     }
 }

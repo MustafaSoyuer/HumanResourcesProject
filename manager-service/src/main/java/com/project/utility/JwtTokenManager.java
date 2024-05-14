@@ -55,10 +55,8 @@ public class JwtTokenManager {
             if (decodedJWT==null){
                 throw new ManagerServiceException(ErrorType.INVALID_TOKEN);
             }
-
             Long id=decodedJWT.getClaim("id").asLong();
             return Optional.of(id);
-
         }catch (Exception e){
             System.out.println(e.getMessage());
             throw new ManagerServiceException(ErrorType.INVALID_TOKEN);

@@ -41,7 +41,5 @@ public class CompanyUpdateRequestDto {
     private String foundingYear;
     private String linkedin;
     private EMemberShipPlan membershipPlan;
-    private Long updateAt;
-    private EStatus status;
 
 }

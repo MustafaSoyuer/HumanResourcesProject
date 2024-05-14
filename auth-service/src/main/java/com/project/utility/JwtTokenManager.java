@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.project.exception.AuthServiceException;
 import com.project.exception.ErrorType;
+import com.project.utility.enums.ERole;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -61,6 +62,26 @@ public class JwtTokenManager {
 
         }catch (Exception e){
             System.out.println(e.getMessage());
+            throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+        }
+    }
+
+    public ERole getRoleFromToken(String token){
+        try {
+            Algorithm algorithm = Algorithm.HMAC512(SECRETKEY);
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+
+            if (decodedJWT == null) {
+                System.out.println("token null mıı?????");
+                throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+            }
+
+            String role = decodedJWT.getClaim("role").asString();
+            return ERole.valueOf(role.toUpperCase());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("yoksa bura mıı????");
             throw new AuthServiceException(ErrorType.INVALID_TOKEN);
         }
     }
