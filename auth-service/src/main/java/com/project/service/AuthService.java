@@ -144,14 +144,10 @@ public class AuthService {
     }
 
     public Boolean registerAdmin(RegisterAdminRequestDto dto) {
-        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
-        if (authId.isEmpty()){
-            throw new AuthServiceException(ErrorType.INVALID_TOKEN);
-        }
-        Optional<Auth> admin = authRepository.findOptionalById(authId.get());
-        if (admin.isEmpty()){
-            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
-        }
+
+        Optional<Auth> OptionalAuth = authRepository.findOptionalByEmail(dto.getEmail());
+        if (OptionalAuth.isPresent())
+            throw new AuthServiceException(ErrorType.USER_ALREADY_EXISTS);
 
 
         Auth auth = Auth.builder().email(dto.getEmail()).password(dto.getPassword()).build();
