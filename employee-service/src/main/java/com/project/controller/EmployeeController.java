@@ -43,7 +43,7 @@ public class EmployeeController {
     }
 
     /**
-     * Managerin vey adminin employee bilgilerini güncellemesi icin method
+     * Managerin veya adminin employee bilgilerini güncellemesi icin method
      * @param dto
      * @return
      */
@@ -101,6 +101,4 @@ public class EmployeeController {
 
 
 
-
-// email _> ad.soyad@şirketadı.com
 }

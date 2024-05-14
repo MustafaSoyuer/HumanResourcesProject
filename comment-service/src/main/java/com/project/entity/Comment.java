@@ -18,7 +18,12 @@ public class Comment {
     private Long id;
     private String comment;
     private Long managerId;
+    private String managerName;
+    private String managerSurname;
+    private String managerEmail;
+    private String managerAvatar;
     private Long point;
+    private String managerOccupation;
     private Long createAt;
     private Long updateAt;
 }
