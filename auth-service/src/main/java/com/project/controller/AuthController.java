@@ -2,19 +2,28 @@ package com.project.controller;
 
 import com.project.dto.request.*;
 import com.project.dto.response.AuthLoginResponseDto;
+import com.project.dto.response.AuthResponseDto;
 import com.project.dto.response.BasicResponse;
 import com.project.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
+import java.util.logging.Logger;
 
 import static com.project.constants.RestApiUrls.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(AUTH)
+@Slf4j
 public class AuthController {
     private final AuthService authService;
+
 
     @PostMapping(LOGIN)
     @CrossOrigin("*")
@@ -67,6 +76,16 @@ public class AuthController {
                 .data(authService.changePassword(dto))
                 .build());
     }
+
+    @GetMapping("/find-by-token")
+    @CrossOrigin("*")
+    public ResponseEntity<AuthResponseDto> findByToken(@RequestParam("token") String token){
+        System.out.println("auth controller buraya geliyor mu ???");
+        System.out.println("token = " + token);
+        log.info("Received request to find by token: {}" + token);
+        return ResponseEntity.ok(authService.findByToken(token));
+    }
+
 
 
 

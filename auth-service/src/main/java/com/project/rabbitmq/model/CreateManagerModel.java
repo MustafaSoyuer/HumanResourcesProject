@@ -19,6 +19,7 @@ public class CreateManagerModel implements Serializable {
     private Long authId;
     private String name;
     private String surname;
+    private String avatar;
     private String email;
     private String phone;
     private String address;
