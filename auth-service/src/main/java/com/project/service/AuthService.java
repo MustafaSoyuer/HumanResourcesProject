@@ -50,7 +50,11 @@ public class AuthService {
             if(token.isEmpty()){
                 throw new AuthServiceException(ErrorType.INVALID_TOKEN);
             }else {
-                return AuthLoginResponseDto.builder().token(token.get()).role(auth.get().getRole()).build();
+                return AuthLoginResponseDto.builder()
+                        .token(token.get())
+                        .role(auth.get().getRole())
+                        .id(auth.get().getId())
+                        .build();
             }
         }else {
             throw new AuthServiceException(ErrorType.USER_IS_NOT_ACTIVE);

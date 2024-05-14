@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class AuthLoginResponseDto {
     String token;
     ERole role;
+    Long id;
 }

@@ -39,8 +39,10 @@ public class EmployeeService {
 
     //TODO: Employee bilgilerini guncellerken girmediğim bilgiler null geliyor
     public Boolean updateEmployee(UpdateEmployeeRequestDto dto) {
+        System.out.println("servis başlangıcı - token geldi mi?..: "+dto.getToken());
         EmployeeResponseDto employeeResponseDto = Optional.ofNullable(findEmployeeByToken(dto.getToken()))
                 .orElseThrow(() -> new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND));
+        System.out.println("servis- token geldi mi 2: "+dto.getToken());
         if(!dto.getId().equals(employeeResponseDto.getId())){
             throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
         }
@@ -124,7 +126,9 @@ public class EmployeeService {
 
 
     public EmployeeResponseDto findEmployeeByToken(String token) {
+        System.out.println("findToken geldi mi? "+token);
         Optional<Long> authId = jwtTokenManager.getIdFromToken(token);
+        System.out.println("jwtden sonra token geldi mi? "+authId);
         if(authId.isPresent()){
             Employee employee = employeeRepository.findByAuthId(authId.get()).get();
             return  EmployeeMapper.INSTANCE.fromEmployeeToEmployeeResponseDto(employee);
