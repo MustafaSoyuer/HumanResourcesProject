@@ -33,6 +33,7 @@ public class MailSenderService {
     public String generateActivationLink(String email,String password) {
         return "http://localhost:9091/swagger-ui/index.html#/auth-controller/changePassword?email=" + email + "&password=" + password;
         // todo:  "http://localhost:9091/dev/v1/auth/change-password?email=" + email + "&password=" + password -> kubernetes kısmı gelince burası güncellenecek.
+        //TODO: "localhost:3000/change-password?email=" + email + "&password=" + password ; -> herhangi bir kubernetes kısmı gelince burası güncellenecek.?
 
     }
 

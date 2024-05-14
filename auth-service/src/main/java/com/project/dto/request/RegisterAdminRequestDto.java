@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterAdminRequestDto {
-    private String token;
     private String email;
     private String password;
 }

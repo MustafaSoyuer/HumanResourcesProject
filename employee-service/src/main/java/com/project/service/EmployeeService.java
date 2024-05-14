@@ -39,6 +39,12 @@ public class EmployeeService {
 
     //TODO: Employee bilgilerini guncellerken girmediğim bilgiler null geliyor
     public Boolean updateEmployee(UpdateEmployeeRequestDto dto) {
+        EmployeeResponseDto employeeResponseDto = Optional.ofNullable(findEmployeeByToken(dto.getToken()))
+                .orElseThrow(() -> new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND));
+        if(!dto.getId().equals(employeeResponseDto.getId())){
+            throw new EmployeeServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+
         Optional<Employee> optionalEmployee = employeeRepository.findById(dto.getId());
         if (optionalEmployee.isPresent()) {
             Employee employee = optionalEmployee.get();
