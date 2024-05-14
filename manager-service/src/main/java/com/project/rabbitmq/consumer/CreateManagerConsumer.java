@@ -22,6 +22,7 @@ public class CreateManagerConsumer {
                         .email(model.getEmail())
                         .taxNumber(model.getTaxNumber())
                         .phone(model.getPhone())
+                        .avatar(model.getAvatar())
                         .address(model.getAddress())
                         .company(model.getCompany())
                         .name(model.getName())

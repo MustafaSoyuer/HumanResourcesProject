@@ -24,7 +24,7 @@ public class LeaveManagerController {
      * @param dto
      * @return
      */
-    @PutMapping(ADD_LEAVE)
+    @PostMapping(ADD_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> addLeaveToEmployee(@RequestBody AddLeaveRequestDto dto){
         leaveService.addLeaveToEmployee(dto);

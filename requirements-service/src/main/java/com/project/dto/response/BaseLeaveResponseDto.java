@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,8 +18,8 @@ public class BaseLeaveResponseDto {
     private Long authId;
     private Long managerId;
     private String companyId;
-    private Long startDate;
-    private Long endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Long approvalDate;
     private EStatus status;
     private Double numberOfDays;
