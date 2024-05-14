@@ -1,5 +1,6 @@
 package com.project.dto.response;
 
+import com.project.utility.enums.ERole;
 import com.project.utility.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,5 +25,6 @@ public class ManagerResponseDto {
     private Long occupation;
     private String avatar;
     private Long updateAt;
+    private ERole role;
     private EStatus status;
 }

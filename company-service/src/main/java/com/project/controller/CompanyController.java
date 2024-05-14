@@ -95,7 +95,6 @@ public class CompanyController {
 
     @GetMapping(GET_ALL_PENDING_COMPANIES)
     @CrossOrigin("*")
-    @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<BasicResponse<List<CompanyManagerResponseDto>>> getAllPendingCompanies(@RequestParam String token) {
         return ResponseEntity.ok(BasicResponse.<List<CompanyManagerResponseDto>>builder()
                 .status(200)
@@ -109,7 +108,7 @@ public class CompanyController {
      * @param
      * @return
      */
-    @PutMapping(APPROVE_COMPANY)
+    @PostMapping(APPROVE_COMPANY)
     @CrossOrigin("*")
    // @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<BasicResponse<Boolean>> approveCompany(@RequestBody CompanyTokenRequestDto dto) {
@@ -121,7 +120,7 @@ public class CompanyController {
                 .build());
     }
 
-    @PutMapping(REJECT_COMPANY )
+    @PostMapping(REJECT_COMPANY )
     @CrossOrigin("*")
     // @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<BasicResponse<Boolean>> rejectCompany(@RequestBody CompanyTokenRequestDto dto) {

@@ -17,7 +17,8 @@ public enum ErrorType {
     BAD_REQUEST_ERROR(3004,"Girilen parametreler hatalıdır, lütfen tekrar deneyin", HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(3005,"Girdiğiniz token hatalıdır. Lütfen değiştirerek tekrar deneyiniz.",HttpStatus.UNAUTHORIZED),
     COMPANY_NOT_FOUND(3006, "Şirket bulunamadı.", HttpStatus.BAD_REQUEST),
-    USER_NOT_FOUND(3007, "Kullanıcı bulunamadı.", HttpStatus.BAD_REQUEST);
+    USER_NOT_FOUND(3007, "Kullanıcı bulunamadı.", HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED(3008,"Yetkisiz kullanıcı" ,HttpStatus.BAD_REQUEST );
 
 
     int code;

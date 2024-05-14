@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.dto.request.*;
 import com.project.dto.response.AuthLoginResponseDto;
+import com.project.dto.response.AuthResponseDto;
 import com.project.entity.Auth;
 import com.project.exception.AuthServiceException;
 import com.project.exception.ErrorType;
@@ -23,7 +24,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
+import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -223,6 +227,37 @@ public class AuthService {
 
         return normalizedString;
     }
+
+    /*public AuthResponseDto findByToken(String token) {
+        System.out.println("service katmanında token var mı?" + token);
+        ERole role = jwtTokenManager.getRoleFromToken(token);
+        System.out.println("burayı geçti mi??? servicete");
+        if (role != null) {
+            System.out.println("kontrol yapıyor mu?");
+            Optional<Long> authId = authRepository.findByRole(ERole.valueOf(String.valueOf(role))).stream().map(Auth::getId).findFirst();
+            System.out.println("role..: " + role.name());
+            if (authId.isPresent()) {
+                Optional<Auth> auth = authRepository.findById(authId.get());
+                if (auth.isPresent()) {
+                    return AuthMapper.INSTANCE.fromAuthToAuthResponseDto(auth.get());
+                }
+            }
+        }
+        System.out.println("admin not found mı?");
+        throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
+    } */
+
+    public AuthResponseDto findByToken(String token) {
+        System.out.println("token var mı?" + token);
+        Optional<Long> authId = jwtTokenManager.getIdFromToken(token);
+        if (authId.isPresent()){
+            Auth auth = authRepository.findById(authId.get()).orElseThrow(()->new AuthServiceException(ErrorType.USER_NOT_FOUND));
+            return AuthMapper.INSTANCE.fromAuthToAuthResponseDto(auth);
+        }
+        throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
+    }
+
+
 
 
 }
