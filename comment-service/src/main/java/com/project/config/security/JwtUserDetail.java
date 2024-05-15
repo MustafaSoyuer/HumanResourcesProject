@@ -16,31 +16,21 @@ import java.util.Optional;
 
 @Service
 public class JwtUserDetail implements UserDetailsService {
-    @Autowired
-    private CommentRepository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
 
 
-    public UserDetails getCommentById(Long commentId){
-        Optional<Comment> commentUser=repository.findOptionalById(commentId);
-        if (commentUser.isEmpty()) return null;
-
-        List<GrantedAuthority> authorizedList=new ArrayList<>();
-        authorizedList.add(new SimpleGrantedAuthority("EMPLOYEE")); //employee
-        authorizedList.add(new SimpleGrantedAuthority("MANAGER")); //manager
-        authorizedList.add(new SimpleGrantedAuthority("ADMIN")); //site yöneticisi
-
-
-
+    public UserDetails loadUserByManager(String role) throws UsernameNotFoundException {
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        authorityList.add(new SimpleGrantedAuthority(role));
         return org.springframework.security.core.userdetails.User.builder()
-                .username(commentUser.get().getCompanyId()) //TODO company id kismi degisebiliir!!
+                .username(role)
                 .password("")
                 .accountLocked(false)
                 .accountExpired(false)
-                .authorities(authorizedList)
+                .authorities(authorityList)
                 .build();
     }
 }

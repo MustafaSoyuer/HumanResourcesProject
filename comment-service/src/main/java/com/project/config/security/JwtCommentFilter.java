@@ -29,17 +29,17 @@ public class JwtCommentFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
 
-        final String commentHeader=request.getHeader("Authorization");
+        final String authHeader=request.getHeader("Authorization");
 
-        log.info("gelen token...: "  + commentHeader);
+        log.info("gelen token...: "  + authHeader);
         log.info("Tüm istekler buraya düşecek ve burada auth kontrol yapılacak.");
-        if (Objects.nonNull(commentHeader) && commentHeader.startsWith("Bearer ")){
-            String token=commentHeader.substring(7);
+        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")){
+            String token=authHeader.substring(7);
             log.info("Token...: " + token);
 
-            Optional<Long> id=jwtTokenManager.validateToken(token);
-            if (id.isPresent()){
-                UserDetails userDetails= userDetail.getCommentById(id.get());
+            Optional<String> role=jwtTokenManager.getRoleFromToken(token);
+            if (role.isPresent()){
+                UserDetails userDetails= userDetail.loadUserByManager(role.get());
                 UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(
                         userDetails,null,userDetails.getAuthorities()
                 );

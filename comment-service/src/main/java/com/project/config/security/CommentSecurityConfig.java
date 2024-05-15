@@ -3,6 +3,7 @@ package com.project.config.security;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -14,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 public class CommentSecurityConfig {
     @Bean
-    public JwtCommentFilter getJwtCommentFilter(){
+    public JwtCommentFilter getJwtManagerFilter(){
         return new JwtCommentFilter();
     }
 
@@ -37,10 +38,10 @@ public class CommentSecurityConfig {
 
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.cors(Customizer.withDefaults());
 
         log.info("**** Tüm istekler buradan geçecek *****");
-
-        httpSecurity.addFilterBefore(getJwtCommentFilter(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(getJwtManagerFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

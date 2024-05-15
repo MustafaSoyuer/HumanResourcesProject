@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.project.utility.enums.EStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,4 +27,6 @@ public class Comment {
     private String managerOccupation;
     private Long createAt;
     private Long updateAt;
+    @Builder.Default
+    private EStatus status=EStatus.PENDING;
 }

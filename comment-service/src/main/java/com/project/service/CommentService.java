@@ -25,26 +25,26 @@ public class CommentService {
         Optional<Comment> comment= commentRepository.findOptionalById(dto.getManagerId());
 
         if (comment.isPresent()){
-            commentRepository.save(
-                    Comment.builder()
-                            .comment(dto.getComment())
-                            .managerId(dto.getManagerId())
-                            .managerAvatar(managerResponseDto.getAvatar())
-                            .managerName(managerResponseDto.getName())
-                            .managerSurname(managerResponseDto.getSurname())
-                            .managerEmail(managerResponseDto.getEmail())
-                            .managerOccupation(managerResponseDto.getOccupation())
-                            .build()
-            );
-            return true;
-        }
             throw new CommentServiceException(ErrorType.MANAGER_ALREADY_HAVE_COMMENT);
+        }
+        commentRepository.save(
+                Comment.builder()
+                        .comment(dto.getComment())
+                        .managerId(dto.getManagerId())
+                        .managerAvatar(managerResponseDto.getAvatar())
+                        .managerName(managerResponseDto.getName())
+                        .managerSurname(managerResponseDto.getSurname())
+                        .managerEmail(managerResponseDto.getEmail())
+                        .managerOccupation(managerResponseDto.getOccupation())
+                        .build()
+        );
 
+        return true;
 
     }
 
 
-    public List<Comment> getAllComments() {
-        return commentRepository.findAll();
-    }
+//    public List<Comment> getAllComments() {
+//        return commentRepository.findAll();
+//    }
 }

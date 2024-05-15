@@ -65,4 +65,20 @@ public class JwtTokenManager {
         }
     }
 
+    public Optional<String> getRoleFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC512(SECRETKEY);
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            if (decodedJWT == null) {
+                throw new CommentServiceException(ErrorType.INVALID_TOKEN);
+            }
+            String role = decodedJWT.getClaim("role").asString();
+            return Optional.of(role);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            throw new CommentServiceException(ErrorType.INVALID_TOKEN);
+        }
+    }
+
 }
