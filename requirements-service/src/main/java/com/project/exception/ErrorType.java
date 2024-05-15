@@ -22,7 +22,8 @@ public enum ErrorType {
     EXPENSES_NOT_FOUND(6011,"Expenses not found" ,HttpStatus.BAD_REQUEST ),
     EXPENSES_ALREADY_EXISTS(6012, "Expenses already exists" ,HttpStatus.BAD_REQUEST ),
     MANAGER_NOT_AUTHORIZED(6013,"Manager is not authorized" ,HttpStatus.BAD_REQUEST ),
-    EQUIPMENTS_NOT_FOUND(6014,"Equipment not found", HttpStatus.BAD_REQUEST );
+    EQUIPMENTS_NOT_FOUND(6014,"Equipment not found", HttpStatus.BAD_REQUEST ),
+    UNAUTHORIZED(6015,"Unauthorized" ,HttpStatus.BAD_REQUEST );
 
     private int code;
     private String message;

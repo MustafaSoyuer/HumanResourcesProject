@@ -62,7 +62,6 @@ public class EmployeeController {
     @GetMapping(GET_EMPLOYEES_BY_MANAGER_ID)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<List<Employee>>> getEmployeesByManagerId(Long managerId) {
-
         return ResponseEntity.ok(BasicResponse.<List<Employee>>builder()
                 .status(200)
                 .message("Employees list turned successfully")
@@ -71,13 +70,16 @@ public class EmployeeController {
         );
     }
 
-    @GetMapping(FIND_EMPLOYEE_BY_TOKEN)
-    public ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam String token) {
+    @GetMapping("/find-employee-by-token")
+    @CrossOrigin("*")
+    public ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam("token") String token) {
+        System.out.println("employee controller token kontrolü...  " + token);
         return ResponseEntity.ok(employeeService.findEmployeeByToken(token));
     }
 
     @GetMapping(FIND_BY_ID)
-    public ResponseEntity<EmployeeResponseDto> findById(@RequestParam Long id) {
+    @CrossOrigin("*")
+    public ResponseEntity<EmployeeResponseDto> findById(@RequestParam("id") Long id) {
         return ResponseEntity.ok(employeeService.findById(id));
     }
 
@@ -88,9 +90,9 @@ public class EmployeeController {
      * @param id
      * @return
      */
-    @PutMapping(UPDATE_SALARY_EMPLOYEE)
+    @PutMapping("/update-salary-employee")
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<EmployeeResponseDto>> updateEmployeeSalary(@RequestParam Long id, @RequestParam Double salary) {
+    public ResponseEntity<BasicResponse<EmployeeResponseDto>> updateEmployeeSalary(@RequestParam("id") Long id, @RequestParam("salary") Double salary) {
         return ResponseEntity.ok(BasicResponse.<EmployeeResponseDto>builder()
                 .status(200)
                 .message("Employee salary updated successfully")
@@ -100,7 +102,4 @@ public class EmployeeController {
     }
 
 
-
-
-// email _> ad.soyad@şirketadı.com
 }

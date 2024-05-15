@@ -122,22 +122,6 @@ public class EmployeeService {
     }
 
 
-//TODO
-    /**
-     *  String companyEmail = "manager" + dto.getName() + "@" + dto.getCompanyName() + ".com";
-     *         auth.setCompanyEmail(companyEmail.toLowerCase());
-     *         auth.setUserType(EUserType.MANAGER);
-     *         auth.setCompanyName(auth.getCompanyName().toLowerCase());
-     *         save(auth);
-     */
-
-
-
-
-
-
-
-
 
 
 }

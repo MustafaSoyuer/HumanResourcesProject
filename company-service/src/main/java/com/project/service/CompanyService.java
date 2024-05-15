@@ -51,13 +51,12 @@ public class CompanyService {
     }
 
     public Boolean updateCompany(CompanyUpdateRequestDto dto) {
-
-        ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
+        AuthResponseDto auth = Optional.ofNullable(authManager.findByToken(dto.getToken()).getBody())
                 .orElseThrow(()->new CompanyServiceException(ErrorType.USER_NOT_FOUND));
 
             Company company = companyRepository.findById(dto.getId()).orElseThrow(() -> new CompanyServiceException(ErrorType.COMPANY_NOT_FOUND));
             company.setId(company.getId());
-            company.setManagerId(manager.getId());
+            company.setManagerId(dto.getManagerId());
             company.setName(dto.getName());
             company.setTitle(dto.getTitle());
             company.setDescription(dto.getDescription());

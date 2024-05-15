@@ -6,12 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseRequestExpensesDto {
-    private String token;
+
     private Long requirementId;
     private Long employeeId;
+    private String token;
+
+
 
 }

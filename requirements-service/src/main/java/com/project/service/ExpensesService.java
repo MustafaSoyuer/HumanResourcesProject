@@ -1,10 +1,12 @@
 package com.project.service;
 
 import com.project.dto.request.AddExpensesRequestDto;
+import com.project.dto.request.ApproveExpensesRequestDto;
 import com.project.dto.request.BaseRequestExpensesDto;
 
 import com.project.dto.response.AddExpensesResponseDto;
 import com.project.dto.response.EmployeeResponseDto;
+import com.project.dto.response.ExpensesListResponseDto;
 import com.project.dto.response.ManagerResponseDto;
 import com.project.entity.Expenses;
 import com.project.exception.ErrorType;
@@ -13,6 +15,7 @@ import com.project.manager.EmployeeManager;
 import com.project.manager.ManagerManager;
 import com.project.mapper.ExpensesMapper;
 import com.project.repository.ExpensesRepository;
+import com.project.utility.enums.ERole;
 import com.project.utility.enums.EStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,7 +48,6 @@ public class ExpensesService {
     public AddExpensesResponseDto addExpensesForEmployee(AddExpensesRequestDto dto) {
         EmployeeResponseDto employee = Optional.ofNullable(employeeManager.findEmployeeByToken(dto.getToken()).getBody())
                 .orElseThrow(()->new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND));
-
         return ExpensesMapper.INSTANCE.fromExpensesToAddExpensesResponseDto(expensesRepository.save(Expenses.builder()
                 .employeeId(employee.getId())
                 .managerId(employee.getManagerId())
@@ -58,26 +60,19 @@ public class ExpensesService {
 
     }
 
-    public Boolean approveExpensesForEmployee(BaseRequestExpensesDto dto) {
-        System.out.println("expenses service hata başlangıcı");
+    public Boolean approveExpensesForEmployee(ApproveExpensesRequestDto dto) {
         ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(dto.getToken()).getBody())
                 .orElseThrow(() -> new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD));
-        System.out.println("hata başlangııc mı????");
-        Optional<Expenses> expensesOptional = expensesRepository.findById(dto.getRequirementId());
+        Optional<Expenses> expensesOptional = expensesRepository.findById(dto.getId());
         if (expensesOptional.isPresent()) {
             Expenses expense = expensesOptional.get();
-            if (expense.getManagerId().equals(manager.getId())) {
                 if (expense.getStatus().equals(EStatus.PENDING)) {
                     expense.setStatus(EStatus.ACTIVE);
                     expense.setApprovalDate(System.currentTimeMillis());
                     expensesRepository.save(expense);
-
                     // Harcama miktarını çalışanın maaşına ekler
-                    System.out.println("HATAA EXPENSES SERVİCE");
-                    System.out.println("employee id: " + expense.getEmployeeId());
                     EmployeeResponseDto employee = Optional.ofNullable(employeeManager.findById(dto.getEmployeeId()).getBody())
                             .orElseThrow(()->new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND));
-                    System.out.println("2. hataaaaa");
                     if (employee != null ) {
                             double currentSalary = employee.getSalary() != null ? employee.getSalary() : 0.0;
                             double additionalAmount = expense.getAmount();
@@ -90,20 +85,18 @@ public class ExpensesService {
                         throw new RequirementsServiceException(ErrorType.EMPLOYEE_NOT_FOUND);
                     }
                 }
-            } else {
-                throw new RequirementsServiceException(ErrorType.MANAGER_NOT_AUTHORIZED);
-            }
         } else {
             throw new RequirementsServiceException(ErrorType.EXPENSES_NOT_FOUND);
         }
         return true;
     }
 
-    public List<Expenses> findAllPendingExpenses(String token) {
+    public List<ExpensesListResponseDto> findAllPendingExpenses(String token) {
         ManagerResponseDto manager = Optional.ofNullable(managerManager.findByToken(token).getBody())
                 .orElseThrow(() -> new RequirementsServiceException(ErrorType.MANAGER_NOT_FOUD));
-        return expensesRepository.findAll().stream().
-                filter(expenses -> expenses.getStatus().equals(EStatus.PENDING))
-                .collect(Collectors.toList());
+            return expensesRepository.findAll().stream().
+                    filter(expenses -> expenses.getStatus().equals(EStatus.PENDING))
+                    .map(expensesMapper::fromExpensesToExpensesListResponseDto)
+                    .collect(Collectors.toList());
     }
 }
