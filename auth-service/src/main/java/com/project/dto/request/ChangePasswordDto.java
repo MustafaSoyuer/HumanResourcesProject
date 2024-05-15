@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChangePasswordDto {
-
+//TODO : token eklenecek?
     private String email;
     private String oldPassword;
     private String newPassword;

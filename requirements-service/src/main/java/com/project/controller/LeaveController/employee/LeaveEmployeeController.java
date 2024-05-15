@@ -34,7 +34,7 @@ public class LeaveEmployeeController {
                 .build());
     }
 
-    @PutMapping(REQUEST_LEAVE)
+    @PostMapping(REQUEST_LEAVE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> requestLeave(@RequestBody RequestLeaveDto dto) {
         leaveService.requestLeaveFromEmployee(dto);
