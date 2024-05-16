@@ -37,4 +37,13 @@ public class RestApiUrls {
     public static final String ADD_EQUIPMENT = "/add-equipment";
     public static final String RETURN_EQUIPMENT = "/return-equipment";
     public static final String REQUEST_EQUIPMENT = "/request-equipment";
+
+    public static final String ADD_SHIFT = "/add-shift";
+    public static final String UPDATE_SHIFT = "/update-shift";
+    public static final String GET_SHIFT_OF_EMPLOYEE = "/get-shift-of-employee";
+    public static final String GET_ALL_SHIFTS_OF_EMPLOYEES = "/get-all-shifts-of-employees";
+    public static final String GET_ALL_MY_SHIFTS = "/get-all-my-shifts";
+
+
+
 }

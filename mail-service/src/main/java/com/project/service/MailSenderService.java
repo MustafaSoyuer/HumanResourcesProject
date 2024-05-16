@@ -17,7 +17,7 @@ public class MailSenderService {
 
     //@EventListener(ApplicationReadyEvent.class)
     public void sendMailChangePassword(String email, String password) {
-        String activationLink = generateActivationLink(email,password);
+        String activationLink = generateActivationLink();
         SimpleMailMessage mailMessage=new SimpleMailMessage();
         mailMessage.setFrom("workforce.solutions.info@gmail.com");
         mailMessage.setTo(email);
@@ -30,8 +30,8 @@ public class MailSenderService {
         javaMailSender.send(mailMessage);
     }
 
-    public String generateActivationLink(String email,String password) {
-        return "http://localhost:9091/swagger-ui/index.html#/auth-controller/changePassword?email=" + email + "&password=" + password;
+    public String generateActivationLink() {
+        return "http://localhost:3000/change-password";
         // todo:  "http://localhost:9091/dev/v1/auth/change-password?email=" + email + "&password=" + password -> kubernetes kısmı gelince burası güncellenecek.
         //TODO: "localhost:3000/change-password?email=" + email + "&password=" + password ; -> herhangi bir kubernetes kısmı gelince burası güncellenecek.?
 

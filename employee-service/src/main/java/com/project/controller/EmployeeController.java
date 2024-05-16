@@ -73,6 +73,7 @@ public class EmployeeController {
     }
 
     @GetMapping(FIND_EMPLOYEE_BY_TOKEN)
+    @CrossOrigin("*")
     public ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam String token) {
         return ResponseEntity.ok(employeeService.findEmployeeByToken(token));
     }
