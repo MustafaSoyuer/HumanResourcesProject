@@ -19,7 +19,7 @@ public class AddExpensesResponseDto {
     private Long managerId;
     private Double amount;
     private EExpenseType expenseType;
-    private String document;
+    private String description;
     private Long requestDate;
     private EStatus status;
 }

@@ -46,7 +46,7 @@ public class CompanyController {
      * @param dto -> CompanyUpdateRequestDto
      * @return -> true, false
      */
-    @PutMapping(UPDATE)
+    @PostMapping(UPDATE)
     @CrossOrigin("*")
     public ResponseEntity<BasicResponse<Boolean>> updateCompany(@RequestBody CompanyUpdateRequestDto dto) {
         companyService.updateCompany(dto);

@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.dto.request.ActivateEmployeeRequestDto;
 import com.project.dto.request.ManagerOrAdminUpdateEmployeeRequestDto;
 import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;

@@ -53,7 +53,7 @@ public class ExpensesService {
                 .managerId(employee.getManagerId())
                 .amount(dto.getAmount())
                 .expenseType(dto.getExpenseType())
-                .document(dto.getDocument())
+                .description(dto.getDescription())
                 .requestDate(System.currentTimeMillis())
                 .status(EStatus.PENDING)
                 .build()));

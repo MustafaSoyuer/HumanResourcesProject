@@ -5,9 +5,11 @@ import com.project.dto.request.SaveEmployeeRequestDto;
 import com.project.dto.request.UpdateEmployeeRequestDto;
 import com.project.dto.response.EmployeeResponseDto;
 import com.project.dto.request.*;
+import com.project.dto.response.ManagerResponseDto;
 import com.project.entity.Employee;
 import com.project.exception.EmployeeServiceException;
 import com.project.exception.ErrorType;
+import com.project.manager.ManagerManager;
 import com.project.mapper.EmployeeMapper;
 import com.project.repository.EmployeeRepository;
 import com.project.utility.JwtTokenManager;
@@ -23,6 +25,7 @@ import java.util.Optional;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final JwtTokenManager jwtTokenManager;
+    private final ManagerManager managerManager;
 
 
     public EmployeeResponseDto saveEmployee(SaveEmployeeRequestDto dto) {

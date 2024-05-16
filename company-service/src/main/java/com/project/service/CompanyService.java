@@ -59,25 +59,13 @@ public class CompanyService {
             company.setManagerId(dto.getManagerId());
             company.setName(dto.getName());
             company.setTitle(dto.getTitle());
-            company.setDescription(dto.getDescription());
             company.setAddress(dto.getAddress());
             company.setPhone(dto.getPhone());
             company.setEmail(dto.getEmail());
             company.setWebsite(dto.getWebsite());
-            company.setLogo(dto.getLogo());
             company.setSector(dto.getSector());
             company.setTaxNumber(dto.getTaxNumber());
-            company.setTaxOffice(dto.getTaxOffice());
-            company.setMersisNo(dto.getMersisNo());
-            company.setVision(dto.getVision());
-            company.setMission(dto.getMission());
-            company.setCountry(dto.getCountry());
-            company.setCity(dto.getCity());
             company.setEmployeeCount(dto.getEmployeeCount());
-            company.setFounded(dto.getFounded());
-            company.setFoundingYear(dto.getFoundingYear());
-            company.setLinkedin(dto.getLinkedin());
-            company.setMembershipPlan(dto.getMembershipPlan());
             company.setUpdateAt(System.currentTimeMillis());
             company.setStatus(EStatus.ACTIVE);
             companyRepository.save(company);
@@ -131,7 +119,6 @@ public class CompanyService {
             return true;
         }
         throw new CompanyServiceException(ErrorType.UNAUTHORIZED);
-
     }
 
     public Boolean rejectCompany(CompanyTokenRequestDto dto) {
