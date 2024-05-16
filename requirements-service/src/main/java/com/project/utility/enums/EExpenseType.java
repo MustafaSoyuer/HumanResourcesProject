@@ -1,5 +1,7 @@
 package com.project.utility.enums;
 
+
+
 public enum EExpenseType {
     OFFICE_RENT,
     UTILITIES,
@@ -20,4 +22,5 @@ public enum EExpenseType {
     TAXES,
     PRINTING,
     OTHER
+
 }

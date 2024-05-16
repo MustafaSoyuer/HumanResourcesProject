@@ -11,15 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddExpensesResponseDto {
+public class ExpensesListResponseDto {
 
 
     private Long id;
     private Long employeeId;
     private Long managerId;
-    private Double amount;
     private EExpenseType expenseType;
-    private String description;
-    private Long requestDate;
+    private Double amount;
     private EStatus status;
 }

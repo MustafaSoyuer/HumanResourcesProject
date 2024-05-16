@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddExpensesRequestDto {
@@ -16,5 +15,7 @@ public class AddExpensesRequestDto {
     private String token;
     private Double amount;
     private EExpenseType expenseType;
-    private String document;
+    private String description;
+
+
 }

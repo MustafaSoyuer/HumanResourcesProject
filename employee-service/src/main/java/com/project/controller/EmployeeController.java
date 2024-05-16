@@ -72,14 +72,16 @@ public class EmployeeController {
         );
     }
 
-    @GetMapping(FIND_EMPLOYEE_BY_TOKEN)
+    @GetMapping("/find-employee-by-token")
     @CrossOrigin("*")
-    public ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam String token) {
+    public ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam("token") String token) {
+        System.out.println("employee controller token kontrolü...  " + token);
         return ResponseEntity.ok(employeeService.findEmployeeByToken(token));
     }
 
     @GetMapping(FIND_BY_ID)
-    public ResponseEntity<EmployeeResponseDto> findById(@RequestParam Long id) {
+    @CrossOrigin("*")
+    public ResponseEntity<EmployeeResponseDto> findById(@RequestParam("id") Long id) {
         return ResponseEntity.ok(employeeService.findById(id));
     }
 
@@ -90,9 +92,9 @@ public class EmployeeController {
      * @param id
      * @return
      */
-    @PutMapping(UPDATE_SALARY_EMPLOYEE)
+    @PutMapping("/update-salary-employee")
     @CrossOrigin("*")
-    public ResponseEntity<BasicResponse<EmployeeResponseDto>> updateEmployeeSalary(@RequestParam Long id, @RequestParam Double salary) {
+    public ResponseEntity<BasicResponse<EmployeeResponseDto>> updateEmployeeSalary(@RequestParam("id") Long id, @RequestParam("salary") Double salary) {
         return ResponseEntity.ok(BasicResponse.<EmployeeResponseDto>builder()
                 .status(200)
                 .message("Employee salary updated successfully")

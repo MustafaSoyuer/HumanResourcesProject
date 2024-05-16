@@ -2,6 +2,7 @@ package com.project.mapper;
 
 
 import com.project.dto.response.AddExpensesResponseDto;
+import com.project.dto.response.ExpensesListResponseDto;
 import com.project.entity.Expenses;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -14,4 +15,6 @@ public interface ExpensesMapper {
 
 
     AddExpensesResponseDto fromExpensesToAddExpensesResponseDto(final Expenses expense);
+
+    ExpensesListResponseDto fromExpensesToExpensesListResponseDto(final Expenses expenses);
 }

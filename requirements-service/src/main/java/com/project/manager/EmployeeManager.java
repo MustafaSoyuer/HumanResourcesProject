@@ -12,12 +12,15 @@ import static com.project.utility.constants.RestApiUrls.*;
 @FeignClient(url= "http://localhost:9094/dev/v1/employee", name= "requirements-employee")
 public interface EmployeeManager {
 
-    @GetMapping(FIND_EMPLOYEE_BY_TOKEN)
-    ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam String token);
+    @GetMapping("/find-employee-by-token")
+    @CrossOrigin("*")
+    ResponseEntity<EmployeeResponseDto> findEmployeeByToken(@RequestParam("token") String token);
 
     @GetMapping("/find-by-id")
-    ResponseEntity<EmployeeResponseDto> findById(@RequestParam Long id);
+    @CrossOrigin("*")
+    ResponseEntity<EmployeeResponseDto> findById(@RequestParam("id") Long id);
 
-    @PutMapping(UPDATE_SALARY_EMPLOYEE)
-    ResponseEntity<BasicResponse<EmployeeResponseDto>> updateEmployeeSalary(@RequestParam Long id, @RequestParam Double salary);
+    @PutMapping("/update-salary-employee")
+    @CrossOrigin("*")
+    ResponseEntity<BasicResponse<EmployeeResponseDto>> updateEmployeeSalary(@RequestParam("id")Long id, @RequestParam("salary") Double salary);
 }
